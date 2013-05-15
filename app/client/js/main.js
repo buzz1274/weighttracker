@@ -1,5 +1,5 @@
 if(Meteor.isClient) {
-    Template.main.logged_in = function() {
+    Template.outer.logged_in = function() {
         return Session.get('user_id');
     }
 }

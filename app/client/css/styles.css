@@ -43,11 +43,20 @@ body {
     z-index:1000 !important;
     opacity:1.0 !important;
 }
+#login_popup {
+    display:none;
+}
 #logo {
     margin:10px 0 10px 10px;
 }
-
 #outer {
     max-width: 800px;
     margin: 0 auto;
+}
+#account_buttons {
+    text-align:center;
+    margin-top:50px;
+}
+#create_account_button {
+    margin-right:50px;
 }

@@ -1,0 +1,61 @@
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 200;
+    padding: 0;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+#header {
+    background-color: #333333;
+    background-image: -moz-linear-gradient(top, #444444, #222222);
+    background-image: -ms-linear-gradient(top, #444444, #222222);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#444444), to(#222222));
+    background-image: -webkit-linear-gradient(top, #444444, #222222);
+    background-image: -o-linear-gradient(top, #444444, #222222);
+    background-image: linear-gradient(top, #444444, #222222);
+    box-shadow: 0 0 7px rgba(0,0,0,0.6);
+    height: 70px;
+    margin-bottom: 20px;
+    position: relative;
+}
+#opaque {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width:100%;
+    z-index: 1000;
+    display: none;
+    background-color: black;
+    filter: alpha(opacity=20);
+    opacity: 0.2;
+}
+* html #opaque {
+    position: absolute;
+}
+.popup_info {
+    position:absolute;
+    display:none;
+    z-index:1000 !important;
+    opacity:1.0 !important;
+}
+#login_popup {
+    display:none;
+}
+#logo {
+    margin:10px 0 10px 10px;
+}
+#outer {
+    max-width: 800px;
+    margin: 0 auto;
+}
+#account_buttons {
+    text-align:center;
+    margin-top:50px;
+}
+#create_account_button {
+    margin-right:50px;
+}

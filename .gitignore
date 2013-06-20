@@ -1,4 +1,5 @@
 .project
+.idea/
 weighttracker.komodoproject
 symfony/web/bundles/
 symfony/app/bootstrap*

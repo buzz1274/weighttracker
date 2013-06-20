@@ -1,0 +1,49 @@
+{% extends 'weighttrackerBundle::layout.html.twig' %}
+
+{% block title %}Weighttracker{% endblock %}
+
+{% block content_header '' %}
+
+{% block body %}
+    <div id="opaque"></div>
+    <div id="header">
+        <img id="logo" src="{{ asset('bundles/weighttracker/images/logo.png') }}" alt="">
+    </div>
+    <div id="outer">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu ante et dui dapibus
+            ullamcorper. Nulla vehicula nibh et nunc suscipit eu interdum erat scelerisque.
+            Cras rutrum interdum mi ac vulputate. Donec ac justo mauris. Cras consequat dui sed
+            ligula molestie sit amet volutpat odio mollis. Nunc commodo semper quam, quis tristique
+            nibh facilisis a. Vivamus mollis elementum tempor. Curabitur et malesuada neque. Aliquam
+            euismod sem a nisi lobortis quis cursus nisl tincidunt. Phasellus hendrerit, turpis
+            id imperdiet faucibus, felis felis posuere lectus, ac egestas nulla quam at odio.
+            Vestibulum iaculis placerat molestie. Ut sollicitudin sapien eget dolor ultricies ac
+            accumsan felis mollis.
+        </p>
+        <br /><br />
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu ante et dui dapibus
+            ullamcorper. Nulla vehicula nibh et nunc suscipit eu interdum erat scelerisque.
+            Cras rutrum interdum mi ac vulputate. Donec ac justo mauris. Cras consequat dui sed
+            ligula molestie sit amet volutpat odio mollis. Nunc commodo semper quam, quis tristique
+            nibh facilisis a. Vivamus mollis elementum tempor. Curabitur et malesuada neque. Aliquam
+            euismod sem a nisi lobortis quis cursus nisl tincidunt. Phasellus hendrerit, turpis
+            id imperdiet faucibus, felis felis posuere lectus, ac egestas nulla quam at odio.
+            Vestibulum iaculis placerat molestie. Ut sollicitudin sapien eget dolor ultricies ac
+            accumsan felis mollis.
+        </p>
+        <div id="account_buttons">
+            <a href="#" id="create_account_button" class="btn btn-primary btn-inverse btn-large">
+                Create Account
+            </a>
+            <a href="#" class="btn btn-inverse btn-large">
+                Login
+            </a>
+        </div>
+        <div class="row">
+            <div id="login_popup" class="span4 offset2 popup_info well" style="display: none;">
+            </div>
+        </div>
+    </div>
+{%  endblock %}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset={{ _charset }}"/>
     <title>{% block title %}{% endblock %}</title>
@@ -7,10 +7,12 @@
     <link href="{{ asset('bundles/weighttracker/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" media="all" />
     <link href="{{ asset('bundles/weighttracker/css/bootstrap-responsive.css') }}" rel="stylesheet" type="text/css" media="all" />
     <link href="{{ asset('bundles/weighttracker/css/styles.css') }}" rel="stylesheet" type="text/css" media="all" />
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ asset('bundles/weighttracker/js/angularstrap.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/weighttracker/js/weighttracker.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/weighttracker/js/core.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/weighttracker/js/account.js') }}"></script>
     {% block head %}{% endblock %}
 </head>
 <body>

@@ -53,9 +53,6 @@ body {
     margin: 0 auto;
 }
 #account_buttons {
-    text-align:center;
-    margin-top:50px;
-}
-#create_account_button {
-    margin-right:50px;
-}
+     text-align:center;
+     margin-top:50px;
+ }

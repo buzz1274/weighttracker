@@ -1,2 +1,0 @@
-weighttracker:
-    resource: "@weighttrackerBundle/Resources/config/routing.yml"

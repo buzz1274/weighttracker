@@ -12,3 +12,6 @@ _configurator:
 
 _main:
     resource: routing.yml
+
+weighttracker:
+    resource: "@weighttrackerBundle/Resources/config/routing.yml"

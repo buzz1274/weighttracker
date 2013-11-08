@@ -1,6 +1,6 @@
 <?php
 
-namespace zz50\weighttrackerBundle\DependencyInjection;
+namespace weighttrackerBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

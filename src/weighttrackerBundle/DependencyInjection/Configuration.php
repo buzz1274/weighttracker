@@ -1,6 +1,6 @@
 <?php
 
-namespace zz50\weighttrackerBundle\DependencyInjection;
+namespace weighttrackerBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace zz50\weighttrackerBundle;
+namespace weighttrackerBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace zz50\weighttrackerBundle\Controller;
+namespace weighttrackerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

@@ -45,17 +45,58 @@
             </div>
             <br />
             <span>
-                <button type="button" bs-modal="'partials/modal.html'"
+                <button type="button" data-toggle="modal" data-target="#register"
                         class="btn btn-default btn-inverse btn-large">
                     Create Account
                 </button>
             </span>
             <span>
-                <button type="button" bs-modal="'partials/modal.html'"
-                        class="btn btn-default btn-inverse btn-large ng-scope">
+                <button type="button" data-toggle="modal" data-target="#login"
+                        class="btn btn-default btn-inverse btn-large">
                     Login
                 </button>
             </span>
         </div>
     </div>
+
+    <!-- Register Popup -->
+    <div id="register" class="modal fade bs-example-modal-sm" tabindex="-1"
+         role="dialog" aria-labelledby="registerModal" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <h4>Register</h4>
+                Email<br />
+                <input type="text" class="span4" autocomplete="off" id="email">
+                <br />Password<br />
+                <input type="password" class="span4" autocomplete="off" id="password">
+                <br />Password(again)<br />
+                <input type="password" class="span4" autocomplete="off" id="password_again">
+                <br />Height(m)<br />
+                <input type="text" class="span4" autocomplete="off" id="username">
+                <br />Weight(kg)<br />
+                <input type="text" class="span4" autocomplete="off" id="password">
+                <br />
+                <button type="submit" class="btn" id="create_account">Submit</button>
+                <button type="cancel" class="btn" id="cancel_create_account">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Popup -->
+    <div id="login" class="modal fade bs-example-modal-sm" tabindex="-1"
+         role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <h4>Login</h4>
+                Email<br />
+                <input type="text" class="span4" autocomplete="off" id="email">
+                <br />Password<br />
+                <input type="password" class="span4" autocomplete="off" id="password">
+                <br />
+                <button type="submit" class="btn" id="create_account">Submit</button>
+                <button type="cancel" class="btn" id="cancel_create_account">Cancel</button>
+            </div>
+        </div>
+    </div>
+
 {%  endblock %}

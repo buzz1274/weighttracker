@@ -9,53 +9,53 @@
     <div id="header">
         <img id="logo" src="{{ asset('bundles/weighttracker/images/logo.png') }}" alt="">
     </div>
-    <div id="outer" class="container-fluid">
-        <div class="row-fluid">
-            <div class="span4">
-                <ul style="list-style-type:none;">
-                    <li>
-                        <div class="span12" style="border:1px solid #000;height:200px;margin-bottom:25px;">
-                            <button type="button" class="btn btn-primary btn-inverse btn-large ng-scope"
-                                    bs-modal="'partials/modal.html'">
-                                Create Account
-                            </button>
-                        </div>
-                    </li>
-                   <li>
-                        <div class="span12" style="border:1px solid #000;height:200px;">
-                            <button type="button" class="btn btn-primary btn-inverse btn-large ng-scope"
-                                    bs-modal="'partials/modal.html'">
-                                Login
-                            </button>
-                        </div>
-                   </li>
-                </ul>
-            </div>
-            <div class="span8" style="border:1px solid #000;height:425px;">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu ante et dui dapibus
-                    ullamcorper. Nulla vehicula nibh et nunc suscipit eu interdum erat scelerisque.
-                    Cras rutrum interdum mi ac vulputate. Donec ac justo mauris. Cras consequat dui sed
-                    ligula molestie sit amet volutpat odio mollis. Nunc commodo semper quam, quis tristique
-                    nibh facilisis a. Vivamus mollis elementum tempor. Curabitur et malesuada neque. Aliquam
-                    euismod sem a nisi lobortis quis cursus nisl tincidunt. Phasellus hendrerit, turpis
-                    id imperdiet faucibus, felis felis posuere lectus, ac egestas nulla quam at odio.
-                    Vestibulum iaculis placerat molestie. Ut sollicitudin sapien eget dolor ultricies ac
+    <div id="outer">
+        <div class="text-center">
+            <div>
+                <p class="text-justify">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Nullam eu ante et dui dapibus ullamcorper. Nulla vehicula
+                    nibh et nunc suscipit eu interdum erat scelerisque. Cras
+                    rutrum interdum mi ac vulputate. Donec ac justo mauris. Cras
+                    consequat dui sed ligula molestie sit amet volutpat odio
+                    mollis. Nunc commodo semper quam, quis tristique
+                    nibh facilisis a. Vivamus mollis elementum tempor.
+                    Curabitur et malesuada neque. Aliquam euismod sem a nisi
+                    lobortis quis cursus nisl tincidunt. Phasellus hendrerit,
+                    turpis id imperdiet faucibus, felis felis posuere lectus, ac
+                    egestas nulla quam at odio. Vestibulum iaculis placerat
+                    molestie. Ut sollicitudin sapien eget dolor ultricies ac
                     accumsan felis mollis.
                 </p>
-                <br /><br />
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu ante et dui dapibus
-                    ullamcorper. Nulla vehicula nibh et nunc suscipit eu interdum erat scelerisque.
-                    Cras rutrum interdum mi ac vulputate. Donec ac justo mauris. Cras consequat dui sed
-                    ligula molestie sit amet volutpat odio mollis. Nunc commodo semper quam, quis tristique
-                    nibh facilisis a. Vivamus mollis elementum tempor. Curabitur et malesuada neque. Aliquam
-                    euismod sem a nisi lobortis quis cursus nisl tincidunt. Phasellus hendrerit, turpis
-                    id imperdiet faucibus, felis felis posuere lectus, ac egestas nulla quam at odio.
-                    Vestibulum iaculis placerat molestie. Ut sollicitudin sapien eget dolor ultricies ac
-                    accumsan felis mollis.
+                <p class="text-justify">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Nullam eu ante et dui dapibus ullamcorper. Nulla vehicula
+                    nibh et nunc suscipit eu interdum erat scelerisque. Cras
+                    rutrum interdum mi ac vulputate. Donec ac justo mauris. Cras
+                    consequat dui sed ligula molestie sit amet volutpat odio
+                    mollis. Nunc commodo semper quam, quis tristique nibh
+                    facilisis a. Vivamus mollis elementum tempor. Curabitur et
+                    malesuada neque. Aliquam euismod sem a nisi lobortis quis
+                    cursus nisl tincidunt. Phasellus hendrerit, turpis id
+                    imperdiet faucibus, felis felis posuere lectus, ac egestas
+                    nulla quam at odio. Vestibulum iaculis placerat molestie. Ut
+                    sollicitudin sapien eget dolor ultricies ac accumsan felis
+                    mollis.
                 </p>
             </div>
+            <br />
+            <span>
+                <button type="button" bs-modal="'partials/modal.html'"
+                        class="btn btn-default btn-inverse btn-large">
+                    Create Account
+                </button>
+            </span>
+            <span>
+                <button type="button" bs-modal="'partials/modal.html'"
+                        class="btn btn-default btn-inverse btn-large ng-scope">
+                    Login
+                </button>
+            </span>
         </div>
     </div>
 {%  endblock %}

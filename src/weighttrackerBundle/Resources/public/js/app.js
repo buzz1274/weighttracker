@@ -1,11 +1,5 @@
-App = Ember.Application.create();
+window.weight_tracker = Ember.Application.create();
 
-App.Router.map(function() {
-  // put your routes here
-});
-
-App.IndexRoute = Ember.Route.extend({
-  model: function() {
-    return ['red', 'yellow', 'blue'];
-  }
+weight_tracker.Router.map(function() {
+    this.resource('index', {path: '/'});
 });

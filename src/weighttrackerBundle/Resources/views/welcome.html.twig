@@ -1,0 +1,149 @@
+<script type="text/x-handlebars" data-template-name="index">
+    <div id="outer" class="text-center">
+        <div>
+            <p class="text-justify">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Nullam eu ante et dui dapibus ullamcorper. Nulla vehicula
+            nibh et nunc suscipit eu interdum erat scelerisque. Cras
+            rutrum interdum mi ac vulputate. Donec ac justo mauris. Cras
+            consequat dui sed ligula molestie sit amet volutpat odio
+            mollis. Nunc commodo semper quam, quis tristique
+            nibh facilisis a. Vivamus mollis elementum tempor.
+            Curabitur et malesuada neque. Aliquam euismod sem a nisi
+            lobortis quis cursus nisl tincidunt. Phasellus hendrerit,
+            turpis id imperdiet faucibus, felis felis posuere lectus, ac
+            egestas nulla quam at odio. Vestibulum iaculis placerat
+            molestie. Ut sollicitudin sapien eget dolor ultricies ac
+            accumsan felis mollis.
+            </p>
+            <p class="text-justify">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Nullam eu ante et dui dapibus ullamcorper. Nulla vehicula
+            nibh et nunc suscipit eu interdum erat scelerisque. Cras
+            rutrum interdum mi ac vulputate. Donec ac justo mauris. Cras
+            consequat dui sed ligula molestie sit amet volutpat odio
+            mollis. Nunc commodo semper quam, quis tristique nibh
+            facilisis a. Vivamus mollis elementum tempor. Curabitur et
+            malesuada neque. Aliquam euismod sem a nisi lobortis quis
+            cursus nisl tincidunt. Phasellus hendrerit, turpis id
+            imperdiet faucibus, felis felis posuere lectus, ac egestas
+            nulla quam at odio. Vestibulum iaculis placerat molestie. Ut
+            sollicitudin sapien eget dolor ultricies ac accumsan felis
+            mollis.
+            </p>
+        </div>
+        <br />
+        <span>
+            <button type="button" data-toggle="modal" data-target="#register"
+            class="btn btn-default btn-inverse btn-large">
+            Create Account
+            </button>
+        </span>
+        <span>
+            <button type="button" data-toggle="modal" data-target="#login"
+            class="btn btn-default btn-inverse btn-large">
+            Login
+            </button>
+        </span>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="register" class="modal fade" tabindex="-1"
+    role="dialog" aria-labelledby="registerModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <form role="form">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    Register
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input id="email" type="text" class="form-control"
+                            autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input id="password" type="password"
+                                class="form-control" autocomplete="off">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password_again">Password(again)</label>
+                                    <input id="password_again" type="password"
+                                    class="form-control" autocomplete="off">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="date_of_birth">Date of Birth</label>
+                                        <input id="date_of_birth" type="text"
+                                        class="form-control" autocomplete="off">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sex">Sex</label>
+                                            <select id="sex" class="form-control">
+                                                <option value="-">Please Select...</option>
+                                                <option value="female">Female</option>
+                                                <option value="male">Male</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="height">Height(m)</label>
+                                            <input id="height" type="text" class="form-control"
+                                            autocomplete="off">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="weight">Weight(kg)</label>
+                                                <input id="weight" type="text" class="form-control"
+                                                autocomplete="off">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn" id="create_account">
+                                                Register
+                                                </button>
+                                                <button type="cancel" class="btn"
+                                                data-dismiss="modal" data-target="#register"
+                                                id="cancel_create_account">
+                                                Cancel
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- login Modal -->
+                            <div id="login" class="modal fade" tabindex="-1"
+                            role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <form role="form">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            Login
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="email">Email</label>
+                                                    <input id="email" type="text" class="form-control"
+                                                    autocomplete="off">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="password">Password</label>
+                                                        <input id="password" type="password"
+                                                        class="form-control" autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn" id="create_account">
+                                                        Login
+                                                        </button>
+                                                        <button type="cancel" class="btn"
+                                                        data-dismiss="modal" data-target="#login"
+                                                        id="cancel_login">
+                                                        Cancel
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </script>

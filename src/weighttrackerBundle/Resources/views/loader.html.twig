@@ -24,14 +24,14 @@
                  src="{{ asset('bundles/weighttracker/images/logo.png') }}">
         </div>
 
-        <script type="text/x-handlebars">
-            <div id="outer" class="text-center">
-                {% verbatim %}
+        {% verbatim %}
+            <script type="text/x-handlebars">
+                <div id="outer" class="text-center">
                     {{outlet "main"}}
-                    {{outlet "modal"}}
-                {% endverbatim %}
-            </div>
-        </script>
+                </div>
+                {{outlet "modal"}}
+            </script>
+        {% endverbatim %}
 
         {% block javascripts %}
             {% javascripts
@@ -41,9 +41,10 @@
                 '//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'
                 '@weighttrackerBundle/Resources/public/js/templates/*.hbs'
                 '@weighttrackerBundle/Resources/public/js/app.js'
-                '@weighttrackerBundle/Resources/public/js/controllers/*.js'
+
                 '@weighttrackerBundle/Resources/public/js/models/*.js'
                 '@weighttrackerBundle/Resources/public/js/views/*.js'
+                '@weighttrackerBundle/Resources/public/js/controllers/*.js'
                 '@weighttrackerBundle/Resources/public/js/routes/*.js'
                 filter='uglifyjs2'
             %}

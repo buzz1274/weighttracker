@@ -35,14 +35,15 @@
     <span>
         <button type="button" data-toggle="modal" data-target="#register"
                 class="btn btn-default btn-inverse btn-large"
-                {{action 'openModal' 'register'}}>
+                {{action 'openRegisterModal'}}>
             Create Account
         </button>
     </span>
 
     <span>
         <button type="button" data-toggle="modal" data-target="#login"
-                class="btn btn-default btn-inverse btn-large">
+                class="btn btn-default btn-inverse btn-large"
+                {{action 'openLoginModal'}}>
             Login
         </button>
     </span>

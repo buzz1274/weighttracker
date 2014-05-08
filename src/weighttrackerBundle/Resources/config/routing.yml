@@ -2,10 +2,6 @@ _weighttracker:
     path:      /
     defaults:  { _controller: weighttrackerBundle:Default:index }
 
-_weight:
-    path: /weight
-    defaults:  { _controller: weighttrackerBundle:Weight:index }
-
 _register:
     path: /register
-    defaults:  { _controller: weighttrackerBundle:Account:register }
+    defaults:  { _controller: weighttrackerBundle:Default:register }

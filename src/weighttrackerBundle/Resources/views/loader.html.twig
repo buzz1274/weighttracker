@@ -20,13 +20,15 @@
     <body>
         <div id="opaque"></div>
         <div id="header">
-            <img id="logo" alt=""
-                 src="{{ asset('bundles/weighttracker/images/logo.png') }}">
+            <a href="/#">
+                <img id="logo" alt=""
+                     src="{{ asset('bundles/weighttracker/images/logo.png') }}">
+            </a>
         </div>
 
         {% verbatim %}
             <script type="text/x-handlebars">
-                <div id="outer" class="text-center">
+                <div id="outer">
                     {{outlet "main"}}
                 </div>
                 {{outlet "modal"}}
@@ -41,17 +43,10 @@
                 '//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'
                 '@weighttrackerBundle/Resources/public/js/templates/*.hbs'
                 '@weighttrackerBundle/Resources/public/js/app.js'
-
                 '@weighttrackerBundle/Resources/public/js/views/*.js'
                 '@weighttrackerBundle/Resources/public/js/routes/*.js'
                 '@weighttrackerBundle/Resources/public/js/controllers/*.js'
                 '@weighttrackerBundle/Resources/public/js/models/*.js'
-
-
-
-
-
-
                 filter='uglifyjs2'
             %}
                 <script type="text/javascript" src="{{asset_url}}"></script>

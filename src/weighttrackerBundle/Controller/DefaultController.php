@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use weighttrackerBundle\Entity\Weight;
 
 class DefaultController extends Controller {
 
@@ -21,6 +22,18 @@ class DefaultController extends Controller {
         $response->setStatusCode(400);
 
         return $response;
+
+    }
+
+    public function weightAction() {
+
+        $weights = $this->getDoctrine()
+                    ->getRepository('weighttrackerBundle\Entity\Weight')
+                    ->findAll();
+
+        print_r($weights);
+
+        return new JsonResponse($weights);
 
     }
 

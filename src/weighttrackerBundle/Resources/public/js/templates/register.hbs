@@ -8,7 +8,7 @@
                 </div>
                 <div class="modal-body">
 
-                    <div class='form-group {{#if emailErrorMessage}} has-error {{/if}}'>
+                    <div id="email_form_group" class="form-group">
                         <label class="control-label" for="email">Email</label>
                         {{view Ember.TextField valueBinding="email" id="email"
                           type="text" class="form-control" autocomplete="off"}}

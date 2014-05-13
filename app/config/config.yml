@@ -63,6 +63,13 @@ doctrine:
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
+        mappings:
+            weighttrackerBundle:
+                type: annotation
+                is_bundle: false
+                dir: %kernel.root_dir%/../src/weighttrackerBundle/
+                prefix: weighttrackerBundle
+                alias: weighttrackerBundle
 
 # Swiftmailer Configuration
 swiftmailer:

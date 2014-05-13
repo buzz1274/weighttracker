@@ -7,3 +7,7 @@ _register:
     defaults:  { _controller: weighttrackerBundle:Default:register }
     requirements:
       _method: POST
+
+_weight:
+    path: /weight
+    defaults:  { _controller: weighttrackerBundle:Default:weight }

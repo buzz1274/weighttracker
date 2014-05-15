@@ -19,11 +19,16 @@
 
     <body>
         <div id="opaque"></div>
-        <div id="header">
+        <div class="header">
             <a href="/#">
                 <img id="logo" alt=""
                      src="{{ asset('bundles/weighttracker/images/logo.png') }}">
             </a>
+            <div style="float:right;color:#FFF;padding:10px 20px 0 0;">
+                Welcome Back, David |
+                <a href="#" style="color:#FFF;">Edit Account</a> |
+                <a href="#" style="color:#FFF;">Logout</a>
+            </div>
         </div>
 
         {% verbatim %}
@@ -41,6 +46,7 @@
                 '//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.js'
                 '//cdnjs.cloudflare.com/ajax/libs/ember.js/1.5.1/ember.min.js'
                 '//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'
+                '//d3js.org/d3.v3.min.js'
                 '@weighttrackerBundle/Resources/public/js/templates/*.hbs'
                 '@weighttrackerBundle/Resources/public/js/app.js'
                 '@weighttrackerBundle/Resources/public/js/views/*.js'

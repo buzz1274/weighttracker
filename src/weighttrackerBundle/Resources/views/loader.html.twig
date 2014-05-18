@@ -19,20 +19,21 @@
 
     <body>
         <div id="opaque"></div>
-        <div class="header">
-            <a href="/#">
-                <img id="logo" alt=""
-                     src="{{ asset('bundles/weighttracker/images/logo.png') }}">
-            </a>
-            <div style="float:right;color:#FFF;padding:10px 20px 0 0;">
-                Welcome Back, David |
-                <a href="#" style="color:#FFF;">Edit Account</a> |
-                <a href="#" style="color:#FFF;">Logout</a>
-            </div>
-        </div>
-
         {% verbatim %}
             <script type="text/x-handlebars">
+                <div class="header">
+                    <a href="/#">
+                        <img id="logo" alt=""
+                             src="/bundles/weighttracker/images/logo.png">
+                    </a>
+                    {{#if isAuthenticated}}
+                        <div class="user_box">
+                            Welcome Back, David |
+                            <a href="#">Edit Account</a> |
+                            <a href="#">Logout</a>
+                        </div>
+                    {{/if}}
+                </div>
                 <div id="outer">
                     {{outlet "main"}}
                 </div>

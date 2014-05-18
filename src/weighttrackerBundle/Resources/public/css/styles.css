@@ -21,6 +21,14 @@ body {
     margin-bottom: 20px;
     position: relative;
 }
+.header div.user_box {
+    float:right;
+    color:#FFF;
+    padding:10px 20px 0 0;
+}
+.header div.user_box a {
+    color:#FFF;
+}
 #opaque {
     position: fixed;
     top: 0px;

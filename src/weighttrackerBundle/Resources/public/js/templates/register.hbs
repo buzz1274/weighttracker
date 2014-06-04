@@ -7,33 +7,53 @@
                     Register
                 </div>
                 <div class="modal-body">
-
+                    {{#if registerFailed}}
+                        <p class="text-danger text-center">
+                            Registration Failed
+                        </p>
+                    {{/if}}
                     <div id="email_form_group" class="form-group">
-                        <label class="control-label" for="email">Email</label>
+                        <label class="control-label" for="email">
+                            Email
+                        </label>
                         {{view Ember.TextField valueBinding="email" id="email"
                           type="text" class="form-control" autocomplete="off"}}
                         {{#if emailErrorMessage}}
-                            <p class="text-danger">{{emailErrorMessage}}</p>
+                            <p class="text-danger">
+                                {{emailErrorMessage}}
+                            </p>
                         {{/if}}
                     </div>
 
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        {{view Ember.TextField valueBinding="password" id="password"
-                          type="text" class="form-control" autocomplete="off"}}
+                    <div id="password_form_group" class="form-group">
+                        <label class="control-label" for="password">
+                            Password
+                        </label>
+                        {{view Ember.TextField valueBinding="password"
+                          id="password" type="text" class="form-control"
+                          autocomplete="off"}}
+                        {{#if registerFailed}}
+                            {{#if passwordErrorMessage}}
+                                <p class="text-danger">
+                                    {{passwordErrorMessage}}
+                                </p>
+                            {{/if}}
+                        {{/if}}
                     </div>
-                    <div class="form-group">
-                        <label for="password_again">Password(again)</label>
+                    <div class="password_again_form_group">
+                        <label class="control-label" for="password_again">
+                            Password(again)
+                        </label>
                         {{view Ember.TextField valueBinding="password_again"
                           id="password_again" type="text" class="form-control"
                           autocomplete="off"}}
+                        {{#if password_againErrorMessage}}
+                            <p class="text-danger">
+                                {{password_againErrorMessage}}
+                            </p>
+                        {{/if}}
                     </div>
                 </div>
-                {{#if registerFailed}}
-                    <p class="text-danger text-center">
-                        Registration Failed
-                    </p>
-                {{/if}}
                 <div class="modal-footer">
                     <button type="submit" class="btn" id="create_account">
                         Register

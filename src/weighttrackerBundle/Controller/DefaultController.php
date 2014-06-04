@@ -31,8 +31,6 @@ class DefaultController extends Controller {
                     ->getRepository('weighttrackerBundle\Entity\Weight')
                     ->findAll();
 
-        print_r($weights);
-
         return new JsonResponse($weights);
 
     }

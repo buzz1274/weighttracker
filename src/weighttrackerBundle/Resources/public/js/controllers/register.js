@@ -3,6 +3,11 @@
     'use strict';
 
     App.RegisterController = Ember.Controller.extend({
+        init: function() {
+            alert("BULF");
+            this._super();
+            this.set("registerFailed", false);
+        },
         register: function() {
             $.post("/register", {
                 email: this.get('email'),
@@ -22,6 +27,9 @@
 
                 }
             }.bind(this));
+        },
+        destroy: function() {
+            alert("DESTROY");
         }
     });
 

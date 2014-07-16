@@ -58,9 +58,9 @@
                     <button type="submit" class="btn" id="create_account">
                         Register
                     </button>
-                    <button type="cancel" class="btn"
-                            data-dismiss="modal" data-target="#register"
-                            id="cancel_create_account">
+                    <button type="button" data-toggle="modal"
+                            data-target="#register" class="btn"
+                        {{action 'closeRegisterModal'}}>
                         Cancel
                     </button>
                 </div>

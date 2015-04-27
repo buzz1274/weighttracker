@@ -14,10 +14,9 @@
     "tests"
   ],
   "dependencies": {
-    "marionette": "2.2",
-    "requirejs": "2.1",
+    "requirejs": "2.1.17",
     "bootstrap": "3.2",
-    "jquery-ui": "1.9",
+    "jquery-ui": "2.1.3",
     "ember": "1.11.3"
   },
   "install" : {

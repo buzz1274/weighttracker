@@ -9,14 +9,12 @@ use Phalcon\DI\FactoryDefault;
 
 try {
 
-    // Register an autoloader
-    $loader = new Loader();
-    $loader->registerDirs(array(
-        '../app/controllers/',
-        '../app/models/'
-    ))->register();
+    $config = parse_ini_file('../config.ini');
 
-    // Create a DI
+    $loader = new Loader();
+    $loader->registerDirs(array('../app/controllers/',
+                                '../app/models/'))->register();
+
     $di = new FactoryDefault();
 
     // Setup the view component

@@ -1,10 +1,11 @@
 require(["config"], function () {
     "use strict"
 
-    require(["bootstrap"],
+    require(["bootstrap", "ember"],
 
-        function ($) {
+        function ($, ember) {
             console.log($);
+            console.log(ember);
         }
     );
 });

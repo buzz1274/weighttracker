@@ -10,3 +10,6 @@
 /vendor/
 /bin/
 /composer.phar
+weighttracker.iml
+bower_components/
+html/assets/js/lib/*

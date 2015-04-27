@@ -1,0 +1,26 @@
+{
+  "name": "weighttracker",
+  "version": "0.1.0",
+  "authors": [
+    "buzz1274"
+  ],
+  "license": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "marionette": "2.2",
+    "requirejs": "2.1",
+    "bootstrap": "3.2",
+    "jquery-ui": "1.9",
+    "ember": "1.11.3"
+  },
+  "install" : {
+    "path" : "html/assets/js/lib/"
+  }
+}

@@ -1,15 +1,13 @@
-define(['Ember', 'wt'],
-    function (Ember, wt) {
+define(['Ember', 'wt'], function (Ember, wt) {
+    "use strict"
 
-        "use strict"
-
-        wt.IndexRoute = Ember.Route.extend({
-            setupController: function () {
-                console.log("controller");
-                this.render();
-            }
-        });
-
-        return wt.IndexRoute;
-
+    wt.IndexRoute = Ember.Route.extend({
+        setupController: function () {
+            console.log("index controller");
+            this.render();
+        }
     });
+
+    return wt.IndexRoute;
+
+});

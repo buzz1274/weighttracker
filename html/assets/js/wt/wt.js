@@ -1,5 +1,8 @@
-define('wt', ['Ember'],
-    function(Ember) {
-        return window.wt = Ember.Application.create();
-    }
-);
+define(['Ember'], function(Ember) {
+    "use strict"
+
+    var wt = Ember.Application.create();
+
+    return wt;
+
+});

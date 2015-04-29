@@ -33,9 +33,6 @@ require(["wt"], function (wt) {
             Router();
 
             wt.advanceReadiness();
-
-            console.log("DONE");
-
         }
     );
 

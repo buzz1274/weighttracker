@@ -1,3 +1,18 @@
-<h2 id="title">Welcome to Ember.js</h2>
-
-{{outlet}}
+<div class="container-fluid">
+    <div id="header">
+        <div id="welcome">
+            {{#if user}}
+              Welcome back, {{user}}&nbsp;|&nbsp;<a href="/logout">logout</a>
+            {{/if}}
+        </div>
+        <div id="header_content">
+          <h1><a href="/">WeightTracker</a></h1>
+        </div>
+    </div>
+    <div id="main" class="row-fluid">
+        <div id="sub_main">
+          {{outlet}}
+        </div>
+    </div>
+    <div id="footer">WeightTracker v0.1</div>
+</div>

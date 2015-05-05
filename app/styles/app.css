@@ -6,7 +6,7 @@ body {
   border:1px solid #000000;
   margin-right:auto;
   margin-left:auto;
-  width:950px;
+  width:800px;
   background:#FFFFFF;
   padding:0;
   margin-top:20px;
@@ -54,5 +54,27 @@ div#sub_main {
   padding-left:10px;
   background-color:#F9F9F9;
   font-weight:bold;
+}
+div.form {
+  width:65%;
+  margin:0 auto;
+}
+div.form fieldset {
+  border:1px solid #000000;
+}
+div.form legend {
+  width:inherit;
+  padding:0px 10px;
+  border-bottom:none;
+  font-size:1.15em;
+}
+div.form form {
+  padding:0px 50px 35px 50px;
+}
+p.form-warning {
+  margin-top:20px;
+  padding:5px;
+  border:1px solid #a94442;
+  width:350px;
 }
 

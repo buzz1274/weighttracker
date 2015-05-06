@@ -3,10 +3,12 @@
         <div id="welcome">
             {{#if user}}
               Welcome back, {{user}}&nbsp;|&nbsp;<a href="/logout">logout</a>
+            {{else}}
+              {{#link-to 'login'}}Login{{/link-to}}
             {{/if}}
         </div>
         <div id="header_content">
-          <h1><a href="/">WeightTracker</a></h1>
+          <h1> {{#link-to 'index'}}WeightTracker{{/link-to}}</h1>
         </div>
     </div>
     <div id="main" class="row-fluid">

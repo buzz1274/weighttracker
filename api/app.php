@@ -1,16 +1,30 @@
 <?php
 
-/**
- * Add your routes here
- */
-$app->get('/', function () use ($app) {
-    echo $app['view']->render('index');
-});
+  use Phalcon\Http\Response;
 
-/**
- * Not found handler
- */
-$app->notFound(function () use ($app) {
+  $app->get('/weights', function() use($app) {
+      $weights = $app->modelsManager->executeQuery(
+        "SELECT * FROM weight");
+
+      $response = new Response();
+
+      if(!$weights) {
+          $response->setJsonContent(array('status' => 'NOT-FOUND'));
+      } else {
+          foreach($weights as $weight) {
+              $data[] = array('id' => $weight->weight_id,
+                              'date' => $weight->weighed_date,
+                              'weight' => $weight->weight);
+          }
+
+          $response->setJsonContent($data);
+
+      }
+
+      return $response;
+
+  });
+
+  $app->notFound(function() use ($app) {
     $app->response->setStatusCode(404, "Not Found")->sendHeaders();
-    echo $app['view']->render('404');
-});
+  });

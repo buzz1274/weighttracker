@@ -1,0 +1,8 @@
+[misc]
+development_mode = 0
+
+[database]
+host = ""
+username = ""
+password = ""
+dbname = ""

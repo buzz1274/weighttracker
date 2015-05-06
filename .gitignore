@@ -18,3 +18,5 @@ npm-debug.log
 testem.log
 *.iml
 .idea/
+weights.csv
+config.ini

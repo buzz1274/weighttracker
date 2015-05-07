@@ -6,10 +6,8 @@
       $weights = $app->modelsManager->executeQuery(
         "SELECT * FROM weight");
 
-      $response = new Response();
-
       if(!$weights) {
-          $response->setJsonContent(array('status' => 'NOT-FOUND'));
+          $app->response->setJsonContent(array('status' => 'NOT-FOUND'));
       } else {
           foreach($weights as $weight) {
               $data[] = array('id' => $weight->weight_id,
@@ -17,14 +15,16 @@
                               'weight' => $weight->weight);
           }
 
-          $response->setJsonContent($data);
+          $app->response->setJsonContent($data);
 
       }
 
-      return $response;
+      return $app->response;
 
   });
 
-  $app->notFound(function() use ($app) {
-    $app->response->setStatusCode(404, "Not Found")->sendHeaders();
-  });
+    $app->notFound(function() use ($app, $config) {
+        $app->response->setStatusCode(404, "Not Found")->sendHeaders();
+        header('location: '.$config['MAINSITE_URL'].'/not-found');
+        die();
+    });

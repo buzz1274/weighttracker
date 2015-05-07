@@ -1,5 +1,6 @@
 [misc]
 development_mode = 0
+mainsite_url = ""
 
 [database]
 host = ""

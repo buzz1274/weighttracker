@@ -2,6 +2,6 @@
 
   use Phalcon\Mvc\Model;
 
-  class Weight extends Model {
+  class weight extends Model {
 
   }

@@ -24,7 +24,6 @@
   });
 
     $app->notFound(function() use ($app, $config) {
-        $app->response->setStatusCode(404, "Not Found")->sendHeaders();
         header('location: '.$config['MAINSITE_URL'].'/not-found');
         die();
     });

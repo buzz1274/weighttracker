@@ -10,10 +10,8 @@ var Router = Ember.Router.extend({
   }
 });
 
-Router.map(function() {
+export default Router.map(function() {
   this.route('index', { path: '/' });
   this.route('login');
   this.route('not-found', { path: '/*path' });
 });
-
-export default Router;

@@ -6,6 +6,9 @@
       $weights = $app->modelsManager->executeQuery(
         "SELECT * FROM weight");
 
+      $app->response->setHeader('Access-Control-Allow-Origin', '*');
+      $app->response->setHeader('Access-Control-Allow-Headers', 'X-Requested-With');
+
       if(!$weights) {
           $app->response->setJsonContent(array('status' => 'NOT-FOUND'));
       } else {
@@ -15,7 +18,7 @@
                               'weight' => $weight->weight);
           }
 
-          $app->response->setJsonContent($data);
+          $app->response->setJsonContent(array('weights' => $data));
 
       }
 

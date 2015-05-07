@@ -1,1 +1,14 @@
-<h1>{{title}}</h1>
+<table class="table table-bordered table-condensed table-hover" style="width:60%">
+  <tbody>
+    <tr>
+      <td>Date</td>
+      <td>Weight(Kg)</td>
+    </tr>
+    {{#each weight in weights}}
+      <tr>
+        <td>{{weight.date}}</td>
+        <td>{{weight.weight}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

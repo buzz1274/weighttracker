@@ -1,14 +1,20 @@
-<table class="table table-bordered table-condensed table-hover" style="width:60%">
-  <tbody>
-    <tr>
-      <td>Date</td>
-      <td>Weight(Kg)</td>
-    </tr>
-    {{#each weight in weights}}
+
+<div style="float:right;width:38%">
+    Stats
+</div>
+<div style="height:500px;width:270px;overflow-y:scroll;">
+  <table class="table table-bordered table-condensed table-hover" style="width:250px;">
+    <tbody>
       <tr>
-        <td>{{weight.date}}</td>
-        <td>{{weight.weight}}</td>
+        <td>Date</td>
+        <td>Weight(Kg)</td>
       </tr>
-    {{/each}}
-  </tbody>
-</table>
+      {{#each weight in weights}}
+        <tr>
+          <td>{{date-format weight.date}}</td>
+          <td>{{weight.weight}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

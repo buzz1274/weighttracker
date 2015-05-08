@@ -4,7 +4,7 @@
 
   $app->get('/weights', function() use($app) {
       $weights = $app->modelsManager->executeQuery(
-        "SELECT * FROM weight");
+        "SELECT * FROM weight ORDER BY weighed_date DESC");
 
       $app->response->setHeader('Access-Control-Allow-Origin', '*');
       $app->response->setHeader('Access-Control-Allow-Headers', 'X-Requested-With');

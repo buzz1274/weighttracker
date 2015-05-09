@@ -1,32 +1,58 @@
 
-<div style="float:right;width:819px;border:1px solid #000000;height:500px;">
+<div id="graph">
     Graph
 </div>
-<div style="width:250px">
-    <div style="border:1px solid #000000;height:150px;margin-bottom:10px;">
-        Stats
+<div id="left_container">
+    <div id="control_panel">
+        Control Panel
     </div>
     <div>
-      <table class="table table-condensed table-bordered table-hover" style="width:250px;">
+      <table id="weights"
+             class="table table-condensed table-bordered table-hover">
         <thead>
-          <tr style="background-color:#000;color:#FFF;">
-            <td colspan="2" style="line-height:10px;">
-                <span style="float:left;" {{action "nextPage" on="click" target="view"}}>
-                  &laquo;&laquo;
-                </span>
-                <span style="float:right;">&raquo;&raquo;</span>
+          <tr id="table_nav">
+            <td colspan="4">
+              <span class="pull-left control"
+                {{action "prevPage" on="click"}}>
+                &laquo;&laquo;
+              </span>
+              <span>Weights</span>
+              <span class="pull-right control"
+                {{action "nextPage" on="click"}}>
+                &raquo;&raquo;
+              </span>
             </td>
           </tr>
           <tr>
             <td><strong>Date</strong></td>
             <td><strong>Weight(Kg)</strong></td>
+            <td><strong>Diff(Kg)</strong></td>
+            <td><strong>Gone(Kg)</strong></td>
           </tr>
         </thead>
         <tbody>
           {{#each weight in weights}}
-            <tr>
-              <td>{{date-format weight.date}}</td>
-              <td>{{weight.weight}}</td>
+            <tr {{action "viewWeight" on="click" target="views"}}>
+              <td>
+                {{date-format weight.date}}
+              </td>
+              <td class="weight">
+                {{weight-format weight.weight}}
+              </td>
+              <td class="{{table-cell-class weight.difference}} weight">
+                {{#if weight.difference}}
+                  {{weight-format weight.difference}}
+                {{else}}
+                  -
+                {{/if}}
+              </td>
+              <td class="{{table-cell-class weight.gone}} weight">
+                {{#if weight.gone}}
+                  {{weight-format weight.gone}}
+                {{else}}
+                    -
+                {{/if}}
+              </td>
             </tr>
           {{/each}}
         </tbody>

@@ -12,10 +12,23 @@
       if(!$weights) {
           $app->response->setJsonContent(array('status' => 'NOT-FOUND'));
       } else {
-          foreach($weights as $weight) {
-              $data[] = array('id' => $weight->weight_id,
-                              'date' => $weight->weighed_date,
-                              'weight' => $weight->weight);
+          $total_weights = count($weights) - 1;
+          $start_weight = $weights[$total_weights]->weight;
+
+          for($i = 0; $i <= $total_weights; $i++) {
+              if($i < $total_weights) {
+                  $weight_loss_this_week =
+                    round($weights[$i]->weight - $weights[$i + 1]->weight, 2);
+              } else {
+                  $weight_loss_this_week = 0;
+              }
+
+              $data[] = array('id' => $weights[$i]->weight_id,
+                              'date' => $weights[$i]->weighed_date,
+                              'weight' => $weights[$i]->weight,
+                              'difference' => $weight_loss_this_week,
+                              'gone' =>
+                                  round($weights[$i]->weight - $start_weight, 2));
           }
 
           $app->response->setJsonContent(array('weights' => $data));

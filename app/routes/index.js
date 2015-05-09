@@ -4,5 +4,8 @@ export default Ember.Route.extend({
   setupController: function(controller) {
     controller.set('title', 'Display graph & table');
     controller.set('weights', this.store.find('weight'));
+  },
+  next_page: function() {
+    alert("NEXT CLICKED");
   }
 });

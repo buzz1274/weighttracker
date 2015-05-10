@@ -7,7 +7,7 @@
         Control Panel
     </div>
     <div>
-      <table id="weights"
+      <table id="weights" style="margin-bottom:0px;"
              class="table table-condensed table-bordered table-hover">
         <thead>
           <tr id="table_nav">
@@ -32,7 +32,7 @@
         </thead>
         <tbody>
           {{#each weight in weights}}
-            <tr {{action "viewWeight" on="click" target="views"}}>
+            <tr {{action "viewWeight" on="click"}}>
               <td>
                 {{date-format weight.date}}
               </td>

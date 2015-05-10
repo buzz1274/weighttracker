@@ -45,7 +45,6 @@ div#main {
 }
 div#sub_main {
   padding:10px;
-  min-height:500px;
 }
 #footer {
   border-top:1px solid #000;
@@ -79,9 +78,9 @@ p.form-warning {
 }
 div#graph {
   float:right;
-  width:717px;
+  width:720px;
   border:1px solid #000;
-  height:500px;
+  height:100%;
 }
 div#left_container {
   width:350px;
@@ -92,6 +91,7 @@ div#control_panel {
   margin-bottom:10px;"
 }
 table#weights {
+  margin-bottom:0px;
   border-color:#000;
 }
 tr#table_nav {
@@ -106,6 +106,9 @@ tr#table_nav > td {
 tr#table_nav > td > span.control {
   cursor:pointer;
 }
+table#weights tbody tr {
+  cursor:pointer;
+}
 table#weights tbody tr > td.weight {
   text-align:right;
 }
@@ -113,8 +116,7 @@ table#weights tbody tr > td.success {
   color:#32CD32;
   font-weight:bold;
 }
-table#weights tbody tr > td.warning {
+table#weights tbody tr > td.danger {
   color:#FF0000;
-  background-color:#f2dede;
   font-weight:bold;
 }

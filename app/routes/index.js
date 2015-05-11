@@ -10,20 +10,6 @@ export default Ember.Route.extend({
 
     //console.log(weights);
 
-    controller.set('weights', this.model());
+    //controller.set('weights', this.model());
   },
-  actions: {
-    nextPage: function() {
-      alert("NEXT CLICKED");
-    },
-    prevPage: function() {
-      alert("PREV CLICKED");
-    },
-    viewWeight: function() {
-      alert("VIEW WEIGHT CLICKED");
-    },
-  },
-  arrangedContent: function() {
-    return this.model().slice(0, 10);
-  }.property('weights')
 });

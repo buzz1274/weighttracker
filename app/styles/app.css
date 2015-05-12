@@ -78,12 +78,12 @@ p.form-warning {
 }
 div#graph {
   float:right;
-  width:720px;
+  width:690px;
   border:1px solid #000;
   height:100%;
 }
 div#left_container {
-  width:350px;
+  width:380px;
 }
 div#control_panel {
   border:1px solid #000;
@@ -94,6 +94,9 @@ table#weights {
   margin-bottom:0px;
   border-color:#000;
 }
+td.weight_width {
+  width:20%;
+}
 tr#table_nav {
   background-color:#000;
   color:#FFF;
@@ -102,6 +105,7 @@ tr#table_nav > td {
   line-height:13px;
   border:1px solid #000;
   text-align:center;
+  font-weight:bold;
 }
 tr#table_nav > td > span.control {
   cursor:pointer;

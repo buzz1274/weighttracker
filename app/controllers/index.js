@@ -3,6 +3,9 @@ import Ember from 'ember';
 export default Ember.ArrayController.extend({
   recordsPerPage: 15,
   page: 1,
+  totalPages: 1,
+  prevDisabled: true,
+  nextDisabled: true,
   actions: {
     prevPage: function() {
       if(this.page > 1) {
@@ -12,7 +15,9 @@ export default Ember.ArrayController.extend({
       }
     },
     nextPage: function() {
-      this.incrementProperty('page', 1);
+      if(this.page < this.totalPages) {
+        this.incrementProperty('page', 1);
+      }
     },
     viewWeight: function() {
       console.log("VIEW WEIGHT CLICKED");
@@ -20,8 +25,12 @@ export default Ember.ArrayController.extend({
   },
   arrangedContent: function() {
     var start = (this.page - 1) * this.recordsPerPage;
+    this.set('totalPages', Math.floor(this.get('content.length') /
+                                      this.recordsPerPage));
+
+    console.log("arrangedContent");
 
     return this.get('content').slice(start, start + this.recordsPerPage);
 
-  }.property('weight', 'page')
+  }.property('weight', 'page', 'totalPages', 'prevDisabled')
 });

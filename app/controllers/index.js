@@ -1,19 +1,27 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
+  recordsPerPage: 15,
+  page: 1,
   actions: {
-    nextPage: function() {
-      alert("NEXT CLICKED");
-    },
     prevPage: function() {
-      alert("PREV CLICKED");
+      if(this.page > 1) {
+        this.decrementProperty('page', 1);
+      } else {
+        this.set('page', 1);
+      }
+    },
+    nextPage: function() {
+      this.incrementProperty('page', 1);
     },
     viewWeight: function() {
-      alert("VIEW WEIGHT CLICKED");
-    },
+      console.log("VIEW WEIGHT CLICKED");
+    }
   },
   arrangedContent: function() {
-    console.log(this.model);
-    return this.model;
-  }.property('weight')
+    var start = (this.page - 1) * this.recordsPerPage;
+
+    return this.get('content').slice(start, start + this.recordsPerPage);
+
+  }.property('weight', 'page')
 });

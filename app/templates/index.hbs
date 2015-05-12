@@ -12,13 +12,15 @@
         <thead>
           <tr id="table_nav">
             <td colspan="4">
-              <span class="pull-left control"
+              <span title="Previous Page"
+                {{bind-attr class=":pull-left prevDisabled:control_disabled:control"}}
                 {{action "prevPage" on="click"}}>
                 &laquo;&laquo;
               </span>
               <span>Weights</span>
-              <span class="pull-right control"
-                {{action "nextPage" on="click"}}>
+                <span title="Next Page"
+                  {{bind-attr class=":pull-right nextDisabled:control_disabled:control"}}
+                  {{action "nextPage" on="click"}}>
                 &raquo;&raquo;
               </span>
             </td>

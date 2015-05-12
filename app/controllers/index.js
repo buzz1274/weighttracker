@@ -28,9 +28,19 @@ export default Ember.ArrayController.extend({
     this.set('totalPages', Math.floor(this.get('content.length') /
                                       this.recordsPerPage));
 
-    console.log("arrangedContent");
+    if(this.page < this.totalPages) {
+      this.set('nextDisabled', false);
+    } else {
+      this.set('nextDisabled', true);
+    }
+
+    if(this.page === 1) {
+      this.set('prevDisabled', true);
+    } else {
+      this.set('prevDisabled', false);
+    }
 
     return this.get('content').slice(start, start + this.recordsPerPage);
 
-  }.property('weight', 'page', 'totalPages', 'prevDisabled')
+  }.property('weight', 'page', 'totalPages', 'prevDisabled', 'nextDisabled')
 });

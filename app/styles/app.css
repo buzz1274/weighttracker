@@ -110,6 +110,9 @@ tr#table_nav > td {
 tr#table_nav > td > span.control {
   cursor:pointer;
 }
+tr#table_nav > td > span.control_disabled {
+  visibility:hidden;
+}
 table#weights tbody tr {
   cursor:pointer;
 }

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
-  recordsPerPage: 15,
+  recordsPerPage: 20,
   page: 1,
   totalPages: 1,
   prevDisabled: true,
@@ -9,14 +9,16 @@ export default Ember.ArrayController.extend({
   actions: {
     prevPage: function() {
       if(this.page > 1) {
-        this.decrementProperty('page', 1);
+        this.set('page', this.page - 1);
       } else {
         this.set('page', 1);
       }
     },
     nextPage: function() {
       if(this.page < this.totalPages) {
-        this.incrementProperty('page', 1);
+        this.set('page', this.page + 1);
+      } else {
+        this.set('page', this.totalPages);
       }
     },
     viewWeight: function() {

@@ -94,6 +94,13 @@ table#weights {
   margin-bottom:0px;
   border-color:#000;
 }
+table#weights td {
+  line-height:13px;
+}
+table#weights td.blanked {
+  background-color:#000;
+  border:1px solid #000;
+}
 td.weight_width {
   width:20%;
 }

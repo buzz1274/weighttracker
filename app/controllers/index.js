@@ -6,6 +6,7 @@ export default Ember.ArrayController.extend({
   totalPages: 1,
   prevDisabled: true,
   nextDisabled: true,
+  showAddEditWeight: false,
   actions: {
     prevPage: function() {
       if(this.page > 1) {
@@ -22,10 +23,10 @@ export default Ember.ArrayController.extend({
       }
     },
     viewWeight: function() {
-      console.log("VIEW WEIGHT CLICKED");
+      this.set('showAddEditWeight', !this.showAddEditWeight);
     }
   },
-  arrangedContent: function() {
+  weights: function() {
     var start = (this.page - 1) * this.recordsPerPage;
     this.set('totalPages', Math.floor(this.get('content.length') /
                                       this.recordsPerPage));
@@ -44,5 +45,7 @@ export default Ember.ArrayController.extend({
 
     return this.get('content').slice(start, start + this.recordsPerPage);
 
-  }.property('weight', 'page', 'totalPages', 'prevDisabled', 'nextDisabled')
+  }.property('weight', 'page', 'totalPages',
+             'prevDisabled', 'nextDisabled',
+             'content')
 });

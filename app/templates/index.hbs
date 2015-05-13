@@ -1,7 +1,9 @@
 
 <div id="graph">
-    Graph
 </div>
+
+{{view "add-edit-weight"}}
+
 <div id="left_container">
     <div id="control_panel">
         Control Panel
@@ -39,7 +41,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each weight in arrangedContent}}
+          {{#each weight in weights}}
             <tr {{action "viewWeight" on="click"}}>
               <td>
                 {{date-format weight.date}}

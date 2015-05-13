@@ -80,7 +80,7 @@ div#graph {
   float:right;
   width:690px;
   border:1px solid #000;
-  height:100%;
+  min-height:500px;
 }
 div#left_container {
   width:380px;

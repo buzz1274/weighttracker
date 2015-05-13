@@ -134,3 +134,7 @@ table#weights tbody tr > td.danger {
   color:#FF0000;
   font-weight:bold;
 }
+.modal {
+  background-color:rgba(0,0,0,0.2);
+}
+

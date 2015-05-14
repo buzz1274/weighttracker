@@ -2,12 +2,17 @@
 
   use Phalcon\Http\Response;
 
-  $app->get('/weights', function() use($app) {
-      $weights = $app->modelsManager->executeQuery(
-        "SELECT * FROM weight ORDER BY weighed_date DESC");
+  $app->response->setHeader('Access-Control-Allow-Origin', '*');
+  $app->response->setHeader('Access-Control-Allow-Headers', 'X-Requested-With');
 
-      $app->response->setHeader('Access-Control-Allow-Origin', '*');
-      $app->response->setHeader('Access-Control-Allow-Headers', 'X-Requested-With');
+  $app->get('/weights', function() use($app) {
+
+      try {
+        $weights = $app->modelsManager->executeQuery(
+          "SELECT * FROM weight ORDER BY weighed_date DESC");
+      } catch(Exception $e) {
+        $app->response->setStatusCode(500, "Error");
+      }
 
       if(!$weights) {
           $app->response->setJsonContent(array('status' => 'NOT-FOUND'));

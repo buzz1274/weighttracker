@@ -2,13 +2,13 @@
 <div id="graph">
 </div>
 
-{{view "weight"}}
+{{partial "weight"}}
 
 <div id="left_container">
   <div id="control_panel">
       Control Panel<br />
       <button type="button" class="btn btn-default"
-        {{action "viewWeight" on="click"}}>
+        {{action "addWeight" on="click"}}>
           Add Weight
       </button>
   </div>
@@ -46,7 +46,7 @@
       </thead>
       <tbody>
         {{#each weight in controller}}
-          <tr {{action "viewWeight" on="click"}}>
+          <tr {{action "editWeight" on="click"}}>
             <td>
               {{date-format weight.model.date}}
             </td>

@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
   itemController: 'weight',
+  showAddEditWeight: false,
   recordsPerPage: 20,
   weight: false,
   page: 1,
@@ -23,9 +24,29 @@ export default Ember.ArrayController.extend({
         this.set('page', this.totalPages);
       }
     },
-    viewWeight: function() {
+    addWeight: function() {
       this.set('weight', false);
-      this.set('showAddEditWeight', !this.showAddEditWeight);
+      this.set('showAddEditWeight', true);
+    },
+    saveWeight: function() {
+      var weight = this.get('weight');
+
+      if(weight) {
+        this.get('weight').set('weight', 111);
+        console.log('edit weight');
+      } else {
+        console.log('add weight');
+      }
+
+      this.set('showAddEditWeight', false);
+    },
+    deleteWeight: function() {
+      console.log('delete weight');
+
+      this.set('showAddEditWeight', false);
+    },
+    closeWeightModal: function() {
+      this.set('showAddEditWeight', false);
     }
   },
   arrangedContent: function() {

@@ -2,7 +2,7 @@
 <div id="graph">
 </div>
 
-{{view "add-edit-weight"}}
+{{view "weight"}}
 
 <div id="left_container">
     <div id="control_panel">
@@ -41,24 +41,24 @@
           </tr>
         </thead>
         <tbody>
-          {{#each weight in weights}}
+          {{#each weight in controller}}
             <tr {{action "viewWeight" on="click"}}>
               <td>
-                {{date-format weight.date}}
+                {{date-format weight.model.date}}
               </td>
               <td class="weight">
-                {{weight-format weight.weight}}
+                {{weight-format weight.model.weight}}
               </td>
-              <td class="{{table-cell-class weight.difference}} weight">
-                {{#if weight.difference}}
-                  {{weight-format weight.difference}}
+              <td class="{{table-cell-class weight.model.difference}} weight">
+                {{#if weight.model.difference}}
+                  {{weight-format weight.model.difference}}
                 {{else}}
                   -
                 {{/if}}
               </td>
-              <td class="{{table-cell-class weight.gone}} weight">
-                {{#if weight.gone}}
-                  {{weight-format weight.gone}}
+              <td class="{{table-cell-class weight.model.gone}} weight">
+                {{#if weight.model.gone}}
+                  {{weight-format weight.model.gone}}
                 {{else}}
                     -
                 {{/if}}

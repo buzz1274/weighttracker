@@ -1,12 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
+  itemController: 'weight',
   recordsPerPage: 20,
   page: 1,
   totalPages: 1,
   prevDisabled: true,
   nextDisabled: true,
-  showAddEditWeight: false,
   actions: {
     prevPage: function() {
       if(this.page > 1) {
@@ -21,12 +21,14 @@ export default Ember.ArrayController.extend({
       } else {
         this.set('page', this.totalPages);
       }
-    },
+    }
+    /*
     viewWeight: function() {
       this.set('showAddEditWeight', !this.showAddEditWeight);
     }
+    */
   },
-  weights: function() {
+  arrangedContent: function() {
     var start = (this.page - 1) * this.recordsPerPage;
     this.set('totalPages', Math.floor(this.get('content.length') /
                                       this.recordsPerPage));

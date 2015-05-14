@@ -1,11 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  showAddEditWeight: false,
+  needs: ['index'],
   actions: {
     viewWeight: function() {
-      console.log(this.model);
-      this.set('showAddEditWeight', !this.showAddEditWeight);
+      var indexController = this.get('controllers.index');
+      indexController.set('showAddEditWeight', !indexController.showAddEditWeight);
+      indexController.set('weight', this.model);
     }
   },
 });

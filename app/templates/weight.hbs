@@ -1,27 +1,37 @@
 <div id="myModal"
-    {{bind-attr class=":modal :fade :in showAddEditWeight:show:hide"}}>
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" aria-hidden="true"
-                  {{action "viewWeight" on="click"}}>
-                    &times;
-                </button>
-                <h4 class="modal-title">Edit Weight</h4>
-            </div>
+  {{bind-attr class=":modal :fade :in showAddEditWeight:show:hide"}}>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" aria-hidden="true"
+          {{action "viewWeight" on="click"}}>
+            &times;
+        </button>
+        <h4 class="modal-title">
+            {{#if weight}}
+              Edit Weight
+            {{else}}
+              Add Weight
+            {{/if}}
+        </h4>
+      </div>
             <div class="modal-body">
-              Date:{{model.date}}
-                {{date}}
+              {{#if weight}}
+                Date:{{date-format weight.date}}<br />
+                Weight:{{weight-format weight.weight}}
+              {{/if}}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default"
                   {{action "viewWeight" on="click"}}>
                     Close
                 </button>
-                <button type="button" class="btn btn-danger"
-                  {{action "viewWeight" on="click"}}>
-                    Delete
-                </button>
+                {{#if weight}}
+                  <button type="button" class="btn btn-danger"
+                    {{action "viewWeight" on="click"}}>
+                      Delete
+                  </button>
+                {{/if}}
                 <button type="button" class="btn btn-primary"
                   {{action "viewWeight" on="click"}}>
                     Save

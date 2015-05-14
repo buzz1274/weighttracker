@@ -5,67 +5,71 @@
 {{view "weight"}}
 
 <div id="left_container">
-    <div id="control_panel">
-        Control Panel
-    </div>
-    <div>
-      <table id="weights"
-             class="table table-condensed table-bordered table-hover">
-        <thead>
-          <tr id="table_nav">
-            <td colspan="4">
-              <span title="Previous Page"
-                {{bind-attr class=":pull-left prevDisabled:control_disabled:control"}}
-                {{action "prevPage" on="click"}}>
-                &laquo;&laquo;
-              </span>
-              <span>Weights</span>
-                <span title="Next Page"
-                  {{bind-attr class=":pull-right nextDisabled:control_disabled:control"}}
-                  {{action "nextPage" on="click"}}>
-                &raquo;&raquo;
-              </span>
+  <div id="control_panel">
+      Control Panel<br />
+      <button type="button" class="btn btn-default"
+        {{action "viewWeight" on="click"}}>
+          Add Weight
+      </button>
+  </div>
+  <div>
+    <table id="weights"
+           class="table table-condensed table-bordered table-hover">
+      <thead>
+        <tr id="table_nav">
+          <td colspan="4">
+            <span title="Previous Page"
+              {{bind-attr class=":pull-left prevDisabled:control_disabled:control"}}
+              {{action "prevPage" on="click"}}>
+              &laquo;&laquo;
+            </span>
+            <span>Weights</span>
+              <span title="Next Page"
+                {{bind-attr class=":pull-right nextDisabled:control_disabled:control"}}
+                {{action "nextPage" on="click"}}>
+              &raquo;&raquo;
+            </span>
+          </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="blanked">&nbsp;</td>
+            <td colspan="2" class="text-center">
+                <strong>Weight Lost(Kg)</strong>
+            </td>
+        </tr>
+        <tr>
+          <td><strong>Date</strong></td>
+          <td class="weight_width"><strong>Weight(Kg)</strong></td>
+          <td class="weight_width"><strong>This Week</strong></td>
+          <td class="weight_width"><strong>All Time</strong></td>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each weight in controller}}
+          <tr {{action "viewWeight" on="click"}}>
+            <td>
+              {{date-format weight.model.date}}
+            </td>
+            <td class="weight">
+              {{weight-format weight.model.weight}}
+            </td>
+            <td class="{{table-cell-class weight.model.difference}} weight">
+              {{#if weight.model.difference}}
+                {{weight-format weight.model.difference}}
+              {{else}}
+                -
+              {{/if}}
+            </td>
+            <td class="{{table-cell-class weight.model.gone}} weight">
+              {{#if weight.model.gone}}
+                {{weight-format weight.model.gone}}
+              {{else}}
+                  -
+              {{/if}}
             </td>
           </tr>
-          <tr>
-              <td colspan="2" class="blanked">&nbsp;</td>
-              <td colspan="2" class="text-center">
-                  <strong>Weight Lost(Kg)</strong>
-              </td>
-          </tr>
-          <tr>
-            <td><strong>Date</strong></td>
-            <td class="weight_width"><strong>Weight(Kg)</strong></td>
-            <td class="weight_width"><strong>This Week</strong></td>
-            <td class="weight_width"><strong>All Time</strong></td>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each weight in controller}}
-            <tr {{action "viewWeight" on="click"}}>
-              <td>
-                {{date-format weight.model.date}}
-              </td>
-              <td class="weight">
-                {{weight-format weight.model.weight}}
-              </td>
-              <td class="{{table-cell-class weight.model.difference}} weight">
-                {{#if weight.model.difference}}
-                  {{weight-format weight.model.difference}}
-                {{else}}
-                  -
-                {{/if}}
-              </td>
-              <td class="{{table-cell-class weight.model.gone}} weight">
-                {{#if weight.model.gone}}
-                  {{weight-format weight.model.gone}}
-                {{else}}
-                    -
-                {{/if}}
-              </td>
-            </tr>
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
 </div>

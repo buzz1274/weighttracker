@@ -48,10 +48,10 @@
         {{#each weight in controller}}
           <tr {{action "editWeight" on="click"}}>
             <td>
-              {{date-format weight.model.date}}
+              {{weight.model.formatted_date}}
             </td>
             <td class="weight">
-              {{weight-format weight.model.weight}}
+              {{weight.model.formatted_weight}}
             </td>
             <td class="{{table-cell-class weight.model.difference}} weight">
               {{#if weight.model.difference}}

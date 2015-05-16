@@ -31,8 +31,10 @@ export default Ember.ArrayController.extend({
     saveWeight: function() {
       var weight = this.get('weight');
 
+      console.log("SAVE WEIGHT");
+
       if(weight) {
-        this.get('weight').set('weight', 111);
+        this.get('weight').save();
         console.log('edit weight');
       } else {
         console.log('add weight');
@@ -53,6 +55,8 @@ export default Ember.ArrayController.extend({
     var start = (this.page - 1) * this.recordsPerPage;
     this.set('totalPages', Math.floor(this.get('content.length') /
                                       this.recordsPerPage));
+
+    console.log("AC");
 
     if(this.page < this.totalPages) {
       this.set('nextDisabled', false);

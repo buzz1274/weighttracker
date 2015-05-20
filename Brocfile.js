@@ -1,8 +1,16 @@
 /* global require, module */
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+var unwatchedTree = require('broccoli-unwatched-tree');
 
-var app = new EmberApp({});
+//var apiTree = new UnwatchedTree('public/api');
+var app = new EmberApp({
+  trees: {
+    'public': unwatchedTree('public/api')
+  }
+});
+
+EmberApp()
 
 app.import('bower_components/bootstrap/dist/css/bootstrap.css');
 app.import('bower_components/moment/moment.js');

@@ -30,6 +30,8 @@ module.exports = function(environment) {
       'style-src': "'self'",
       'media-src': "'self'"
     }
+
+    ENV.APP.hostname = 'alpha.weighttracker.zz50.co.uk'
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
@@ -50,7 +52,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.APP.hostname = 'weighttracker.zz50.co.uk'
   }
 
   return ENV;

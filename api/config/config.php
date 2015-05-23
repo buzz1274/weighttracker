@@ -1,20 +1,24 @@
 <?php
 
     if(!file_exists(__DIR__."/../config/config.ini") ||
-      !is_array($settings = parse_ini_file(__DIR__."/../config/config.ini"))) {
+       !is_array($config = parse_ini_file(__DIR__."/../config/config.ini"))) {
       throw new \Exception('no settings file');
+    }
+
+    if(!($db_host = getenv('POSTGRES_PORT_5432_TCP_ADDR'))) {
+      $db_host = $config['db_host'];
     }
 
     return new \Phalcon\Config(array(
 
-        'MAINSITE_URL' => $settings['mainsite_url'],
+        'MAINSITE_URL' => $config['mainsite_url'],
 
         'database' => array(
             'adapter'    => 'Mysql',
-            'host'       => 'localhost',
-            'username'   => 'root',
-            'password'   => '',
-            'dbname'     => 'test',
+            'host'       => $db_host,
+            'username'   => $config['username'],
+            'password'   => $config['password'],
+            'dbname'     => $config['dbname'],
             'charset'    => 'utf8',
         ),
 

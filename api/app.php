@@ -11,10 +11,11 @@
           $weights = $app->modelsManager->executeQuery(
             "SELECT * FROM weight ORDER BY weighed_date DESC");
         } catch(Exception $e) {
-          $app->response->setStatusCode(500, "Error");
+          $weights = false;
         }
 
         if(!$weights) {
+            $app->response->setStatusCode(500, "Error");
             $app->response->setJsonContent(array('status' => 'NOT-FOUND'));
         } else {
             $total_weights = count($weights) - 1;

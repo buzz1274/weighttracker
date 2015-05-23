@@ -12,11 +12,6 @@
 
       define('APP_PATH', realpath('..'));
 
-      if(!file_exists(__DIR__."/../config/config.ini") ||
-         !is_array($settings = parse_ini_file(__DIR__."/../config/config.ini"))) {
-          throw new \Exception('no settings file');
-      }
-
       $config = include __DIR__."/../config/config.php";
 
       include APP_PATH.'/config/services.php';
@@ -26,11 +21,11 @@
 
       $loader->registerDirs(array(__DIR__ . '/models/'));
 
-      $di->set('db', function() use($settings) {
-          return new PdoPostgres(array("host" => $settings['host'],
-                                       "username" => $settings['username'],
-                                       "password" => $settings['password'],
-                                       "dbname" => $settings['dbname']));
+      $di->set('db', function() use($config) {
+          return new PdoPostgres(array("host" => $config['database']['host'],
+                                       "username" => $config['database']['username'],
+                                       "password" => $config['database']['password'],
+                                       "dbname" => $config['database']['dbname']));
       });
 
       $app = new Micro($di);

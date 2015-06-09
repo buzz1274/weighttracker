@@ -12,6 +12,7 @@
     return new \Phalcon\Config(array(
 
         'MAINSITE_URL' => $config['mainsite_url'],
+        'MAINSITE_URL_PORT' => $config['port'] ? ':'.$config['port'] : '',
 
         'database' => array(
             'adapter'    => 'Mysql',

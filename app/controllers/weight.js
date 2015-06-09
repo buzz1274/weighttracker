@@ -8,5 +8,5 @@ export default Ember.Controller.extend({
       indexController.set('showAddEditWeight', true);
       indexController.set('weight', this.model);
     }
-  },
+  }
 });

@@ -1,7 +1,7 @@
 <?php
 
-  use Phalcon\Mvc\Model;
+    use Phalcon\Mvc\Model;
 
-  class weight extends Model {
+    class weight extends Model {
 
-  }
+    }

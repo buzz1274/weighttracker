@@ -56,8 +56,6 @@ export default Ember.ArrayController.extend({
     this.set('totalPages', Math.floor(this.get('content.length') /
                                       this.recordsPerPage));
 
-    console.log("AC");
-
     if(this.page < this.totalPages) {
       this.set('nextDisabled', false);
     } else {

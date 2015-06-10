@@ -21,11 +21,12 @@
             return $app->response;
 
         }
-        
+
         if(!$weights) {
             $app->response->setStatusCode(404, "Not Found");
 
             return $app->response;
+
         }
 
         $total_weights = count($weights) - 1;

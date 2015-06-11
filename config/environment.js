@@ -25,7 +25,7 @@ module.exports = function(environment) {
       'default-src': "'none'",
       'script-src': "'self' 'unsafe-eval' alpha.weighttracker.zz50.co.uk:35729",
       'font-src': "'self'",
-      'connect-src': "'self' ws://alpha.weighttracker.zz50.co.uk:35729",
+      'connect-src': "'self' ws://alpha.weighttracker.zz50.co.uk:35729 alpha.weighttracker.zz50.co.uk",
       'img-src': "'self'",
       'style-src': "'self'",
       'media-src': "'self'"

@@ -23,15 +23,15 @@ module.exports = function(environment) {
 
     ENV.contentSecurityPolicy = {
       'default-src': "'none'",
-      'script-src': "'self' 'unsafe-eval' alpha.weighttracker.zz50.co.uk:35729",
+      'script-src': "'self' 'unsafe-eval' dev.weighttracker.zz50.co.uk:35729",
       'font-src': "'self'",
-      'connect-src': "'self' ws://alpha.weighttracker.zz50.co.uk:35729 alpha.weighttracker.zz50.co.uk",
+      'connect-src': "'self' ws://dev.weighttracker.zz50.co.uk:35729 dev.weighttracker.zz50.co.uk",
       'img-src': "'self'",
       'style-src': "'self'",
       'media-src': "'self'"
     }
 
-    ENV.APP.hostname = 'alpha.weighttracker.zz50.co.uk'
+    ENV.APP.hostname = 'dev.weighttracker.zz50.co.uk'
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;

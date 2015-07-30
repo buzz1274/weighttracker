@@ -42,11 +42,13 @@ body {
 }
 div#main {
   clear:both;
+  min-height:500px;
 }
 div#sub_main {
   padding:10px;
 }
 #footer {
+  clear:both;
   border-top:1px solid #000;
   font-size:0.75em;
   padding-left:10px;
@@ -81,6 +83,7 @@ div#graph {
   width:690px;
   border:1px solid #000;
   min-height:500px;
+  margin-bottom:10px;
 }
 div#left_container {
   width:380px;

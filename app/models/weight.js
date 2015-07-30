@@ -5,7 +5,12 @@ export default DS.Model.extend({
   difference: DS.attr('number'),
   gone: DS.attr('number'),
   formatted_weight: function() {
-    return this.get('weight').toFixed(1);
+    var weight = this.get('weight');
+    if(weight) {
+      return this.get('weight').toFixed(1);
+    } else {
+      return false;
+    }
   }.property('weight'),
   formatted_date: function() {
     return moment(this.get('date')).format('MMMM D, YYYY');

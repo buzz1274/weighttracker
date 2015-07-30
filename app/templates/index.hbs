@@ -7,17 +7,13 @@
 <div id="left_container">
   <div id="control_panel">
       Control Panel<br />
-      <button type="button" class="btn btn-default"
-        {{action "addWeight" on="click"}}>
-          Add Weight
-      </button>
   </div>
   <div>
     <table id="weights"
            class="table table-condensed table-bordered table-hover">
       <thead>
         <tr id="table_nav">
-          <td colspan="4">
+          <td colspan="5">
             <span title="Previous Page"
               {{bind-attr class=":pull-left prevDisabled:control_disabled:control"}}
               {{action "prevPage" on="click"}}>
@@ -29,6 +25,11 @@
                 {{action "nextPage" on="click"}}>
               &raquo;&raquo;
             </span>
+            {{#link-to 'weights.new' class="pull-right"}}
+              <button type="button" class="btn btn-xs">
+                  Add Weight
+              </button>
+            {{/link-to}}
           </td>
         </tr>
         <tr>
@@ -36,12 +37,14 @@
             <td colspan="2" class="text-center">
                 <strong>Weight Lost(Kg)</strong>
             </td>
+            <td class="blanked">&nbsp;</td>
         </tr>
         <tr>
           <td><strong>Date</strong></td>
           <td class="weight_width"><strong>Weight(Kg)</strong></td>
           <td class="weight_width"><strong>This Week</strong></td>
           <td class="weight_width"><strong>All Time</strong></td>
+          <td class="text-center">-</td>
         </tr>
       </thead>
       <tbody>
@@ -66,6 +69,9 @@
               {{else}}
                   -
               {{/if}}
+            </td>
+            <td>
+
             </td>
           </tr>
         {{/each}}

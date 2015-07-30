@@ -41,11 +41,16 @@
             {{action "deleteWeight" on="click"}}>
               Delete
           </button>
+          <button type="button" class="btn btn-primary"
+            {{action "editWeight" on="click"}}>
+              Edit
+          </button>
+        {{else}}
+          <button type="button" class="btn btn-primary"
+            {{action "addWeight" on="click"}}>
+              Add
+          </button>
         {{/if}}
-        <button type="button" class="btn btn-primary"
-          {{action "saveWeight" on="click"}}>
-            Save
-        </button>
       </div>
     </div>
   </div>

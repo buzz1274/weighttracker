@@ -54,13 +54,26 @@
 
     });
 
-    $app->put('/weights/[0-9]{1,}', function() use($app) {
+    $app->put('/weights(/[0-9]{1,})?', function() use($app) {
         $app->response->setJsonContent(array('success' => true));
 
         return $app->response;
     });
 
-    $app->options('/weights/[0-9]{1,}', function() use($app) {
+    $app->post('/weights(/[0-9]{1,})?', function() use($app) {
+        //error_log(json_encode($_POST));
+        error_log("SAVE");
+        $app->response->setJsonContent(array('weight' =>
+            array('id' => 2,
+                  'date' => '2015-07-10',
+                  'weight' => 120,
+                  'difference' => 10,
+                  'gone' => 10)));
+
+        return $app->response;
+    });
+
+    $app->options('/weights(/[0-9]{1,})?', function() use($app) {
         return $app->response;
     });
 

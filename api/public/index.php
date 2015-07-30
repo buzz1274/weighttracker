@@ -22,6 +22,7 @@
         $loader->registerDirs(array(__DIR__ . '/models/'));
 
         $di->set('db', function() use($config) {
+
             return new PdoPostgres(array("host" => $config['database']['host'],
                                          "username" => $config['database']['username'],
                                          "password" => $config['database']['password'],

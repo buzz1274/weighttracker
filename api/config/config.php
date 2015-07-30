@@ -5,18 +5,13 @@
       throw new \Exception('no settings file');
     }
 
-    if(!($db_host = getenv('POSTGRES_PORT_5432_TCP_ADDR'))) {
-      $db_host = $config['db_host'];
-    }
-
     return new \Phalcon\Config(array(
 
         'MAINSITE_URL' => $config['mainsite_url'],
         'MAINSITE_URL_PORT' => $config['port'] ? ':'.$config['port'] : '',
 
         'database' => array(
-            'adapter'    => 'Mysql',
-            'host'       => $db_host,
+            'host'       => $config['db_host'],
             'username'   => $config['username'],
             'password'   => $config['password'],
             'dbname'     => $config['dbname'],

@@ -1,9 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  model: function() {
+  showAddEditWeight: true,
+  model() {
     "use strict";
-
-    return this.store.find('weight');
+    return this.store.createRecord('weight');
   }
 });

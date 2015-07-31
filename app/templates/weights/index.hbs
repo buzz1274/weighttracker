@@ -4,39 +4,39 @@
 
 <div id="left_container">
     <div id="control_panel">
-        Control Panel<br />
+      Control Panel<br />
     </div>
     <div>
         <table id="weights"
                class="table table-condensed table-bordered table-hover">
             <thead>
             <tr id="table_nav">
-                <td colspan="5">
-            <span title="Previous Page"
-              {{bind-attr class=":pull-left prevDisabled:control_disabled:control"}}
-              {{action "prevPage" on="click"}}>
-              &laquo;&laquo;
-            </span>
-                    <span>Weights</span>
-              <span title="Next Page"
-                {{bind-attr class=":pull-right nextDisabled:control_disabled:control"}}
-                {{action "nextPage" on="click"}}>
-              &raquo;&raquo;
-            </span>
-                  {{#link-to 'weights.new' class="pull-right" title="Add Weight"}}
-                      <i class="glyphicon glyphicon-plus"></i>
-                  {{/link-to}}
-                </td>
+              <td colspan="5">
+                <span title="Previous Page"
+                  {{bind-attr class=":pull-left prevDisabled:control_disabled:control"}}
+                  {{action "prevPage" on="click"}}>
+                  &laquo;&laquo;
+                </span>
+                <span>Weights</span>
+                <span title="Next Page"
+                  {{bind-attr class=":pull-right nextDisabled:control_disabled:control"}}
+                  {{action "nextPage" on="click"}}>
+                  &raquo;&raquo;
+                </span>
+                {{#link-to 'weights.new' class="pull-right" title="Add Weight"}}
+                  <i class="glyphicon glyphicon-plus"></i>
+                {{/link-to}}
+              </td>
             </tr>
             <tr>
-                <td><strong>Date</strong></td>
-                <td class="weight_width"><strong>Weight(Kg)</strong></td>
-                <td class="weight_width"><strong>Lost(Kg)</strong></td>
-                <td class="text-center">-</td>
+              <td><strong>Date</strong></td>
+              <td class="weight_width"><strong>Weight(Kg)</strong></td>
+              <td class="weight_width"><strong>Lost(Kg)</strong></td>
+              <td class="text-center">-</td>
             </tr>
             </thead>
             <tbody>
-            {{#each controller as |weight|}}
+              {{#each controller as |weight|}}
                 <tr>
                     <td>
                       {{weight.formatted_date}}
@@ -52,11 +52,11 @@
                       {{/if}}
                     </td>
                     <td class="text-center">
-                        <i class="glyphicon glyphicon-trash"></i>
-                        <i class="glyphicon glyphicon-edit"></i>
+                      <i class="glyphicon glyphicon-trash"></i>
+                      <i class="glyphicon glyphicon-edit"></i>
                     </td>
                 </tr>
-            {{/each}}
+              {{/each}}
             </tbody>
         </table>
     </div>

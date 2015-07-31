@@ -40,6 +40,24 @@ body {
   color:#FFF;
   text-decoration:none;
 }
+div#home_text {
+  width:80%;
+  padding-top:50px;
+  margin:0 auto;
+  font-size:1.2em;
+}
+div#home_text div#links {
+  margin-top:35px;
+}
+div#home_text div#links span {
+  margin:0px 10px 0px 10px;
+}
+div#home_text div#links a {
+  color:#000;
+  text-decoration: none;
+  font-weight:bold;
+  font-size:1.05em;
+}
 div#main {
   clear:both;
   min-height:500px;

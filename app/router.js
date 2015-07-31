@@ -23,4 +23,5 @@ export default Router.map(function() {
     this.route('new');
   });
 
+  this.route('register');
 });

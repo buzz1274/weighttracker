@@ -5,6 +5,8 @@ var Router = Ember.Router.extend({
   location: config.locationType,
   actions: {
     error: function() {
+      "use strict";
+
       this.transitionTo('not-found', 'application-error');
     }
   }

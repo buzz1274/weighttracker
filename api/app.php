@@ -65,7 +65,22 @@
         return $app->response;
     });
 
-    $app->options('/weights(/[0-9]{1,})?', function() use($app) {
+    $app->post('/users(/[0-9]{1,})?', function() use($app) {
+        $user = new user();
+        $response = $user->register($app->request->getJsonRawBody());
+
+        if(isset($response['errors'])) {
+            $app->response->setStatusCode(400, "User failed validation");
+        } else {
+            $app->response->setStatusCode(200, "OK");
+        }
+
+        $app->response->setJsonContent($response);
+
+        return $app->response;
+    });
+
+    $app->options('/(weights|users)(/[0-9]{1,})?/?', function() use($app) {
         return $app->response;
     });
 

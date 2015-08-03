@@ -91,6 +91,9 @@ div.form legend {
 div.form form {
   padding:0px 50px 35px 50px;
 }
+div.form div.error {
+  color:#FF0000;
+}
 p.form-warning {
   margin-top:20px;
   padding:5px;

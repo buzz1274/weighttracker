@@ -17,6 +17,9 @@
                        id="id_password" name="password" type="password">
 
             </div>
+            <span class="pull-right">
+              {{#link-to 'register'}}Register{{/link-to}}
+            </span>
             <input name="submit" type="submit" value="Login">
             {{#if login_error}}
               <p class="text-danger form-warning">

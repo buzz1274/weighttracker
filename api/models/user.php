@@ -7,6 +7,10 @@
         private $validationErrors = false;
 
         public function register($user) {
+
+            error_log("USER");
+            error_log(json_encode($user));
+
             if(!$this->isValidUser($user)) {
                 return array('errors' => $this->validationErrors);
             }
@@ -17,8 +21,6 @@
 
         private function isValidUser($user) {
             $this->validationErrors = false;
-
-            error_log(json_encode($user));
 
             if(!isset($user->user->email) || !$user->user->email) {
                 $this->validationErrors['email'] =
@@ -34,6 +36,13 @@
                !$user->user->repeat_password) {
                 $this->validationErrors['repeat_password'] =
                     "Please enter password again.";
+            } elseif($user->user->repeat_password !=
+                     $user->user->password) {
+
+                $this->validationErrors['password'] =
+                    "Passwords do not match.";
+                $this->validationErrors['repeat_password'] =
+                    "Passwords do not match.";
             }
 
             if(!isset($user->user->name) || !$user->user->name) {
@@ -46,7 +55,8 @@
                     "Please enter a date of birth.";
             }
 
-            if(!isset($user->user->sex) || !$user->user->sex) {
+            if(!isset($user->user->sex) || !$user->user->sex ||
+               $user->user->sex === '-') {
                 $this->validationErrors['sex'] = "Please select a sex.";
             }
 
@@ -56,11 +66,13 @@
 
             if(!isset($user->user->weight) || !$user->user->weight) {
                 $this->validationErrors['weight'] = "Please enter a weight.";
+            } elseif((float)$user->user->weight <= 0) {
+                $this->validationErrors['weight'] = "Please enter a weight.";
             }
 
             return !$this->validationErrors;
 
         }
-
+        //end isValidUser
 
     }

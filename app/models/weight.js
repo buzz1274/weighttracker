@@ -16,10 +16,16 @@ export default DS.Model.extend({
     }
 
   }.property('weight'),
-    formatted_date: function() {
-      "use strict";
+  formatted_date: function() {
+    "use strict";
 
-      return window.moment(this.get('date')).format('MMMM D, YYYY');
+      alert("HERE");
+
+      if(this.get('date')) {
+        return window.moment(this.get('date')).format('MMMM D, YYYY');
+      } else {
+        return;
+      }
 
   }.property('date')
 });

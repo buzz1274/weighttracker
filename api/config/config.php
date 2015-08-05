@@ -1,5 +1,7 @@
 <?php
 
+    date_default_timezone_set('UTC');
+
     if(!file_exists(__DIR__."/../config/config.ini") ||
        !is_array($config = parse_ini_file(__DIR__."/../config/config.ini"))) {
       throw new \Exception('no settings file');
@@ -24,4 +26,5 @@
             'viewsDir'       => APP_PATH . '/views/',
             'baseUri'        => '/1/',
         )
+
     ));

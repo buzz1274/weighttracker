@@ -12,6 +12,9 @@
 
     $app->get('/weights', function() use($app) {
 
+        $user = new user();
+        //$user->findFirst()
+
         try {
             $weights = $app->modelsManager->executeQuery(
                 "SELECT * FROM weight ORDER BY weighed_date DESC");
@@ -54,7 +57,6 @@
 
     $app->post('/weights(/[0-9]{1,})?', function() use($app) {
         $weight = $app->request->getJsonRawBody();
-        error_log(json_encode($weight));
 
         $app->response->setJsonContent(array('weight' =>
             array('id' => 2,
@@ -70,7 +72,7 @@
         $response = $user->register($app->request->getJsonRawBody());
 
         if(isset($response['errors'])) {
-            $app->response->setStatusCode(400, "User failed validation");
+            $app->response->setStatusCode(422, "User failed validation");
         } else {
             $app->response->setStatusCode(200, "OK");
         }

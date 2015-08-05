@@ -8,10 +8,9 @@ export default Ember.Controller.extend({
     register() {
       "use strict";
 
-      var date = new Date(this.get('model').get('formatted_date'));
-
-      if(date !== 'Invalid Date') {
-        this.get('model').set('date_of_birth', date);
+      if(this.get('model').get('formatted_date')) {
+        this.get('model').set('date_of_birth',
+          window.moment(this.get('model').get('formatted_date')).toDate());
       }
 
       var that = this;

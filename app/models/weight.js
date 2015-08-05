@@ -19,8 +19,6 @@ export default DS.Model.extend({
   formatted_date: function() {
     "use strict";
 
-      alert("HERE");
-
       if(this.get('date')) {
         return window.moment(this.get('date')).format('MMMM D, YYYY');
       } else {

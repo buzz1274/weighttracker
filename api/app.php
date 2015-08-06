@@ -13,7 +13,7 @@
     $app->get('/weights', function() use($app) {
 
         $user = new user();
-        //$user->findFirst()
+        $user->register('dd');
 
         try {
             $weights = $app->modelsManager->executeQuery(
@@ -73,8 +73,10 @@
 
         if(isset($response['errors'])) {
             $app->response->setStatusCode(422, "User failed validation");
-        } else {
+        } elseif(isset($response['user']) && isset($response['user']['id'])) {
             $app->response->setStatusCode(200, "OK");
+        } else {
+            $app->response->setStatusCode(500, "Failed");
         }
 
         $app->response->setJsonContent($response);

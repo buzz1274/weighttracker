@@ -18,7 +18,11 @@ export default Ember.Controller.extend({
       this.get('model').save().then(() => {
         this.transitionToRoute('login');
       }).catch(function(response) {
-        that.set('errors', response.responseJSON.errors);
+        if(response.status === 500 || !response.responseJSON.errors) {
+          that.transitionToRoute('error');
+        } else {
+          that.set('errors', response.responseJSON.errors);
+        }
       });
 
       return false;

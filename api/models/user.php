@@ -4,15 +4,17 @@
 
     class user extends Model {
 
+        //db columns
         public $user_id;
-
         public $email;
+        public $password;
+        public $name;
+        public $date_of_birth;
+        public $sex;
+        public $height;
+        public $weight;
 
         private $validationErrors = false;
-
-        public function initialize() {
-            $this->setSource("user");
-        }
 
         public function register($user) {
 
@@ -20,11 +22,34 @@
                 return array('errors' => $this->validationErrors);
             }
 
-            //save user//
+            $this->email = $user->user->email;
+            $this->password = $this->hashPassword($user->user->password);
+            $this->name = $user->user->name;
+            $this->date_of_birth = date('Y-m-d', strtotime($user->user->date_of_birth));
+            $this->sex = (strtolower($user->user->sex) === 'male' ? 'm' : 'f');
+            $this->height = $user->user->height;
+            $this->weight = $user->user->weight;
 
-            return array('user' => array('id' => 1));
+            try {
+                if(!$this->save()) {
+                    return false;
+                } else {
+                    return array('user' => array('id' => $this->user_id));
+                }
+            } catch(Exception $e) {
+                return false;
+            }
 
         }
+        //end register
+
+        /**
+         * hash password before insertion into database
+         */
+        private function hashPassword($password) {
+            return $password;
+        }
+        //end hash password
 
         /**
          * validate user

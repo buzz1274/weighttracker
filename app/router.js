@@ -15,9 +15,10 @@ var Router = Ember.Router.extend({
 export default Router.map(function() {
   "use strict";
 
-  this.route('index', { path: '/' });
+  this.route('index', {path: '/'});
   this.route('login');
-  this.route('not-found', { path: '/*path' });
+  this.route('error');
+  this.route('not-found', {path: '/*path'});
 
   this.route('weights', function() {
     this.route('new');

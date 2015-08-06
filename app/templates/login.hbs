@@ -18,9 +18,20 @@
 
             </div>
             <span class="pull-right">
-              {{#link-to 'register'}}Register{{/link-to}}
+              {{#link-to 'index'}}
+                <button type="button" class="btn btn-default">
+                    Cancel
+                </button>
+              {{/link-to}}
+              {{#link-to 'register'}}
+                  <button type="button" class="btn btn-default">
+                      Register
+                  </button>
+              {{/link-to}}
+              <button type="button" class="btn btn-primary">
+                  Login
+              </button>
             </span>
-            <input name="submit" type="submit" value="Login">
             {{#if login_error}}
               <p class="text-danger form-warning">
                   <strong>

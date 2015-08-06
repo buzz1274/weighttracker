@@ -1,6 +1,8 @@
 <?php
 
     use Phalcon\Mvc\Model;
+    use Phalcon\Security as Security;
+    use Phalcon\Mvc\Model\Transaction\Manager as TransactionManager;
 
     class user extends Model {
 
@@ -12,31 +14,53 @@
         public $date_of_birth;
         public $sex;
         public $height;
-        public $weight;
+        public $account_created;
 
         private $validationErrors = false;
 
         public function register($user) {
 
-            if(!$this->isValidUser($user)) {
+            if(!$this->isValidUser($user, 'register')) {
                 return array('errors' => $this->validationErrors);
             }
 
+            $security = new Security();
+            $transactionManager = new TransactionManager();
+            $today = date('Y-m-d', strtotime('now'));
+            $transaction = $transactionManager->get();
+
+            $this->setTransaction($transaction);
             $this->email = $user->user->email;
-            $this->password = $this->hashPassword($user->user->password);
+            $this->password = $security->hash($user->user->password);
             $this->name = $user->user->name;
             $this->date_of_birth = date('Y-m-d', strtotime($user->user->date_of_birth));
             $this->sex = (strtolower($user->user->sex) === 'male' ? 'm' : 'f');
             $this->height = $user->user->height;
-            $this->weight = $user->user->weight;
+            $this->account_created = $today;
 
             try {
                 if(!$this->save()) {
-                    return false;
+                    throw new Exception('failed to save user');
                 } else {
+
+                    $weight = new weight();
+                    
+                    $weight->setTransaction($transaction);
+                    $weight->user_id = $this->user_id;
+                    $weight->weight = $user->user->weight;
+                    $weight->weighed_date = $today;
+
+                    if(!$weight->save()) {
+                        throw new Exception('failed to save initial weight');
+                    }
+
+                    $transaction->commit();
+
                     return array('user' => array('id' => $this->user_id));
+
                 }
             } catch(Exception $e) {
+                $transaction->rollback();
                 return false;
             }
 
@@ -44,17 +68,9 @@
         //end register
 
         /**
-         * hash password before insertion into database
-         */
-        private function hashPassword($password) {
-            return $password;
-        }
-        //end hash password
-
-        /**
          * validate user
          */
-        private function isValidUser($user) {
+        private function isValidUser($user, $validationType) {
             $this->validationErrors = false;
 
             if(!isset($user->user->email) || !$user->user->email) {

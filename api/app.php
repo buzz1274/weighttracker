@@ -12,9 +12,6 @@
 
     $app->get('/weights', function() use($app) {
 
-        $user = new user();
-        $user->register('dd');
-
         try {
             $weights = $app->modelsManager->executeQuery(
                 "SELECT * FROM weight ORDER BY weighed_date DESC");

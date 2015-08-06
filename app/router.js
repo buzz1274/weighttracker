@@ -18,11 +18,11 @@ export default Router.map(function() {
   this.route('index', {path: '/'});
   this.route('login');
   this.route('error');
+  this.route('register');
   this.route('not-found', {path: '/*path'});
 
   this.route('weights', function() {
     this.route('new');
   });
 
-  this.route('register');
 });

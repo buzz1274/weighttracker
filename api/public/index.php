@@ -6,7 +6,7 @@
     use Phalcon\Db\Adapter\Pdo\Postgresql as PdoPostgres;
 
     error_reporting(E_ALL);
-    ini_set("display_errors", 1);
+    ini_set("display_errors", 0);
 
     try {
 

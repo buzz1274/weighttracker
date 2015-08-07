@@ -26,6 +26,7 @@
 
             $security = new Security();
             $transactionManager = new TransactionManager();
+
             $today = date('Y-m-d', strtotime('now'));
             $transaction = $transactionManager->get();
 
@@ -44,7 +45,7 @@
                 } else {
 
                     $weight = new weight();
-                    
+
                     $weight->setTransaction($transaction);
                     $weight->user_id = $this->user_id;
                     $weight->weight = $user->user->weight;
@@ -76,8 +77,10 @@
             if(!isset($user->user->email) || !$user->user->email) {
                 $this->validationErrors['email'] =
                     "Please enter an email address.";
-            } elseif(self::findFirst(array('conditions' => "email = ?1",
-                                           'bind' => array(1 => $user->user->email)))) {
+            } elseif(($validationType == 'register' ||
+                     ($validationType == 'edit' && $user->user->email != $user->email)) &&
+                      self::findFirst(array('conditions' => "email = ?1",
+                                            'bind' => array(1 => $user->user->email)))) {
                 $this->validationErrors['email'] =
                     "Email address is already in use.";
             }
@@ -93,7 +96,6 @@
                     "Please enter password again.";
             } elseif(!isset($this->validationErrors['password']) &&
                      $user->user->repeat_password != $user->user->password) {
-
                 $this->validationErrors['password'] =
                     "Passwords do not match.";
                 $this->validationErrors['repeat_password'] =

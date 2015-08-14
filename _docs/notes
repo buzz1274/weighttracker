@@ -1,0 +1,7 @@
+Deployment
+
+ember build -prod
+mv -f --backup=numbered dist/assets/ public/
+mv -f --backup=numbered dist/fonts/ public/
+mv -f dist/index.html public
+

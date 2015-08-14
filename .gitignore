@@ -20,3 +20,6 @@ testem.log
 .idea/
 weights.csv
 config.ini
+public/fonts/*
+public/assets/*
+public/index.html

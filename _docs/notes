@@ -1,7 +1,14 @@
 Deployment
-
 ember build -prod
 mv -f --backup=numbered dist/assets/ public/
 mv -f --backup=numbered dist/fonts/ public/
 mv -f dist/index.html public
+
+clean environment
+rm -rf node_modules
+rm -rf bower_components
+npm cache clean
+bower cache clean
+npm install
+bower install --allow-root
 

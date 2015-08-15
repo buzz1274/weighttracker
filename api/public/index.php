@@ -36,5 +36,5 @@
         $app->handle();
 
     } catch (\Exception $e) {
-      echo $e->getMessage();
+      error_log($e->getMessage());
     }

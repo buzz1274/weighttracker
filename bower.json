@@ -14,6 +14,7 @@
     "qunit": "~1.17.1",
     "jquery-ui": "1.11.1",
     "moment": "~2.10.6",
-    "bootstrap": "~3.3.5"
+    "bootstrap": "~3.3.5",
+    "ember-simple-auth": "0.8.0"
   }
 }

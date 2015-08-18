@@ -4,7 +4,7 @@
 
     if(!file_exists(__DIR__."/../config/config.ini") ||
        !is_array($config = parse_ini_file(__DIR__."/../config/config.ini"))) {
-      throw new \Exception('no settings file');
+        throw new \Exception('no settings file');
     }
 
     return new \Phalcon\Config(array(

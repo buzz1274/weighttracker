@@ -11,7 +11,6 @@ module.exports = function(environment) {
     EmberENV: {
       FEATURES: {}
     },
-
     APP: {}
   };
 
@@ -41,6 +40,10 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     ENV.APP.hostname = 'weighttracker.zz50.co.uk';
+  }
+
+  ENV['simple-auth'] = {
+    serverTokenRevocationEndpoint: '/logout'
   }
 
   return ENV;

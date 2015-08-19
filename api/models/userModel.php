@@ -4,7 +4,7 @@
     use Phalcon\Security as Security;
     use Phalcon\Mvc\Model\Transaction\Manager as TransactionManager;
 
-    class user extends Model {
+    class userModel extends Model {
 
         //db columns
         public $user_id;
@@ -67,6 +67,12 @@
 
         }
         //end register
+
+        public function login($user) {
+            return array('status_code' => 200,
+                         'user_id' => 1);
+        }
+        //end login
 
         /**
          * validate user

@@ -23,6 +23,7 @@
         'application' => array(
             'modelsDir'      => APP_PATH . '/models/',
             'migrationsDir'  => APP_PATH . '/migrations/',
+            'controllerDir'  => APP_PATH . '/controllers/',
             'viewsDir'       => APP_PATH . '/views/',
             'baseUri'        => '/1/',
         )

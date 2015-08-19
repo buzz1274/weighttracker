@@ -4,6 +4,7 @@
     use Phalcon\Mvc\Url as UrlResolver;
     use Phalcon\DI\FactoryDefault;
     use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
+    use Phalcon\Session\Adapter\Files as Session;
 
     $di = new FactoryDefault();
 
@@ -25,9 +26,15 @@
         return $url;
     };
 
-    /**
-     * Database connection is created based in the parameters defined in the configuration file
-     */
     $di['db'] = function () use ($config) {
         return new DbAdapter($config->toArray());
+    };
+
+    $di['session'] = function() {
+        $session = new Session(array('uniqueId' => 'wt'));
+        $session->start();
+
+        error_log("SESSION START");
+
+        return $session;
     };

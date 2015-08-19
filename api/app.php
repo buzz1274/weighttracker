@@ -64,28 +64,23 @@
         return $app->response;
     });
 
-    $app->post('/users(/[0-9]{1,})?', function() use($app) {
-        $user = new user();
-        $response = $user->register($app->request->getJsonRawBody());
+    $app->get('/login',
+              array(new userController($app), "login"));
 
-        if(isset($response['errors'])) {
-            $app->response->setStatusCode(422, "User failed validation");
-        } elseif(isset($response['user']) && isset($response['user']['id'])) {
-            $app->response->setStatusCode(200, "OK");
-        } else {
-            $app->response->setStatusCode(500, "Failed");
-        }
+    $app->post('/users(/[0-9]{1,})?',
+               array(new userController($app), "register"));
 
-        $app->response->setJsonContent($response);
 
+    $app->options('/(weights|users|login)(/[0-9]{1,})?/?', function() use($app) {
         return $app->response;
     });
 
-    $app->options('/(weights|users)(/[0-9]{1,})?/?', function() use($app) {
-        return $app->response;
+    $app->error(function($exception) use($app) {
+        $app->response->setStatusCode(500, "An error has occurred");
     });
 
     $app->notFound(function() use ($app, $config) {
-        header('location: http://'.$config['MAINSITE_URL'].'/not-found');
+        header('location: http://'.$config['MAINSITE_URL'].
+                                   $config['MAINSITE_URL_PORT'].'/not-found');
         die();
     });

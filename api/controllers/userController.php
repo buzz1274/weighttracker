@@ -28,11 +28,13 @@
 
             }
 
-            $this->response = $this->user->login($this->request->username,
-                                                 $this->request->password);
+            //$this->response = $this->user->login($this->request->username,
+            //                                     $this->request->password);
 
-            $this->app->session->set("user_id", 1);
-
+            $this->response = array('token' => 'derp',
+                                    'name' => 'David',
+                                    'userId' => 1);
+            
             return $this->generateResponse();
         }
         //end login

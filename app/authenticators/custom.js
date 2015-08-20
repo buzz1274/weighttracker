@@ -13,7 +13,13 @@ export default Base.extend({
         contentType: 'application/json'
       }).then(function(response) {
         Ember.run(function() {
-          resolve({token: response.token});
+          console.log(response);
+          //console.log(response['name']);
+
+          response = JSON.parse(response);
+          resolve({token: response.token,
+                   userId: response.userId,
+                   name: response.name});
         });
       }, function(xhr) {
         var response = JSON.parse(xhr.responseText);

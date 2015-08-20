@@ -43,7 +43,7 @@ module.exports = function(environment) {
   }
 
   ENV['simple-auth'] = {
-    serverTokenRevocationEndpoint: '/logout'
+    serverTokenRevocationEndpoint: '/logout',
   }
 
   return ENV;

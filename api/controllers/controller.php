@@ -5,7 +5,7 @@
         protected $app = false;
         protected $response = false;
         protected $statusCode = 200;
-        protected $statusMessage = 'ok';
+        protected $statusMessage = 'OK';
         protected $errors = false;
         protected $request = false;
 

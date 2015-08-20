@@ -3,7 +3,7 @@
         <div id="welcome">
             {{#if session.isAuthenticated}}
               Welcome back,
-              {{session.user}}&nbsp;|&nbsp;<a {{action 'invalidateSession'}}>logout</a>
+              {{session.secure.name}}&nbsp;|&nbsp;<a {{action 'invalidateSession'}}>logout</a>
             {{else}}
               {{#link-to 'login'}}Login{{/link-to}}
             {{/if}}

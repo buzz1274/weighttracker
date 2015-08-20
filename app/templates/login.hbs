@@ -15,8 +15,8 @@
       {{input class="form-control form-large" autocomplete="off"
               id="id_password" type="password" value=password}}
     </div>
-    {{#if login_error}}
-      <p class="text-danger"><strong>{{login_error}}</strong></p>
+    {{#if errorMessage}}
+      <p class="text-danger"><strong>{{errorMessage}}</strong></p>
     {{/if}}
     <span class="pull-right">
       {{#link-to 'index'}}

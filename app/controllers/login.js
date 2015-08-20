@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  login_error: false,
+  errorMessage: false,
   actions: {
     authenticate() {
       "use strict";
@@ -10,7 +10,7 @@ export default Ember.Controller.extend({
       var that = this;
 
       this.get('session').authenticate('authenticator:custom', data).then(null, function(message) {
-        that.set('login_error', message);
+        that.set('errorMessage', message);
       });
 
       return false;

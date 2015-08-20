@@ -64,8 +64,6 @@
         return $app->response;
     });
 
-    error_log("IN ROUTER");
-
     $app->post('/login',
               array(new userController($app), "login"));
 

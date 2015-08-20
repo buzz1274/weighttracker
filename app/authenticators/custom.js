@@ -13,9 +13,6 @@ export default Base.extend({
         contentType: 'application/json'
       }).then(function(response) {
         Ember.run(function() {
-          console.log(response);
-          //console.log(response['name']);
-
           response = JSON.parse(response);
           resolve({token: response.token,
                    userId: response.userId,
@@ -30,6 +27,17 @@ export default Base.extend({
     });
 
   },
-  restore: function() {},
+  restore: function(data) {
+    "use strict";
+
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      if (!Ember.isEmpty(data.token)) {
+        resolve(data);
+      } else {
+        reject();
+      }
+    });
+
+  },
   invalidate: function() {}
 });

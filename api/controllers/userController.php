@@ -34,7 +34,7 @@
             $this->response = array('token' => 'derp',
                                     'name' => 'David',
                                     'userId' => 1);
-            
+
             return $this->generateResponse();
         }
         //end login

@@ -17,6 +17,5 @@ export default DS.Model.extend({
     } else {
       return;
     }
-
   }.property('date')
 });

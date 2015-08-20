@@ -10,7 +10,10 @@ export default Ember.Controller.extend({
 
       console.log(data);
 
-      console.log(this.get('session').authenticate('authenticator:custom', data));
+      if(!this.get('session').authenticate('authenticator:custom', data)) {
+        this.errors = true;
+      }
+      console.log("DERP");
 
       return false;
     },

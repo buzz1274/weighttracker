@@ -11,9 +11,28 @@
         }
         //end __construct
 
+        /**
+         * authenticates the user using the supplied credentials
+         * @return mixed
+         */
         public function login() {
-            $this->response =
-                $this->user->login($this->app->request->getJsonRawBody());
+
+            error_log("IN LOGIN CONTROLLER");
+            error_log(json_encode($this->request));
+
+            if(!isset($this->request->username) || !$this->request->username ||
+               !isset($this->request->password) || !$this->request->password) {
+                $this->response['errors'] = 'Please enter a username & password';
+
+                $this->statusCode = 422;
+                $this->statusMessage = 'user failed authentication';
+
+                return $this->generateResponse();
+
+            }
+
+            $this->response = $this->user->login($this->request->username,
+                                                 $this->request->password);
 
             $this->app->session->set("user_id", 1);
 

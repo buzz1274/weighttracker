@@ -64,7 +64,9 @@
         return $app->response;
     });
 
-    $app->get('/login',
+    error_log("IN ROUTER");
+
+    $app->post('/login',
               array(new userController($app), "login"));
 
     $app->post('/users(/[0-9]{1,})?',
@@ -76,6 +78,7 @@
     });
 
     $app->error(function($exception) use($app) {
+        error_log($exception);
         $app->response->setStatusCode(500, "An error has occurred");
     });
 

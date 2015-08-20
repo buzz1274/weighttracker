@@ -15,15 +15,8 @@ export default Base.extend({
         Ember.run(function() {
           resolve({token: response.token});
         });
-      }, function(xhr, status, error) {
+      }, function(xhr) {
         var response = JSON.parse(xhr.responseText);
-
-        var login_error = true;
-
-        console.log(response);
-        console.log(status);
-        console.log(error);
-        console.log(response.errors);
         Ember.run(function() {
           reject(response.errors);
         });

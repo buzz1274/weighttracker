@@ -1,8 +1,9 @@
 <div class="container-fluid">
     <div id="header">
         <div id="welcome">
-            {{#if user}}
-              Welcome back, {{user}}&nbsp;|&nbsp;<a href="/logout">logout</a>
+            {{#if session.isAuthenticated}}
+              Welcome back,
+              {{session.user}}&nbsp;|&nbsp;<a {{action 'invalidateSession'}}>logout</a>
             {{else}}
               {{#link-to 'login'}}Login{{/link-to}}
             {{/if}}

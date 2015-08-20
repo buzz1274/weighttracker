@@ -1,19 +1,17 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  errors: false,
+  login_error: false,
   actions: {
     authenticate() {
       "use strict";
 
       var data = this.getProperties('username', 'password');
+      var that = this;
 
-      console.log(data);
-
-      if(!this.get('session').authenticate('authenticator:custom', data)) {
-        this.errors = true;
-      }
-      console.log("DERP");
+      this.get('session').authenticate('authenticator:custom', data).then(null, function(message) {
+        that.set('login_error', message);
+      });
 
       return false;
     },

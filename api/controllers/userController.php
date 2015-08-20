@@ -16,13 +16,10 @@
          * @return mixed
          */
         public function login() {
-
-            error_log("IN LOGIN CONTROLLER");
-            error_log(json_encode($this->request));
-
             if(!isset($this->request->username) || !$this->request->username ||
                !isset($this->request->password) || !$this->request->password) {
-                $this->response['errors'] = 'Please enter a username & password';
+                $this->response['errors'] =
+                    'Please enter a valid username and password';
 
                 $this->statusCode = 422;
                 $this->statusMessage = 'user failed authentication';

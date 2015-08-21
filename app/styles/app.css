@@ -26,6 +26,9 @@ body {
   color:#000;
   text-decoration:underline;
 }
+#welcome a:hover {
+  cursor:pointer;
+}
 #header_content {
   padding:15px 0 0 15px;
 }

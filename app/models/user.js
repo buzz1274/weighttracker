@@ -8,7 +8,8 @@ export default DS.Model.extend({
   date_of_birth: DS.attr('isodate'),
   sex: DS.attr('string'),
   height: DS.attr('number'),
-  weight: DS.attr('string'),
+  weight: DS.attr('number'),
+  target_weight: DS.attr('number'),
   formatted_date: function() {
     "use strict";
 
@@ -17,5 +18,6 @@ export default DS.Model.extend({
     } else {
       return;
     }
+
   }.property('date')
 });

@@ -16,16 +16,24 @@
     Donec fermentum mi ac dolor pharetra finibus. Suspendisse venenatis condimentum
     odio, eu consectetur magna rutrum et. Cras imperdiet neque dui, sed
   </p>
-  <div id="links" class="text-center">
+  {{#unless session.isAuthenticated}}
+    <div id="links" class="text-center">
+      <span>
+        {{#link-to 'login'}}
+          <button type="button" class="btn btn-default">Login</button>
+        {{/link-to}}
+      </span>
+      <span>
+        {{#link-to 'register'}}
+          <button type="button" class="btn btn-default">Register</button>
+        {{/link-to}}
+      </span>
+    </div>
+  {{else}}
     <span>
-      {{#link-to 'login'}}
-        <button type="button" class="btn btn-default">Login</button>
+      {{#link-to 'weights'}}
+          <button type="button" class="btn btn-default">Weights</button>
       {{/link-to}}
     </span>
-    <span>
-      {{#link-to 'register'}}
-        <button type="button" class="btn btn-default">Register</button>
-      {{/link-to}}
-    </span>
-  </div>
+  {{/unless}}
 </div>

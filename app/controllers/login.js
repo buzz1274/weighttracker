@@ -10,7 +10,13 @@ export default Ember.Controller.extend({
       var that = this;
 
       this.get('session').authenticate('authenticator:custom', data).then(null, function(message) {
-        that.set('errorMessage', message);
+        if(!message) {
+          that.transitionToRoute('error');
+        } else {
+          that.set('errorMessage', message);
+          that.set('username', '');
+          that.set('password', '');
+        }
       });
 
       return false;

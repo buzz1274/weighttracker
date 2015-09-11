@@ -16,8 +16,12 @@
          * @return mixed
          */
         public function login() {
+
             if(!isset($this->request->username) || !$this->request->username ||
-               !isset($this->request->password) || !$this->request->password) {
+               !isset($this->request->password) || !$this->request->password ||
+               !($user = $this->user->login($this->request->username,
+                                            $this->request->password))) {
+
                 $this->response['errors'] =
                     'Please enter a valid username and password';
 
@@ -28,36 +32,48 @@
 
             }
 
-            //$this->response = $this->user->login($this->request->username,
-            //                                     $this->request->password);
-
-            $this->response = array('token' => 'derp',
-                                    'name' => 'David',
-                                    'userId' => 1);
+            $this->app->session->set('userId', $user->user_id);
+            $this->response = array('token' => session_id(),
+                                    'name' => $user->name);
 
             return $this->generateResponse();
         }
         //end login
 
+        /**
+         * destroys the session for current user
+         */
+        public function logout() {
+
+            if($this->app->session->has("userId")) {
+                $this->app->session->destroy();
+            } else {
+                $this->statusCode = 422;
+                $this->statusMessage = 'user not authenticated';
+            }
+
+            return $this->generateResponse();
+        }
+        //end logout
+
+        /**
+         * register a new user using the supplied details
+         * @return mixed
+         */
         public function register() {
-            /*
-            $app->post('/users(/[0-9]{1,})?', function() use($app) {
-                $user = new user();
-                $response = $user->register($app->request->getJsonRawBody());
 
-                if(isset($response['errors'])) {
-                    $app->response->setStatusCode(422, "User failed validation");
-                } elseif(isset($response['user']) && isset($response['user']['id'])) {
-                    $app->response->setStatusCode(200, "OK");
-                } else {
-                    $app->response->setStatusCode(500, "Failed");
-                }
+            $this->response = $this->user->register($this->request);
 
-                $app->response->setJsonContent($response);
+            if(isset($this->response['errors'])) {
+                $this->statusCode = 422;
+                $this->statusMessage = 'user failed validation';
+            } elseif(!isset($this->response['user']) ||
+                     !isset($this->response['user']['id'])) {
+                $this->statusCode = 500;
+                $this->statusMessage = 'failed';
+            }
 
-                return $app->response;
-            });
-            */
+            return $this->generateResponse();
 
         }
         //end register

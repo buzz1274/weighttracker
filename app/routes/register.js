@@ -1,11 +1,15 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  model() {
+  setupController(controller, model) {
     "use strict";
 
-    this.controllerFor('register').set('errors', false);
+    if(this.get('session').isAuthenticated) {
+      this.transitionTo('index');
+    }
 
-    return this.store.createRecord('user');
+    controller.set('errors', false);
+    controller.set('model', this.store.createRecord('user'));
+
   }
 });

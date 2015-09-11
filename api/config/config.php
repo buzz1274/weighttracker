@@ -1,11 +1,43 @@
 <?php
 
+    register_shutdown_function('errorHandler');
     date_default_timezone_set('UTC');
+    error_reporting(E_ALL);
+    ini_set("display_errors", 0);
+    session_save_path("/tmp/");
+
+    define('APP_PATH', realpath('..'));
 
     if(!file_exists(__DIR__."/../config/config.ini") ||
        !is_array($config = parse_ini_file(__DIR__."/../config/config.ini"))) {
         throw new \Exception('no settings file');
     }
+
+    /**
+     * handle fatal errors
+     * @param bool|false $message
+     * @param int $statusCode
+     */
+    function errorHandler($message = false, $statusCode = 500) {
+
+        if(!$message) {
+            if(is_array($error = error_get_last()) && isset($error['type']) &&
+               in_array($error['type'], array(E_PARSE, E_ERROR)) &&
+               isset($error['message'])) {
+                $message = $error['message'];
+            }
+        }
+
+        if($message) {
+            error_log($message);
+
+            http_response_code($statusCode);
+            echo json_encode(array('responseJSON' => array('status' => $statusCode)));
+            die();
+        }
+
+    }
+    //end errorHandler
 
     return new \Phalcon\Config(array(
 

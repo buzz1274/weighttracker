@@ -3,6 +3,9 @@ body {
   font-family: "Trebuchet MS";
   font-size:13px;
 }
+a.button:hover {
+  text-decoration:none;
+}
 .container-fluid {
   border:1px solid #000;
   width:1100px;

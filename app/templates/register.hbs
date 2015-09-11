@@ -79,6 +79,18 @@
               <div class="error clear">{{errors.weight}}</div>
           {{/if}}
         </div>
+        <div class="form-group">
+          <label for="target_weight">Target Weight(kg)</label>
+          <div class="row">
+            <div class="col-xs-4">
+              {{input class="form-control" maxlength="6"
+                value=model.target_weight}}
+            </div>
+          </div>
+          {{#if errors.target_weight}}
+            <div class="error clear">{{errors.target_weight}}</div>
+          {{/if}}
+        </div>
       </form>
       <div class="pull-right">
         <button type="button" class="btn btn-default"

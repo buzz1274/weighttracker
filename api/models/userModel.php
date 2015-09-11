@@ -15,8 +15,12 @@
         public $sex;
         public $height;
         public $account_created;
-
+        public $target_weight;
         private $validationErrors = false;
+
+        public function initialize() {
+            $this->setSource('user');
+        }
 
         public function register($user) {
 
@@ -37,6 +41,7 @@
             $this->date_of_birth = date('Y-m-d', strtotime($user->user->date_of_birth));
             $this->sex = (strtolower($user->user->sex) === 'male' ? 'm' : 'f');
             $this->height = $user->user->height;
+            $this->target_weight = $user->user->target_weight;
             $this->account_created = $today;
 
             try {
@@ -44,7 +49,7 @@
                     throw new Exception('failed to save user');
                 } else {
 
-                    $weight = new weight();
+                    $weight = new weightModel();
 
                     $weight->setTransaction($transaction);
                     $weight->user_id = $this->user_id;
@@ -62,15 +67,32 @@
                 }
             } catch(Exception $e) {
                 $transaction->rollback();
-                return false;
+                throw $e;
             }
 
         }
         //end register
 
-        public function login($user) {
-            return array('status_code' => 200,
-                         'user_id' => 1);
+        /**
+         * returns user details if email & password match a user
+         * @param $email
+         * @param $password
+         * @return mixed
+         */
+        public function login($email, $password) {
+
+            $security = new Security();
+
+            if(($user = self::findFirst(['conditions' => "email = ?1",
+                                         'bind' => [1 => $email]])) &&
+                $security->checkHash($password, $user->password)) {
+
+                return $user;
+
+            } else {
+                return false;
+            }
+
         }
         //end login
 
@@ -138,6 +160,14 @@
             } elseif((float)$user->user->weight <= 0) {
                 $this->validationErrors['weight'] =
                     "Please enter a positive decimal value for weight.";
+            }
+
+            if(!isset($user->user->target_weight) || !$user->user->target_weight) {
+                $this->validationErrors['target_weight'] =
+                    "Please enter a target weight.";
+            } elseif((float)$user->user->target_weight <= 0) {
+                $this->validationErrors['target_weight'] =
+                    "Please enter a positive decimal value for target weight.";
             }
 
             return !$this->validationErrors;

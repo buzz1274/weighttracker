@@ -31,7 +31,8 @@
     };
 
     $di['session'] = function() {
-        $session = new Session(array('uniqueId' => 'wt'));
+        $session = new Session();
+
         $session->start();
 
         return $session;

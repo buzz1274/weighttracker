@@ -10,7 +10,10 @@ export default Base.extend({
         url: window.location.protocol+'//'+window.location.hostname+'/api/login',
         type: 'POST',
         data: JSON.stringify(data),
-        contentType: 'application/json'
+        contentType: 'application/json',
+        xhrFields: {
+          withCredentials:true
+        },
       }).then(function(response) {
         Ember.run(function() {
           response = JSON.parse(response);
@@ -19,10 +22,14 @@ export default Base.extend({
                    name: response.name});
         });
       }, function(xhr) {
-        var response = JSON.parse(xhr.responseText);
-        Ember.run(function() {
-          reject(response.errors);
-        });
+        if(!xhr.responseText) {
+          reject();
+        } else {
+          var response = JSON.parse(xhr.responseText);
+          Ember.run(function () {
+            reject(response.errors);
+          });
+        }
       });
     });
 
@@ -39,5 +46,20 @@ export default Base.extend({
     });
 
   },
-  invalidate: function() {}
+  invalidate: function() {
+    "use strict";
+
+    return new Ember.RSVP.Promise(function(resolve) {
+      Ember.$.ajax({
+        url: window.location.protocol+'//'+window.location.hostname+'/api/logout',
+        xhrFields: {
+          withCredentials: true
+        },
+        type: 'DELETE'
+      }).always(function() {
+        resolve();
+      });
+    });
+
+  }
 });

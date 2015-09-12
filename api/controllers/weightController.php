@@ -15,24 +15,27 @@
          */
         public function weights() {
 
+            if(!$this->app->session->get('userID')) {
+                $this->statusCode = '401';
+
+                return $this->generateResponse();
+            }
+
             if((!$weights = $this->weight->weights($this->app->session->get('userID')))) {
                 $this->response = array('weights' => false);
             } else {
-                $this->response = array('weights' => false);
-            }
 
-            /*
-            $total_weights = count($weights) - 1;
-            $start_weight = $weights[$total_weights]->weight;
+                $start_weight = $weights->getFirst()->weight;
 
-            for($i = 0; $i <= $total_weights; $i++) {
-                $data[] =
-                    array('id' => $weights[$i]->weight_id,
-                          'date' => $weights[$i]->weighed_date,
-                          'weight' => $weights[$i]->weight,
-                          'lost' => round($weights[$i]->weight - $start_weight, 2));
+                foreach($weights as $weight) {
+                    $data[] = ['id' => $weight->weight_id,
+                               'date' => $weight->weighed_date,
+                               'weight' => $weight->weight,
+                               'lost' => $start_weight - $weight->weight];
+                }
+
+                $this->response = array('weights' => $data);
             }
-            */
 
             return $this->generateResponse();
 

@@ -12,42 +12,6 @@
                               'HEAD,GET,PUT,POST,DELETE,OPTIONS');
 
     /*
-    $app->get('/weights', function() use($app) {
-
-        try {
-            $weights = $app->modelsManager->executeQuery(
-                "SELECT * FROM weight ORDER BY weighed_date DESC");
-        } catch(Exception $e) {
-            $app->response->setStatusCode(500, "Error");
-
-            return $app->response;
-
-        }
-
-        if(!$weights) {
-            $app->response->setStatusCode(404, "Not Found");
-
-            return $app->response;
-
-        }
-
-        $total_weights = count($weights) - 1;
-        $start_weight = $weights[$total_weights]->weight;
-
-        for($i = 0; $i <= $total_weights; $i++) {
-            $data[] =
-                array('id' => $weights[$i]->weight_id,
-                      'date' => $weights[$i]->weighed_date,
-                      'weight' => $weights[$i]->weight,
-                      'lost' => round($weights[$i]->weight - $start_weight, 2));
-        }
-
-        $app->response->setJsonContent(array('weights' => $data));
-
-        return $app->response;
-
-    });
-
     $app->put('/weights(/[0-9]{1,})?', function() use($app) {
         $app->response->setJsonContent(array('success' => true));
 

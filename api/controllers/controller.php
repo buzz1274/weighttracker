@@ -10,7 +10,6 @@
         protected $statusMessage = 'OK';
         protected $errors = false;
         protected $request = false;
-        protected $session = false;
 
         public function __construct($app) {
             $this->app = $app;

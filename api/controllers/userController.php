@@ -32,7 +32,7 @@
 
             }
 
-            $this->app->session->set('userId', $user->user_id);
+            $this->app->session->set('userID', $user->user_id);
             $this->response = array('token' => session_id(),
                                     'name' => $user->name);
 

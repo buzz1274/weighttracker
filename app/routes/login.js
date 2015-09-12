@@ -5,7 +5,7 @@ export default Ember.Route.extend({
     "use strict";
 
     if(this.get('session').isAuthenticated) {
-      this.transitionTo('index');
+      this.transitionTo('weights');
     }
 
     controller.set('errorMessage', false);

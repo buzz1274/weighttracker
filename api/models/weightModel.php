@@ -8,4 +8,9 @@
             $this->setSource('weight');
         }
 
+        public function weights() {
+            return false;
+        }
+        //end weights
+
     }

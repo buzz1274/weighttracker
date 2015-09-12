@@ -9,7 +9,13 @@
             {{/if}}
         </div>
         <div id="header_content">
-          <h1> {{#link-to 'index'}}WeightTracker{{/link-to}}</h1>
+          <h1>
+            {{#if session.isAuthenticated}}
+              {{#link-to 'weights'}}WeightTracker{{/link-to}}
+            {{else}}
+              {{#link-to 'index'}}WeightTracker{{/link-to}}
+            {{/if}}
+          </h1>
         </div>
     </div>
     <div id="main" class="row-fluid">

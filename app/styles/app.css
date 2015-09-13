@@ -128,7 +128,7 @@ table#weights {
 table#weights td {
   line-height:13px;
 }
-tr#table_nav > a > i {
+i#add_weight {
   color:#FFF;
 }
 table#weights td.blanked {
@@ -142,16 +142,20 @@ tr#table_nav {
   background-color:#000;
   color:#FFF;
 }
+div#table_title {
+  width:50%;
+  margin:auto;
+}
 tr#table_nav > td {
   line-height:13px;
   border:1px solid #000;
   text-align:center;
   font-weight:bold;
 }
-tr#table_nav > td > span.control {
+span.control {
   cursor:pointer;
 }
-tr#table_nav > td > span.control_disabled {
+span.control_disabled {
   visibility:hidden;
 }
 table#weights tbody tr {

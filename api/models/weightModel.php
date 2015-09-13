@@ -22,7 +22,7 @@
         public function weights($userID) {
             $weights = self::find(array('conditions' => "user_id = ?1",
                                         'bind' => array(1 => $userID),
-                                        'order' => 'weighed_date ASC'));
+                                        'order' => 'weighed_date DESC'));
             return $weights;
         }
         //end weights

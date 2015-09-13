@@ -35,6 +35,7 @@
                 }
 
                 $this->response = array('weights' => $data);
+
             }
 
             return $this->generateResponse();
@@ -42,5 +43,45 @@
         }
         //end weights
 
+        /**
+         * return weight loss stats for current user
+         */
+        public function stats() {
+
+            if(!$this->app->session->get('userID')) {
+                $this->statusCode = '401';
+
+                return $this->generateResponse();
+            }
+
+            $data[] = ['name' => 'test test'];
+
+            //$this->response = ['stats' => ['name' => 'test test']];
+
+            $this->response = array('stats' => $data);
+
+            return $this->generateResponse();
+
+        }
+        //end stats
+
+        /**
+         * add a new weight
+         * @return mixed
+         */
+        public function addWeight() {
+
+            /*
+            $app->response->setJsonContent(array('weight' =>
+                array('id' => 2,
+                    'date' => $weight->weight->date,
+                    'weight' => $weight->weight->weight,
+                    'lost' => 110 - $weight->weight->weight)));
+            */
+
+            return $this->generateResponse();
+
+        }
+        //end addWeight
 
     }

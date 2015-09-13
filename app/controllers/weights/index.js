@@ -3,10 +3,11 @@ import Ember from 'ember';
 export default Ember.ArrayController.extend({
   sortProperties: ['weighed_date'],
   sortAscending: false,
-  recordsPerPage: 15,
+  recordsPerPage: 10,
   startRecord: 1,
   page: 1,
   totalPages: 1,
+  stats: false,
   prevDisabled: true,
   nextDisabled: true,
   actions: {

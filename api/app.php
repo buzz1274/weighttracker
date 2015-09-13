@@ -17,23 +17,21 @@
 
         return $app->response;
     });
+    */
 
     $app->post('/weights(/[0-9]{1,})?', function() use($app) {
-        $weight = $app->request->getJsonRawBody();
-
-        $app->response->setJsonContent(array('weight' =>
-            array('id' => 2,
-                  'date' => $weight->weight->date,
-                  'weight' => $weight->weight->weight,
-                  'lost' => 110 - $weight->weight->weight)));
-
-        return $app->response;
+        $controller = new weightController($app);
+        return $controller->addWeight();
     });
-    */
 
     $app->get('/weights', function() use($app) {
         $controller = new weightController($app);
         return $controller->weights();
+    });
+
+    $app->get('/stats', function() use($app) {
+        $controller = new weightController($app);
+        return $controller->stats();
     });
 
     $app->delete('/logout', function() use($app) {

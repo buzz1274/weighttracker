@@ -6,5 +6,12 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     "use strict";
 
     return this.store.findAll('weight');
+  },
+  setupController: function(controller, model) {
+    "use strict";
+
+    controller.set('stats', this.store.findAll('stats'));
+    controller.set('content', model);
+
   }
 });

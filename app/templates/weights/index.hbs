@@ -4,13 +4,69 @@
 
 <div id="left_container">
   <div id="control_panel">
-    Control Panel<br />
+    <table id="weights"
+           class="table table-condensed table-bordered table-hover">
+      <thead>
+        <tr class="table_nav">
+          <td colspan="2">
+            {{#link-to 'weights.new' class="pull-right" title="Edit User"}}
+              <i id="edit_user" class="glyphicon glyphicon-edit"></i>
+            {{/link-to}}
+            <div id="table_title">Stats</div>
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="stats_title">Name</td>
+          <td>{{stats.name}}</td>
+        </tr>
+        <tr>
+          <td class="stats_title">Sex</td>
+          <td>{{stats.name}}</td>
+        </tr>
+        <tr>
+          <td class="stats_title">Height</td>
+          <td>{{stats.name}}</td>
+        </tr>
+        <tr>
+          <td class="stats_title">Target Weight</td>
+          <td>{{stats.name}}</td>
+        </tr>
+        <tr>
+          <td class="stats_title">Current Weight</td>
+          <td>{{stats.name}}</td>
+        </tr>
+        <tr>
+          <td class="stats_title">Weight to go for target</td>
+          <td>{{stats.name}}</td>
+        </tr>
+        <tr>
+          <td class="stats_title">
+            Date target weight hit based on last month average weight loss
+          </td>
+          <td>{{stats.name}}</td>
+        </tr>
+        <tr>
+          <td class="stats_title">Weight Last week +/- difference(date)</td>
+          <td>{{stats.name}}</td>
+        </tr>
+        <tr>
+          <td class="stats_title">Weight Last month +/- difference(date)</td>
+          <td>{{stats.name}}</td>
+        </tr>
+        <tr>
+          <td class="stats_title">Weight Last year +/- difference(date)</td>
+          <td>{{stats.name}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
   <div>
     <table id="weights"
            class="table table-condensed table-bordered table-hover">
         <thead>
-          <tr id="table_nav">
+          <tr class="table_nav">
             <td colspan="5">
               {{#link-to 'weights.new' class="pull-right" title="Add Weight"}}
                 <i id="add_weight" class="glyphicon glyphicon-plus"></i>
@@ -31,7 +87,7 @@
             </td>
           </tr>
           <tr>
-            <td><strong>Date</strong></td>
+            <td class="date_width"><strong>Date</strong></td>
             <td class="weight_width"><strong>Weight(Kg)</strong></td>
             <td class="weight_width"><strong>Lost(Kg)</strong></td>
             <td class="text-center">-</td>

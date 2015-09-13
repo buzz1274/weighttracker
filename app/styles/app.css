@@ -117,8 +117,6 @@ div#left_container {
   width:380px;
 }
 div#control_panel {
-  border:1px solid #000;
-  height:150px;
   margin-bottom:10px;
 }
 table#weights {
@@ -128,7 +126,7 @@ table#weights {
 table#weights td {
   line-height:13px;
 }
-i#add_weight {
+tr.table_nav i {
   color:#FFF;
 }
 table#weights td.blanked {
@@ -138,7 +136,7 @@ table#weights td.blanked {
 td.weight_width {
   width:25%;
 }
-tr#table_nav {
+tr.table_nav {
   background-color:#000;
   color:#FFF;
 }
@@ -146,7 +144,7 @@ div#table_title {
   width:50%;
   margin:auto;
 }
-tr#table_nav > td {
+tr.table_nav > td {
   line-height:13px;
   border:1px solid #000;
   text-align:center;
@@ -171,6 +169,15 @@ table#weights tbody tr > td.success {
 table#weights tbody tr > td.danger {
   color:#FF0000;
   font-weight:bold;
+}
+table#weights td.date_width {
+  width:43%;
+}
+table#weights td.weight_width {
+  width:23%;
+}
+table#weights td.stats_title {
+  width:65%;
 }
 .modal {
   background-color:rgba(0,0,0,0.2);

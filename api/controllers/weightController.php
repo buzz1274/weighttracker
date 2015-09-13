@@ -25,7 +25,7 @@
                 $this->response = array('weights' => false);
             } else {
 
-                $start_weight = $weights->getFirst()->weight;
+                $start_weight = $weights->getLast()->weight;
 
                 foreach($weights as $weight) {
                     $data[] = ['id' => $weight->weight_id,

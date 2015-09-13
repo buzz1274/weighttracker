@@ -33,7 +33,7 @@ export default Ember.ArrayController.extend({
     "use strict";
 
     this.set('startRecord', (this.page - 1) * this.recordsPerPage);
-    this.set('totalPages', Math.floor(this.get('content.length') /
+    this.set('totalPages', Math.ceil(this.get('content.length') /
                            this.recordsPerPage));
 
     if(this.page < this.totalPages) {

@@ -64,6 +64,17 @@
             } else {
                 $data[] = ['id' => $user->user_id,
                            'name' => $user->name,
+                           'sex' => $user->sex == 'm' ? 'Male' :' Female',
+                           'height' => round($user->height / 100, 2),
+                           'weightToTarget' => ($stats['currentWeight'] -
+                                                $user->target_weight),
+                           'targetWeight' => $user->target_weight,
+                           'startWeight' => $stats['startWeight'],
+                           'currentWeight' => $stats['currentWeight'],
+                           'changeLastWeek' => $stats['changeLastWeek'],
+                           'changeLastMonth' => $stats['changeLastMonth'],
+                           'changeLastYear' => $stats['changeLastYear'],
+                           'changeAllTime' => $stats['changeAllTime'],
                            'dateToTarget' => $stats['dateToTarget']];
 
                 $this->response = array('stats' => $data);

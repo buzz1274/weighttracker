@@ -31,10 +31,106 @@
          * @return array
          */
         public function stats($user) {
-            return ['dateToTarget' => $this->dateToTarget($user->user_id,
+
+            $changeLastWeek = false;
+            $changeLastMonth = false;
+            $changeLastYear = false;
+            $startWeight = $this->startWeight($user->user_id);
+            $currentWeight = $this->closestWeightToDate($user->user_id, date('Y-m-d'));
+
+            if($currentWeight) {
+                $changeLastWeek =
+                    $this->closestWeightToDate($user->user_id,
+                                               date('Y-m-d', mktime(0, 0, 0,
+                                                                    date('n'),
+                                                                    date('j') - 7,
+                                                                    date('Y'))));
+
+                $changeLastMonth =
+                    $this->closestWeightToDate($user->user_id,
+                                               date('Y-m-d', mktime(0, 0, 0,
+                                                                    date('n') - 1,
+                                                                    date('j'),
+                                                                    date('Y'))));
+
+                $changeLastYear =
+                    $this->closestWeightToDate($user->user_id,
+                                               date('Y-m-d', mktime(0, 0, 0,
+                                                                    date('n'),
+                                                                    date('j'),
+                                                                    date('Y') - 1)));
+
+                if($changeLastWeek) {
+                    $changeLastWeek = round($changeLastWeek - $currentWeight, 2);
+                }
+
+                if($changeLastMonth) {
+                    $changeLastMonth = round($changeLastMonth - $currentWeight, 2);
+                }
+
+                if($changeLastYear) {
+                    $changeLastYear = round($changeLastYear - $currentWeight, 2);
+                }
+
+                if($startWeight) {
+                    $changeAllTime = round($startWeight - $currentWeight, 2);
+                }
+
+            }
+
+            return ['currentWeight' => $currentWeight,
+                    'changeLastWeek' => $changeLastWeek,
+                    'changeLastMonth' => $changeLastMonth,
+                    'changeLastYear' => $changeLastYear,
+                    'changeAllTime' => $changeAllTime,
+                    'startWeight' => $startWeight,
+                    'dateToTarget' => $this->dateToTarget($user->user_id,
                                                           $user->target_weight)];
         }
         //end stats
+
+        /**
+         * get first weight entered
+         * @param $userID
+         * @return mixed
+         */
+        private function startWeight($userID) {
+            $weights =
+                self::find(array('columns' => 'weight',
+                                 'conditions' => "user_id = ?1",
+                                 'bind' => array(1 => $userID),
+                                 'order' => 'weighed_date',
+                                 'limit' => 1))->toArray();
+
+            if(is_array($weights) && count($weights) === 1) {
+                return $weights[0]['weight'];
+            } else {
+                return false;
+            }
+        }
+        //end startWeight
+
+        /**
+         * returns the closest weight to the supplied date
+         * @param $userID
+         * @param $date
+         * @return mixed
+         */
+        private function closestWeightToDate($userID, $date) {
+            $results = self::find(
+                array('columns' => 'weight',
+                      'conditions' => "user_id = ?1",
+                      'bind' => array(1 => $userID, 2 => $date),
+                      'order' => "ABS(weighed_date - DATE(?2))",
+                      'limit' => 1))->toArray();
+
+            if(is_array($results) && count($results) === 1) {
+                return $results[0]['weight'];
+            } else {
+                return false;
+            }
+        }
+        //end closestWeightToDate
 
         /**
          * calculates the date the target weight will be hit
@@ -49,7 +145,8 @@
                                               date('j') - 28, date('Y')));
 
             $results = self::find(
-                array('conditions' => "user_id = ?1 AND weighed_date BETWEEN ?2 AND ?3",
+                array('columns' => 'weight, weighed_date',
+                      'conditions' => "user_id = ?1 AND weighed_date BETWEEN ?2 AND ?3",
                       'bind' => array(1 => $userID,
                                       2 => $startDate,
                                       3 => $endDate),

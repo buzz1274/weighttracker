@@ -10,7 +10,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   setupController: function(controller, model) {
     "use strict";
 
-    controller.set('stats', this.store.findAll('stats'));
+    controller.set('stats', this.store.findAll('stat'));
     controller.set('content', model);
 
   }

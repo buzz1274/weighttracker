@@ -7,7 +7,6 @@ export default Ember.ArrayController.extend({
   startRecord: 1,
   page: 1,
   totalPages: 1,
-  stats: false,
   prevDisabled: true,
   nextDisabled: true,
   actions: {

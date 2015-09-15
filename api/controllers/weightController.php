@@ -48,17 +48,27 @@
          */
         public function stats() {
 
-            if(!$this->app->session->get('userID')) {
+            $user = new userModel();
+
+            if(!$this->app->session->get('userID') ||
+               !($user = $user->findFirst($this->app->session->get('userID')))) {
+
                 $this->statusCode = '401';
 
                 return $this->generateResponse();
+
             }
 
-            $data[] = ['name' => 'test test'];
+            if(!($stats = $this->weight->stats($user))) {
+                $this->response = array('stats' => false);
+            } else {
+                $data[] = ['id' => $user->user_id,
+                           'name' => $user->name,
+                           'dateToTarget' => $stats['dateToTarget']];
 
-            //$this->response = ['stats' => ['name' => 'test test']];
+                $this->response = array('stats' => $data);
 
-            $this->response = array('stats' => $data);
+            }
 
             return $this->generateResponse();
 

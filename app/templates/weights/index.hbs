@@ -12,53 +12,65 @@
             {{#link-to 'weights.new' class="pull-right" title="Edit User"}}
               <i id="edit_user" class="glyphicon glyphicon-edit"></i>
             {{/link-to}}
-            <div id="table_title">Stats</div>
+            <div id="table_title">Profile/Stats</div>
           </td>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td class="stats_title">Name</td>
-          <td>{{stats.name}}</td>
-        </tr>
-        <tr>
-          <td class="stats_title">Sex</td>
-          <td>{{stats.name}}</td>
-        </tr>
-        <tr>
-          <td class="stats_title">Height</td>
-          <td>{{stats.name}}</td>
-        </tr>
-        <tr>
-          <td class="stats_title">Target Weight</td>
-          <td>{{stats.name}}</td>
-        </tr>
-        <tr>
-          <td class="stats_title">Current Weight</td>
-          <td>{{stats.name}}</td>
-        </tr>
-        <tr>
-          <td class="stats_title">Weight to go for target</td>
-          <td>{{stats.name}}</td>
-        </tr>
-        <tr>
-          <td class="stats_title">
-            Date target weight hit based on last month average weight loss
-          </td>
-          <td>{{stats.name}}</td>
-        </tr>
-        <tr>
-          <td class="stats_title">Weight Last week +/- difference(date)</td>
-          <td>{{stats.name}}</td>
-        </tr>
-        <tr>
-          <td class="stats_title">Weight Last month +/- difference(date)</td>
-          <td>{{stats.name}}</td>
-        </tr>
-        <tr>
-          <td class="stats_title">Weight Last year +/- difference(date)</td>
-          <td>{{stats.name}}</td>
-        </tr>
+        {{#each controller.stats as |stat|}}
+          <tr>
+            <td class="stats_title">Name</td>
+            <td>{{stat.name}}</td>
+          </tr>
+          <tr>
+            <td class="stats_title">Sex</td>
+            <td>{{stats.name}}</td>
+          </tr>
+          <tr>
+            <td class="stats_title">Height</td>
+            <td>{{stats.name}}</td>
+          </tr>
+          <tr>
+            <td class="stats_title">Target Weight</td>
+            <td>{{stats.name}}</td>
+          </tr>
+          <tr>
+              <td class="stats_title">Start Weight</td>
+              <td>{{stats.name}}</td>
+          </tr>
+          <tr>
+            <td class="stats_title">Current Weight</td>
+            <td>{{stats.name}}</td>
+          </tr>
+          <tr>
+            <td class="stats_title">Weight to go for target</td>
+            <td>{{stats.name}}</td>
+          </tr>
+          <tr>
+            <td class="stats_title">
+              Estimated date target weight hit
+            </td>
+            <td>{{stat.formattedDateToTarget}}</td>
+          </tr>
+          <tr>
+            <td class="stats_title">
+                Change last week(kg)
+            </td>
+            <td>
+              {{stat.changeLastWeek}}
+            </td>
+          </tr>
+          <tr>
+            <td class="stats_title">
+                Change last month(kg)
+            </td>
+            <td>{{stats.name}}</td>
+          </tr>
+          <tr>
+            <td class="stats_title">Change last year(kg)</td>
+            <td>{{stats.name}}</td>
+          </tr>
+        {{/each}}
       </tbody>
     </table>
   </div>

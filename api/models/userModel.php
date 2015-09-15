@@ -1,10 +1,9 @@
 <?php
 
-    use Phalcon\Mvc\Model;
     use Phalcon\Security as Security;
     use Phalcon\Mvc\Model\Transaction\Manager as TransactionManager;
 
-    class userModel extends Model {
+    class userModel extends dbModel {
 
         //db columns
         public $user_id;

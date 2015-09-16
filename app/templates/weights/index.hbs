@@ -32,7 +32,10 @@
           </tr>
           <tr>
             <td class="stats_title">Start Weight(Kg)</td>
-            <td>{{stat.startWeight}}</td>
+            <td>
+              {{stat.startWeight}}&nbsp;
+              ({{date-format stat.accountCreated}})
+            </td>
           </tr>
           <tr>
             <td class="stats_title">Current Weight(Kg)</td>
@@ -48,7 +51,7 @@
           </tr>
           <tr>
             <td class="stats_title">Estimated date target weight hit</td>
-            <td>{{stat.formattedDateToTarget}}</td>
+            <td>{{date-format stat.dateToTarget}}</td>
           </tr>
           <tr>
             <td class="stats_title">Change last week(Kg)</td>
@@ -69,10 +72,24 @@
             </td>
           </tr>
           <tr>
-              <td class="stats_title">Change all time(Kg)</td>
-              <td class="{{table-cell-class stat.changeAllTime}}">
-                {{stat.changeAllTime}}
-              </td>
+            <td class="stats_title">Change all time(Kg)</td>
+            <td class="{{table-cell-class stat.changeAllTime}}">
+              {{stat.changeAllTime}}
+            </td>
+          </tr>
+          <tr>
+            <td class="stats_title">Lowest Weight(Kg)</td>
+            <td>
+              {{stat.minWeight.weight}}&nbsp;
+              ({{date-format stat.minWeight.weighed_date}})
+            </td>
+          </tr>
+          <tr>
+            <td class="stats_title">Highest Weight(Kg)</td>
+            <td>
+              {{stat.maxWeight.weight}}&nbsp;
+              ({{date-format stat.maxWeight.weighed_date}})
+            </td>
           </tr>
         {{/each}}
       </tbody>
@@ -105,7 +122,7 @@
           <tr>
             <td class="date_width"><strong>Date</strong></td>
             <td class="weight_width"><strong>Weight(Kg)</strong></td>
-            <td class="weight_width"><strong>Lost(Kg)</strong></td>
+            <td class="weight_width"><strong>Change(Kg)</strong></td>
             <td class="text-center">-</td>
           </tr>
         </thead>
@@ -113,14 +130,14 @@
           {{#each controller as |weight|}}
             <tr>
               <td>
-                {{weight.formatted_date}}
+                {{date-format weight.date}}
               </td>
               <td class="weight">
-                {{weight.formatted_weight}}
+                {{weight-format weight.weight}}
               </td>
-              <td class="{{table-cell-class weight.lost}} weight">
-                {{#if weight.lost}}
-                  {{weight-format weight.lost}}
+              <td class="{{table-cell-class weight.change}} weight">
+                {{#if weight.change}}
+                  {{weight-format weight.change}}
                 {{else}}
                     -
                 {{/if}}

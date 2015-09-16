@@ -9,15 +9,5 @@ export default DS.Model.extend({
   sex: DS.attr('string'),
   height: DS.attr('number'),
   weight: DS.attr('number'),
-  target_weight: DS.attr('number'),
-  formatted_date: function() {
-    "use strict";
-
-    if(this.get('date')) {
-      return window.moment(this.get('date')).format('MMMM D, YYYY');
-    } else {
-      return;
-    }
-
-  }.property('date')
+  target_weight: DS.attr('number')
 });

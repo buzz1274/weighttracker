@@ -31,7 +31,7 @@
                     $data[] = ['id' => $weight->weight_id,
                                'date' => $weight->weighed_date,
                                'weight' => $weight->weight,
-                               'lost' => $start_weight - $weight->weight];
+                               'change' => $weight->weight - $start_weight];
                 }
 
                 $this->response = array('weights' => $data);
@@ -66,10 +66,13 @@
                            'name' => $user->name,
                            'sex' => $user->sex == 'm' ? 'Male' :' Female',
                            'height' => round($user->height / 100, 2),
+                           'accountCreated' => $user->account_created,
                            'weightToTarget' => ($stats['currentWeight'] -
                                                 $user->target_weight),
                            'targetWeight' => $user->target_weight,
                            'startWeight' => $stats['startWeight'],
+                           'maxWeight' => $stats['maxWeight'],
+                           'minWeight' => $stats['minWeight'],
                            'currentWeight' => $stats['currentWeight'],
                            'changeLastWeek' => $stats['changeLastWeek'],
                            'changeLastMonth' => $stats['changeLastMonth'],

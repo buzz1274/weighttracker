@@ -61,22 +61,24 @@
                                                                     date('Y') - 1)));
 
                 if($changeLastWeek) {
-                    $changeLastWeek = round($changeLastWeek - $currentWeight, 2);
+                    $changeLastWeek = round($currentWeight - $changeLastWeek, 2);
                 }
 
                 if($changeLastMonth) {
-                    $changeLastMonth = round($changeLastMonth - $currentWeight, 2);
+                    $changeLastMonth = round($currentWeight - $changeLastMonth, 2);
                 }
 
                 if($changeLastYear) {
-                    $changeLastYear = round($changeLastYear - $currentWeight, 2);
+                    $changeLastYear = round($currentWeight - $changeLastYear, 2);
                 }
 
                 if($startWeight) {
-                    $changeAllTime = round($startWeight - $currentWeight, 2);
+                    $changeAllTime = round($currentWeight - $startWeight, 2);
                 }
 
             }
+
+            $this->minMaxWeight($user->user_id);
 
             return ['currentWeight' => $currentWeight,
                     'changeLastWeek' => $changeLastWeek,
@@ -84,10 +86,40 @@
                     'changeLastYear' => $changeLastYear,
                     'changeAllTime' => $changeAllTime,
                     'startWeight' => $startWeight,
+                    'minWeight' => $this->minMaxWeight($user->user_id, true),
+                    'maxWeight' => $this->minMaxWeight($user->user_id, false),
                     'dateToTarget' => $this->dateToTarget($user->user_id,
                                                           $user->target_weight)];
         }
         //end stats
+
+        /**
+         * determine a users minimum & maximum weight
+         * @param $userID
+         * @param $min
+         * @return mixed
+         */
+        private function minMaxWeight($userID, $min = true) {
+            if($min) {
+                $direction = 'weight ASC';
+            } else {
+                $direction = 'weight DESC';
+            }
+
+            $weight =
+                self::findFirst(array('columns' => 'weighed_date, weight',
+                                      'conditions' => "user_id = ?1",
+                                      'bind' => array(1 => $userID),
+                                      'order' => $direction))->toArray();
+
+            if(is_array($weight) && isset($weight['weight'])) {
+                return $weight;
+            } else {
+                return false;
+            }
+
+        }
+        //end minMaxWeight
 
         /**
          * get first weight entered
@@ -170,6 +202,7 @@
                 if($targetWeight === $currentWeight ||
                    ($targetWeight > $currentWeight && $averageWeightChange < 0) ||
                    ($targetWeight < $currentWeight && $averageWeightChange > 0)) {
+                    error_log("HERE");
                     return false;
                 }
 

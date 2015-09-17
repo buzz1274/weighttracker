@@ -119,16 +119,16 @@ div#left_container {
 div#control_panel {
   margin-bottom:10px;
 }
-table#weights {
+table.weights {
   margin-bottom:0px;
 }
-table#weights td {
+table.weights td {
   line-height:13px;
 }
 tr.table_nav i {
   color:#FFF;
 }
-table#weights td.blanked {
+table.weights td.blanked {
   background-color:#000;
   border:1px solid #000;
 }
@@ -145,7 +145,6 @@ div#table_title {
 }
 tr.table_nav > td {
   line-height:13px;
-  border:1px solid #000;
   text-align:center;
   font-weight:bold;
 }
@@ -155,28 +154,32 @@ span.control {
 span.control_disabled {
   visibility:hidden;
 }
-table#weights tbody tr {
+table.weights td:not(:last-child) {
+  border-right:1px solid #ddd;
+}
+table.weights tbody tr {
   cursor:pointer;
 }
-table#weights tbody tr > td.weight {
+table.weights tbody tr > td.weight {
   text-align:right;
 }
-table#weights tbody tr > td.success {
+table.weights tbody tr > td.success {
   color:#32CD32;
   font-weight:bold;
 }
-table#weights tbody tr > td.danger {
+table.weights tbody tr > td.danger {
   color:#FF0000;
   font-weight:bold;
 }
-table#weights td.date_width {
+table.weights td.date_width {
   width:43%;
 }
-table#weights td.weight_width {
+table.weights td.weight_width {
   width:23%;
 }
-table#weights td.stats_title {
-  width:45%;
+table.weights td.stats_title {
+  width:43%;
+  font-weight:bold;
 }
 .modal {
   background-color:rgba(0,0,0,0.2);

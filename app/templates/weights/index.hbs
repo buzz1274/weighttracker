@@ -33,21 +33,21 @@
           <tr>
             <td class="stats_title">Start Weight(Kg)</td>
             <td>
-              {{stat.startWeight}}&nbsp;
+              {{weight-format stat.startWeight}}&nbsp;
               ({{date-format stat.accountCreated}})
             </td>
           </tr>
           <tr>
             <td class="stats_title">Current Weight(Kg)</td>
-            <td>{{stat.currentWeight}}</td>
+            <td>{{weight-format stat.currentWeight}}</td>
           </tr>
           <tr>
             <td class="stats_title">Target Weight(Kg)</td>
-            <td>{{stat.targetWeight}}</td>
+            <td>{{weight-format stat.targetWeight}}</td>
           </tr>
           <tr>
             <td class="stats_title">Weight to go for target(Kg)</td>
-            <td>{{stat.weightToTarget}}</td>
+            <td>{{weight-format stat.weightToTarget}}</td>
           </tr>
           <tr>
             <td class="stats_title">Estimated date target weight hit</td>
@@ -56,38 +56,38 @@
           <tr>
             <td class="stats_title">Change last week(Kg)</td>
             <td class="{{table-cell-class stat.changeLastWeek}}">
-              {{stat.changeLastWeek}}
+              {{weight-format stat.changeLastWeek}}
             </td>
           </tr>
           <tr>
             <td class="stats_title">Change last month(Kg)</td>
             <td class="{{table-cell-class stat.changeLastMonth}}">
-              {{stat.changeLastMonth}}
+              {{weight-format stat.changeLastMonth}}
             </td>
           </tr>
           <tr>
             <td class="stats_title">Change last year(Kg)</td>
             <td class="{{table-cell-class stat.changeLastYear}}">
-              {{stat.changeLastYear}}
+              {{weight-format stat.changeLastYear}}
             </td>
           </tr>
           <tr>
             <td class="stats_title">Change all time(Kg)</td>
             <td class="{{table-cell-class stat.changeAllTime}}">
-              {{stat.changeAllTime}}
+              {{weight-format stat.changeAllTime}}
             </td>
           </tr>
           <tr>
             <td class="stats_title">Lowest Weight(Kg)</td>
             <td>
-              {{stat.minWeight.weight}}&nbsp;
+              {{weight-format stat.minWeight.weight}}&nbsp;
               ({{date-format stat.minWeight.weighed_date}})
             </td>
           </tr>
           <tr>
             <td class="stats_title">Highest Weight(Kg)</td>
             <td>
-              {{stat.maxWeight.weight}}&nbsp;
+              {{weight-format stat.maxWeight.weight}}&nbsp;
               ({{date-format stat.maxWeight.weighed_date}})
             </td>
           </tr>

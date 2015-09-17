@@ -9,27 +9,12 @@
       <thead>
         <tr class="table_nav">
           <td colspan="2">
-            {{#link-to 'weights.new' class="pull-right" title="Edit User"}}
-              <i id="edit_user" class="glyphicon glyphicon-edit"></i>
-            {{/link-to}}
-            <div id="table_title">Profile/Stats</div>
+            <div id="table_title">Stats</div>
           </td>
         </tr>
       </thead>
       <tbody>
         {{#each controller.stats as |stat|}}
-          <tr>
-            <td class="stats_title">Name</td>
-            <td>{{stat.name}}</td>
-          </tr>
-          <tr>
-            <td class="stats_title">Sex</td>
-            <td>{{stat.sex}}</td>
-          </tr>
-          <tr>
-            <td class="stats_title">Height(m)</td>
-            <td>{{stat.height}}</td>
-          </tr>
           <tr>
             <td class="stats_title">Start Weight(Kg)</td>
             <td>
@@ -46,12 +31,25 @@
             <td>{{weight-format stat.targetWeight}}</td>
           </tr>
           <tr>
-            <td class="stats_title">Weight to go for target(Kg)</td>
-            <td>{{weight-format stat.weightToTarget}}</td>
+            <td class="stats_title">Weight to target(Kg)</td>
+            <td>
+              {{weight-format stat.weightToTarget}}&nbsp;
+              (~{{date-format stat.dateToTarget}})
+            </td>
           </tr>
           <tr>
-            <td class="stats_title">Estimated date target weight hit</td>
-            <td>{{date-format stat.dateToTarget}}</td>
+            <td class="stats_title">Lowest Weight(Kg)</td>
+            <td>
+              {{weight-format stat.minWeight.weight}}&nbsp;
+                ({{date-format stat.minWeight.weighed_date}})
+            </td>
+          </tr>
+          <tr>
+            <td class="stats_title">Highest Weight(Kg)</td>
+            <td>
+              {{weight-format stat.maxWeight.weight}}&nbsp;
+                ({{date-format stat.maxWeight.weighed_date}})
+            </td>
           </tr>
           <tr>
             <td class="stats_title">Change last week(Kg)</td>
@@ -75,20 +73,6 @@
             <td class="stats_title">Change all time(Kg)</td>
             <td class="{{table-cell-class stat.changeAllTime}}">
               {{weight-format stat.changeAllTime}}
-            </td>
-          </tr>
-          <tr>
-            <td class="stats_title">Lowest Weight(Kg)</td>
-            <td>
-              {{weight-format stat.minWeight.weight}}&nbsp;
-              ({{date-format stat.minWeight.weighed_date}})
-            </td>
-          </tr>
-          <tr>
-            <td class="stats_title">Highest Weight(Kg)</td>
-            <td>
-              {{weight-format stat.maxWeight.weight}}&nbsp;
-              ({{date-format stat.maxWeight.weighed_date}})
             </td>
           </tr>
         {{/each}}

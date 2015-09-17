@@ -63,9 +63,6 @@
                 $this->response = array('stats' => false);
             } else {
                 $data[] = ['id' => $user->user_id,
-                           'name' => $user->name,
-                           'sex' => $user->sex == 'm' ? 'Male' :' Female',
-                           'height' => round($user->height / 100, 2),
                            'accountCreated' => $user->account_created,
                            'weightToTarget' => ($stats['currentWeight'] -
                                                 $user->target_weight),

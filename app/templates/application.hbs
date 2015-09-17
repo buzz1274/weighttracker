@@ -3,7 +3,11 @@
         <div id="welcome">
             {{#if session.isAuthenticated}}
               Welcome back,
-              {{session.secure.name}}&nbsp;|&nbsp;<a {{action 'invalidateSession'}}>logout</a>
+              {{session.secure.name}}&nbsp;
+              {{#link-to 'weights.new' title="Edit User"}}
+                <i id="edit_user" class="glyphicon glyphicon-edit"></i>
+              {{/link-to}}|&nbsp;
+              <a {{action 'invalidateSession'}}>logout</a>
             {{else}}
               {{#link-to 'login'}}Login{{/link-to}}
             {{/if}}

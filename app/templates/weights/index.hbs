@@ -23,7 +23,10 @@
           </tr>
           <tr>
             <td class="stats_title">Current Weight(Kg)</td>
-            <td>{{weight-format stat.currentWeight}}</td>
+            <td>
+              {{weight-format stat.currentWeight.weight}}&nbsp;
+              ({{date-format stat.currentWeight.weighed_date}})
+            </td>
           </tr>
           <tr>
             <td class="stats_title">Target Weight(Kg)</td>

@@ -64,7 +64,7 @@
             } else {
                 $data[] = ['id' => $user->user_id,
                            'accountCreated' => $user->account_created,
-                           'weightToTarget' => ($stats['currentWeight'] -
+                           'weightToTarget' => ($stats['currentWeight']['weight'] -
                                                 $user->target_weight),
                            'targetWeight' => $user->target_weight,
                            'startWeight' => $stats['startWeight'],

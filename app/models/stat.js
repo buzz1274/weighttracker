@@ -7,7 +7,7 @@ export default DS.Model.extend({
   changeAllTime: DS.attr('number'),
   dateToTarget: DS.attr('date'),
   accountCreated: DS.attr('date'),
-  currentWeight: DS.attr('number'),
+  currentWeight: DS.attr(),
   targetWeight: DS.attr('number'),
   weightToTarget: DS.attr('number'),
   startWeight: DS.attr('number'),

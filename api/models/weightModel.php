@@ -36,9 +36,10 @@
             $changeLastMonth = false;
             $changeLastYear = false;
             $startWeight = $this->startWeight($user->user_id);
-            $currentWeight = $this->closestWeightToDate($user->user_id, date('Y-m-d'));
+            $currentWeight = $this->closestWeightToDate($user->user_id,
+                                                        date('Y-m-d'), true);
 
-            if($currentWeight) {
+            if($currentWeight['weight']) {
                 $changeLastWeek =
                     $this->closestWeightToDate($user->user_id,
                                                date('Y-m-d', mktime(0, 0, 0,
@@ -61,19 +62,23 @@
                                                                     date('Y') - 1)));
 
                 if($changeLastWeek) {
-                    $changeLastWeek = round($currentWeight - $changeLastWeek, 2);
+                    $changeLastWeek = round($currentWeight['weight'] -
+                                            $changeLastWeek, 2);
                 }
 
                 if($changeLastMonth) {
-                    $changeLastMonth = round($currentWeight - $changeLastMonth, 2);
+                    $changeLastMonth = round($currentWeight['weight'] -
+                                             $changeLastMonth, 2);
                 }
 
                 if($changeLastYear) {
-                    $changeLastYear = round($currentWeight - $changeLastYear, 2);
+                    $changeLastYear = round($currentWeight['weight'] -
+                                            $changeLastYear, 2);
                 }
 
                 if($startWeight) {
-                    $changeAllTime = round($currentWeight - $startWeight, 2);
+                    $changeAllTime = round($currentWeight['weight'] -
+                                           $startWeight, 2);
                 }
 
             }
@@ -146,18 +151,24 @@
          * returns the closest weight to the supplied date
          * @param $userID
          * @param $date
+         * @param $returnDate
          * @return mixed
          */
-        private function closestWeightToDate($userID, $date) {
+        private function closestWeightToDate($userID, $date,
+                                             $returnDate = false) {
             $results = self::find(
-                array('columns' => 'weight',
+                array('columns' => 'weight, weighed_date',
                       'conditions' => "user_id = ?1",
                       'bind' => array(1 => $userID, 2 => $date),
                       'order' => "ABS(weighed_date - DATE(?2))",
                       'limit' => 1))->toArray();
 
             if(is_array($results) && count($results) === 1) {
-                return $results[0]['weight'];
+                if($returnDate) {
+                    return $results[0];
+                } else {
+                    return $results[0]['weight'];
+                }
             } else {
                 return false;
             }

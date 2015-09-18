@@ -26,7 +26,7 @@
         //end weights
 
         /**
-         * get weight loss stats for suppleid userID
+         * get weight loss stats for supplied userID
          * @param $user
          * @return array
          */
@@ -202,7 +202,6 @@
                 if($targetWeight === $currentWeight ||
                    ($targetWeight > $currentWeight && $averageWeightChange < 0) ||
                    ($targetWeight < $currentWeight && $averageWeightChange > 0)) {
-                    error_log("HERE");
                     return false;
                 }
 

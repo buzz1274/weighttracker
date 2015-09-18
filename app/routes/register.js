@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  setupController(controller, model) {
+  setupController(controller) {
     "use strict";
 
     if(this.get('session').isAuthenticated) {

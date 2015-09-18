@@ -27,7 +27,10 @@
           </tr>
           <tr>
             <td class="stats_title">Target Weight(Kg)</td>
-            <td>{{weight-format stat.targetWeight}}</td>
+            <td>
+              {{weight-format stat.targetWeight}}&nbsp;
+              (~{{date-format stat.dateToTarget}})
+            </td>
           </tr>
           <tr>
             <td class="stats_title">Weight to target(Kg)</td>
@@ -125,8 +128,8 @@
                 {{/if}}
               </td>
               <td class="text-center">
-                <i class="glyphicon glyphicon-trash"></i>
                 <i class="glyphicon glyphicon-edit"></i>
+                <i class="glyphicon glyphicon-trash"></i>
               </td>
             </tr>
           {{/each}}

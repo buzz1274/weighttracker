@@ -6,5 +6,11 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   model() {
     "use strict";
     return this.store.createRecord('weight');
-  }
+  },
+  deactivate: function() {
+    "use strict";
+
+    var model = this.controllerFor('weights.new').get('model');
+    model.rollback();
+  },
 });

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
-git pull
+npm install
+bower install --allow-root
 ember build --environment production
 

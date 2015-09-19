@@ -32,14 +32,18 @@
             <td class="stats_title">Target Weight(Kg)</td>
             <td>
               {{weight-format stat.targetWeight}}&nbsp;
-              (~{{date-format stat.dateToTarget}})
+              {{#if stat.dateToTarget}}
+                (~{{date-format stat.dateToTarget}})
+              {{/if}}
             </td>
           </tr>
           <tr>
             <td class="stats_title">Weight to target(Kg)</td>
             <td>
               {{weight-format stat.weightToTarget}}&nbsp;
-              (~{{date-format stat.dateToTarget}})
+              {{#if stat.dateToTarget}}
+                (~{{date-format stat.dateToTarget}})
+              {{/if}}
             </td>
           </tr>
           <tr>

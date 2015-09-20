@@ -2,6 +2,7 @@
 development_mode = 0
 mainsite_url = ""
 port = ""
+db_backup_folder=""
 
 [database]
 db_host = ""

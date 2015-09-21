@@ -172,13 +172,16 @@ table.weights tbody tr > td.danger {
   font-weight:bold;
 }
 table.weights td.date_width {
-  width:43%;
+  width:40%;
 }
-table.weights td.weight_width {
-  width:23%;
+table.weights td.weight_width_20 {
+  width:20%;
+}
+table.weights td.weight_width_28 {
+  width:28%;
 }
 table.weights td.stats_title {
-  width:43%;
+  width:40%;
   font-weight:bold;
 }
 .modal {

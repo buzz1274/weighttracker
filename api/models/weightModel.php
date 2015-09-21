@@ -18,10 +18,35 @@
          * @return mixed
          */
         public function weights($userID) {
-            $weights = self::find(array('conditions' => "user_id = ?1",
-                                        'bind' => array(1 => $userID),
-                                        'order' => 'weighed_date DESC'));
-            return $weights;
+
+            $query = "SELECT weight.weight_id, weights.weighed_date, ".
+                     "       weights.date_difference, weight.weight, ".
+                     "       last_week.last_week_date AS last_week_date, ".
+                     "       last_week.weight AS last_week_weight, ".
+                     "       weight.weight - last_week.weight AS change ".
+                     "FROM (SELECT   w.weighed_date, ".
+                     "               MIN(ABS((lw.weighed_date + 7) - w.weighed_date)) AS date_difference ".
+                     '      FROM     weight w '.
+                     '      JOIN     weight lw ON lw.user_id = w.user_id '.
+                     "      WHERE    w.user_id = ? ".
+                     "      GROUP BY w.weighed_date ".
+                     "      ORDER BY w.weighed_date DESC, date_difference ASC) AS weights ".
+                     "JOIN  weight ON (    weight.user_id = ? ".
+                     "                 AND weight.weighed_date = weights.weighed_date) ".
+                     "JOIN  (SELECT w.weighed_date, lw.weight, lw.weighed_date AS last_week_date, ".
+                     "              ABS((lw.weighed_date + 7) - w.weighed_date) AS date_difference ".
+                     "       FROM weight w ".
+                     "       JOIN weight lw ON lw.user_id = w.user_id ".
+                     "       WHERE w.user_id = ? ".
+                     "       GROUP BY w.weighed_date, lw.weight, lw.weighed_date ".
+                     "       ORDER BY w.weighed_date DESC, date_difference ASC ".
+                     "       ) AS last_week ON (    last_week.date_difference = weights.date_difference ".
+                     "                          AND weight.weighed_date = last_week.weighed_date) ".
+                     "ORDER BY weights.weighed_date DESC";
+
+            return $this->getReadConnection()->query(
+                $query, array($userID, $userID, $userID))->fetchAll();
+
         }
         //end weights
 

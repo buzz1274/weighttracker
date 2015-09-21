@@ -6,6 +6,7 @@
             parent::__construct($app);
 
             $this->weight = new weightModel();
+
         }
         //end __construct
 
@@ -25,13 +26,11 @@
                 $this->response = array('weights' => false);
             } else {
 
-                $start_weight = $weights->getLast()->weight;
-
                 foreach($weights as $weight) {
-                    $data[] = ['id' => $weight->weight_id,
-                               'date' => $weight->weighed_date,
-                               'weight' => $weight->weight,
-                               'change' => $weight->weight - $start_weight];
+                    $data[] = ['id' => $weight['weight_id'],
+                               'date' => $weight['weighed_date'],
+                               'weight' => $weight['weight'],
+                               'change' => $weight['change']];
                 }
 
                 $this->response = array('weights' => $data);
@@ -92,13 +91,31 @@
          */
         public function addWeight() {
 
-            /*
-            $app->response->setJsonContent(array('weight' =>
-                array('id' => 2,
-                    'date' => $weight->weight->date,
-                    'weight' => $weight->weight->weight,
-                    'lost' => 110 - $weight->weight->weight)));
-            */
+            if(!$this->app->session->get('userID')) {
+                $this->statusCode = '401';
+
+                return $this->generateResponse();
+
+            }
+
+            $this->weight->weight = $this->request->weight->weight;
+            $this->weight->weighed_date = $this->request->weight->date;
+            $this->weight->user_id = $this->app->session->get('userID');
+
+            $this->weight->save();
+
+            //error_log(json_encode($this->request->weight->weight));
+            error_log(json_encode($this->request));
+
+
+            $this->response =
+                array('weight' => array('id' => $this->weight->weight_id,
+                                        'date' => $this->weight->weighed_date,
+                                        'weight' => $this->weight->weight,
+                                        'changed' => 110.10 - $this->weight->weight));
+
+
+            error_log(json_encode($this->response));
 
             return $this->generateResponse();
 

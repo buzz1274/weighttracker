@@ -9,6 +9,9 @@ export default Ember.ArrayController.extend({
   totalPages: 1,
   prevDisabled: true,
   nextDisabled: true,
+  stats: false,
+  targetWeight: false,
+  currentWeight: false,
   actions: {
     prevPage: function() {
       "use strict";

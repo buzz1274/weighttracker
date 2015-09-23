@@ -15,7 +15,7 @@
          * @return mixed
          */
         public function weights() {
-
+            
             if(!$this->app->session->get('userID')) {
                 $this->statusCode = '401';
 
@@ -31,9 +31,6 @@
                                'date' => $weight['weighed_date'],
                                'weight' => $weight['weight'],
                                'change' => $weight['change']];
-
-                    error_log($weight['weighed_date'].'  '.$weight['weight']);
-
                 }
 
                 $this->response = array('weights' => $data);

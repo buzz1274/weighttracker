@@ -12,7 +12,7 @@ export default Ember.ArrayController.extend({
   stats: false,
   targetWeight: false,
   currentWeight: false,
-  message: false,
+  updateArrangedContent: false,
   actions: {
     prevPage: function() {
       "use strict";
@@ -32,21 +32,15 @@ export default Ember.ArrayController.extend({
       }
 
     },
-    modifiedWeight: function(message) {
+    updateArrangedContent: function() {
       "use strict";
 
-      this.set('message', message);
+      this.set('updateArrangedContent', true);
 
     }
   },
   arrangedContent: function() {
     "use strict";
-
-    console.log("AC");
-
-    if(!this.page) {
-      this.set('page', 1);
-    }
 
     this.set('startRecord', (this.page - 1) * this.recordsPerPage);
     this.set('totalPages', Math.ceil(this.get('content.length') /
@@ -64,12 +58,14 @@ export default Ember.ArrayController.extend({
       this.set('prevDisabled', false);
     }
 
+    this.set('updateArrangedContent', false);
+
     return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
-      content: this.get('content').toArray(),
+      content: this.get('model').toArray(),
       sortProperties: this.get('sortProperties'),
       sortAscending: this.get('sortAscending')
     }).slice(this.startRecord, this.startRecord + this.recordsPerPage);
 
   }.property('weight', 'page', 'totalPages', 'prevDisabled',
-             'nextDisabled', 'message')
+             'nextDisabled', 'updateArrangedContent')
 });

@@ -12,8 +12,8 @@ export default Ember.Controller.extend({
       }
 
       this.get('model').save().then(() => {
-        this.controllerFor('weights.index').send('setMessage', 'added');
         this.transitionToRoute('weights.index');
+        this.controllerFor('weights.index').send('updateArrangedContent');
       });
 
       return false;

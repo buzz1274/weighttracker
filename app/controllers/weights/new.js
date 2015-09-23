@@ -5,13 +5,14 @@ export default Ember.Controller.extend({
     save() {
       "use strict";
 
-      var date = new Date(this.get('model').get('formatted_date'));
+      var date = new Date(window.moment.utc(this.get('model').get('formatted_date')));
 
       if(date !== 'Invalid Date') {
         this.get('model').set('date', date);
       }
 
       this.get('model').save().then(() => {
+        this.controllerFor('weights.index').send('setMessage', 'added');
         this.transitionToRoute('weights.index');
       });
 

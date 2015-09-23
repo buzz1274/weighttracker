@@ -31,6 +31,9 @@
                                'date' => $weight['weighed_date'],
                                'weight' => $weight['weight'],
                                'change' => $weight['change']];
+
+                    error_log($weight['weighed_date'].'  '.$weight['weight']);
+
                 }
 
                 $this->response = array('weights' => $data);
@@ -51,7 +54,6 @@
 
             if(!$this->app->session->get('userID') ||
                !($user = $user->findFirst($this->app->session->get('userID')))) {
-
                 $this->statusCode = '401';
 
                 return $this->generateResponse();
@@ -93,31 +95,44 @@
 
             if(!$this->app->session->get('userID')) {
                 $this->statusCode = '401';
+            } else {
 
-                return $this->generateResponse();
+                $this->weight->weight = $this->request->weight->weight;
+                $this->weight->weighed_date = $this->request->weight->date;
+                $this->weight->user_id = $this->app->session->get('userID');
+
+                //validate weight
+
+                if(!$this->weight->save() || !isset($this->weight->weight_id) ||
+                    !$this->weight->weight_id) {
+
+                    $this->statusCode = '500';
+
+                } else {
+
+                    $date = strtotime($this->request->weight->date);
+                    $changeLastWeek =
+                        $this->weight->closestWeightToDate($this->weight->user_id,
+                                                   date('Y-m-d', mktime(0, 0, 0,
+                                                                        date('n',
+                                                                             $date),
+                                                                        date('j',
+                                                                             $date) - 7,
+                                                                        date('Y',
+                                                                             $date))));
+
+                    $this->response =
+                        array('weight' => array('id' => $this->weight->weight_id,
+                            'date' => $this->weight->weighed_date,
+                            'weight' => $this->weight->weight,
+                            'changed' => round($this->weight->weight -
+                                               $changeLastWeek, 2)));
+
+                    return $this->generateResponse();
+
+                }
 
             }
-
-            $this->weight->weight = $this->request->weight->weight;
-            $this->weight->weighed_date = $this->request->weight->date;
-            $this->weight->user_id = $this->app->session->get('userID');
-
-            $this->weight->save();
-
-            //error_log(json_encode($this->request->weight->weight));
-            error_log(json_encode($this->request));
-
-
-            $this->response =
-                array('weight' => array('id' => $this->weight->weight_id,
-                                        'date' => $this->weight->weighed_date,
-                                        'weight' => $this->weight->weight,
-                                        'changed' => 110.10 - $this->weight->weight));
-
-
-            error_log(json_encode($this->response));
-
-            return $this->generateResponse();
 
         }
         //end addWeight

@@ -124,6 +124,34 @@
         //end stats
 
         /**
+         * returns the closest weight to the supplied date
+         * @param $userID
+         * @param $date
+         * @param $returnDate
+         * @return mixed
+         */
+        public function closestWeightToDate($userID, $date,
+                                            $returnDate = false) {
+            $results = self::find(
+                array('columns' => 'weight, weighed_date',
+                    'conditions' => "user_id = ?1",
+                    'bind' => array(1 => $userID, 2 => $date),
+                    'order' => "ABS(weighed_date - DATE(?2))",
+                    'limit' => 1))->toArray();
+
+            if(is_array($results) && count($results) === 1) {
+                if($returnDate) {
+                    return $results[0];
+                } else {
+                    return $results[0]['weight'];
+                }
+            } else {
+                return false;
+            }
+        }
+        //end closestWeightToDate
+
+        /**
          * determine a users minimum & maximum weight
          * @param $userID
          * @param $min
@@ -171,34 +199,6 @@
             }
         }
         //end startWeight
-
-        /**
-         * returns the closest weight to the supplied date
-         * @param $userID
-         * @param $date
-         * @param $returnDate
-         * @return mixed
-         */
-        private function closestWeightToDate($userID, $date,
-                                             $returnDate = false) {
-            $results = self::find(
-                array('columns' => 'weight, weighed_date',
-                      'conditions' => "user_id = ?1",
-                      'bind' => array(1 => $userID, 2 => $date),
-                      'order' => "ABS(weighed_date - DATE(?2))",
-                      'limit' => 1))->toArray();
-
-            if(is_array($results) && count($results) === 1) {
-                if($returnDate) {
-                    return $results[0];
-                } else {
-                    return $results[0]['weight'];
-                }
-            } else {
-                return false;
-            }
-        }
-        //end closestWeightToDate
 
         /**
          * calculates the date the target weight will be hit

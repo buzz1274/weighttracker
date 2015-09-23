@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
-  sortProperties: ['weighed_date'],
+  sortProperties: ['date'],
   sortAscending: false,
   recordsPerPage: 10,
   startRecord: 1,
@@ -12,6 +12,7 @@ export default Ember.ArrayController.extend({
   stats: false,
   targetWeight: false,
   currentWeight: false,
+  message: false,
   actions: {
     prevPage: function() {
       "use strict";
@@ -31,9 +32,21 @@ export default Ember.ArrayController.extend({
       }
 
     },
+    modifiedWeight: function(message) {
+      "use strict";
+
+      this.set('message', message);
+
+    }
   },
   arrangedContent: function() {
     "use strict";
+
+    console.log("AC");
+
+    if(!this.page) {
+      this.set('page', 1);
+    }
 
     this.set('startRecord', (this.page - 1) * this.recordsPerPage);
     this.set('totalPages', Math.ceil(this.get('content.length') /
@@ -51,8 +64,12 @@ export default Ember.ArrayController.extend({
       this.set('prevDisabled', false);
     }
 
-    return this.get('content').slice(this.startRecord,
-                                     this.startRecord + this.recordsPerPage);
+    return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
+      content: this.get('content').toArray(),
+      sortProperties: this.get('sortProperties'),
+      sortAscending: this.get('sortAscending')
+    }).slice(this.startRecord, this.startRecord + this.recordsPerPage);
 
-  }.property('weight', 'page', 'totalPages', 'prevDisabled', 'nextDisabled')
+  }.property('weight', 'page', 'totalPages', 'prevDisabled',
+             'nextDisabled', 'message')
 });

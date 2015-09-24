@@ -15,7 +15,7 @@
          * @return mixed
          */
         public function weights() {
-            
+
             if(!$this->app->session->get('userID')) {
                 $this->statusCode = '401';
 

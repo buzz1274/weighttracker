@@ -13,6 +13,9 @@ App = Ember.Application.extend({
   Resolver: Resolver,
 });
 
+App.idleTime = 0;
+App.idleMax = 5;
+
 loadInitializers(App, config.modulePrefix);
 
 export default App;

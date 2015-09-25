@@ -40,8 +40,5 @@
     "ember-disable-proxy-controllers": "^1.0.0",
     "ember-export-application-global": "^1.0.2",
     "jqui-datepicker": "0.1.3"
-  },
-  "dependencies": {
-    "ember-cli-chart": "^2.0.5"
   }
 }

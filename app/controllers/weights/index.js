@@ -13,6 +13,50 @@ export default Ember.ArrayController.extend({
   targetWeight: false,
   currentWeight: false,
   updateArrangedContent: false,
+  chartOptions: {pointDot: false,
+                 animation: false,
+                 scaleShowHorizontalLines: true,
+                 scaleShowVerticalLines: false,
+                 showTooltips: false},
+  chartData: Ember.computed('model', function() {
+    "use strict";
+
+    return {
+      labels: Array.apply(null, new Array(this.get('content.length'))).map(String.prototype.valueOf, ''),
+      datasets: [
+        {
+          label: "Obese",
+          data: Array.apply(null, new Array(this.get('content.length'))).map(Number.prototype.valueOf, 120),
+          fillColor: "rgba(255,0,0,0.05)",
+          strokeColor: "transparent",
+        },
+        {
+          label: "Overweight",
+          data: Array.apply(null, new Array(this.get('content.length'))).map(Number.prototype.valueOf, 98),
+          fillColor: "rgba(255,255,0,0.05)",
+          strokeColor: "rgba(255,127,0,0.5)",
+        },
+        {
+          label: "Normal Weight",
+          data: Array.apply(null, new Array(this.get('content.length'))).map(Number.prototype.valueOf, 85),
+          fillColor: "rgba(0,255,255,0.05)",
+          strokeColor: "rgba(0,255,0,0.5)",
+        },
+        {
+          label: "Weight",
+          fillColor: "transparent",
+          strokeColor: "#AAA",
+          data: this.get('content').mapBy('weight').reverse()
+        },
+        {
+          label: "Target Weight",
+          data: Array.apply(null, new Array(this.get('content.length'))).map(Number.prototype.valueOf, 78),
+          strokeColor: "#9Af",
+        },
+      ]
+    };
+
+  }),
   actions: {
     prevPage: function() {
       "use strict";

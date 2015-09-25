@@ -109,7 +109,6 @@ p.form-warning {
 div#graph {
   float:right;
   width:690px;
-  border:1px solid #000;
   min-height:500px;
   margin-bottom:10px;
 }

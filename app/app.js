@@ -14,7 +14,7 @@ App = Ember.Application.extend({
 });
 
 App.idleTime = 0;
-App.idleMax = 5;
+App.idleMax = 15;
 
 loadInitializers(App, config.modulePrefix);
 

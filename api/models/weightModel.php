@@ -64,6 +64,15 @@
             $currentWeight = $this->closestWeightToDate($user->user_id,
                                                         date('Y-m-d'), true);
 
+            $maxUnderweightWeight = round((($user->height / 100) *
+                                           ($user->height / 100)) * 18.5, 2);
+
+            $maxNormalWeight = round((($user->height / 100) *
+                                      ($user->height / 100)) * 25, 2);
+
+            $maxOverweightWeight = round((($user->height / 100) *
+                                          ($user->height / 100)) * 30, 2);
+
             if($currentWeight['weight']) {
                 $changeLastWeek =
                     $this->closestWeightToDate($user->user_id,
@@ -116,6 +125,9 @@
                     'changeLastYear' => $changeLastYear,
                     'changeAllTime' => $changeAllTime,
                     'startWeight' => $startWeight,
+                    'maxUnderweightWeight' => $maxUnderweightWeight,
+                    'maxNormalWeight' => $maxNormalWeight,
+                    'maxOverweightWeight' => $maxOverweightWeight,
                     'minWeight' => $this->minMaxWeight($user->user_id, true),
                     'maxWeight' => $this->minMaxWeight($user->user_id, false),
                     'dateToTarget' => $this->dateToTarget($user->user_id,

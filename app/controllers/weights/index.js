@@ -15,31 +15,54 @@ export default Ember.ArrayController.extend({
   updateArrangedContent: false,
   chartOptions: {pointDot: false,
                  animation: false,
+                 height: 700,
                  scaleShowHorizontalLines: true,
                  scaleShowVerticalLines: false,
+                 scaleGridLineColor : "rgba(0,0,0,0.10)",
+
                  showTooltips: false},
   chartData: Ember.computed('model', function() {
     "use strict";
 
-    return {
-      labels: Array.apply(null, new Array(this.get('content.length'))).map(String.prototype.valueOf, ''),
+    var obeseWeight = 0;
+
+    if(this.get('stats').objectAt(0).get('maxOverweightWeight') >
+       this.get('stats').objectAt(0).get('maxWeight')) {
+      obeseWeight = Number(this.get('stats').objectAt(0).get('maxOverweightWeight')) + 5;
+    } else {
+      obeseWeight = Number(this.get('stats').objectAt(0).get('maxWeight.weight')) + 5;
+    }
+
+    var dataset =  {
+      labels: Array.apply(null, new Array(this.get('totalWeights'))).map(
+        String.prototype.valueOf, ''),
       datasets: [
         {
           label: "Obese",
-          data: Array.apply(null, new Array(this.get('content.length'))).map(Number.prototype.valueOf, 120),
+          data: Array.apply(null, new Array(this.get('totalWeights'))).map(
+            Number.prototype.valueOf, Math.round(Number(obeseWeight))),
           fillColor: "rgba(255,0,0,0.05)",
           strokeColor: "transparent",
         },
         {
           label: "Overweight",
-          data: Array.apply(null, new Array(this.get('content.length'))).map(Number.prototype.valueOf, 98),
+          data: Array.apply(null, new Array(this.get('totalWeights'))).map(
+            Number.prototype.valueOf, this.get('stats').objectAt(0).get('maxOverweightWeight')),
           fillColor: "rgba(255,255,0,0.05)",
           strokeColor: "rgba(255,127,0,0.5)",
         },
         {
           label: "Normal Weight",
-          data: Array.apply(null, new Array(this.get('content.length'))).map(Number.prototype.valueOf, 85),
+          data: Array.apply(null, new Array(this.get('totalWeights'))).map(
+            Number.prototype.valueOf, this.get('stats').objectAt(0).get('maxNormalWeight')),
           fillColor: "rgba(0,255,255,0.05)",
+          strokeColor: "rgba(0,255,0,0.5)",
+        },
+        {
+          label: "Underweight",
+          data: Array.apply(null, new Array(this.get('totalWeights'))).map(
+            Number.prototype.valueOf, this.get('stats').objectAt(0).get('maxUnderweightWeight')),
+          fillColor: "rgba(255,0,0,0.05)",
           strokeColor: "rgba(0,255,0,0.5)",
         },
         {
@@ -50,11 +73,28 @@ export default Ember.ArrayController.extend({
         },
         {
           label: "Target Weight",
-          data: Array.apply(null, new Array(this.get('content.length'))).map(Number.prototype.valueOf, 78),
+          data: Array.apply(null, new Array(this.get('totalWeights'))).map(
+            Number.prototype.valueOf, this.get('targetWeight')),
           strokeColor: "#9Af",
         },
       ]
     };
+
+    if(this.get('stats').objectAt(0).get('minWeight') >
+       this.get('stats').objectAt(0).get('maxUnderweightWeight') + 5 ||
+       this.get('targetWeight') >
+       this.get('stats').objectAt(0).get('maxUnderweightWeight') + 5) {
+      dataset.datasets[3].data = [];
+    }
+
+    if(this.get('stats').objectAt(0).get('maxWeight') <
+      this.get('stats').objectAt(0).get('maxOverweightWeight') + 5 ||
+      this.get('targetWeight') >
+      this.get('stats').objectAt(0).get('maxOverweightWeight') + 5) {
+      dataset.datasets[0].data = [];
+    }
+
+    return dataset;
 
   }),
   actions: {
@@ -86,8 +126,9 @@ export default Ember.ArrayController.extend({
   arrangedContent: function() {
     "use strict";
 
+    this.set('totalWeights', this.get('content.length'));
     this.set('startRecord', (this.page - 1) * this.recordsPerPage);
-    this.set('totalPages', Math.ceil(this.get('content.length') /
+    this.set('totalPages', Math.ceil(this.get('totalWeights') /
                            this.recordsPerPage));
 
     if(this.page < this.totalPages) {
@@ -111,5 +152,5 @@ export default Ember.ArrayController.extend({
     }).slice(this.startRecord, this.startRecord + this.recordsPerPage);
 
   }.property('weight', 'page', 'totalPages', 'prevDisabled',
-             'nextDisabled', 'updateArrangedContent')
+             'nextDisabled', 'updateArrangedContent', 'totalWeights')
 });

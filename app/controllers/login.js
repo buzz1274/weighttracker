@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import app from '../app';
 
 export default Ember.Controller.extend({
   errorMessage: false,
@@ -11,6 +12,7 @@ export default Ember.Controller.extend({
 
       this.get('session').authenticate('authenticator:custom', data).then(null, function(message) {
         if(!message) {
+          app.idleTime = 0;
           that.transitionToRoute('error');
         } else {
           that.set('errorMessage', message);

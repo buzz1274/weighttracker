@@ -8,6 +8,7 @@ export default Ember.ArrayController.extend({
   startRecord: 1,
   page: 1,
   totalPages: 1,
+  totalWeights: 0,
   prevDisabled: true,
   nextDisabled: true,
   stats: false,
@@ -34,8 +35,8 @@ export default Ember.ArrayController.extend({
     }
 
     var dataset =  {
-      labels: Array.apply(null, new Array(this.get('totalWeights'))).map(
-        String.prototype.valueOf, ''),
+      labels: this.calculateXAxisLabels(),
+      showXLabels: 10,
       datasets: [
         {
           label: "Obese",
@@ -120,8 +121,6 @@ export default Ember.ArrayController.extend({
     updateArrangedContent: function() {
       "use strict";
 
-      console.log(window.ember)
-
       this.set('updateArrangedContent', true);
 
     }
@@ -155,5 +154,37 @@ export default Ember.ArrayController.extend({
     }).slice(this.startRecord, this.startRecord + this.recordsPerPage);
 
   }.property('weight', 'page', 'totalPages', 'prevDisabled',
-             'nextDisabled', 'updateArrangedContent', 'totalWeights')
+             'nextDisabled', 'updateArrangedContent', 'totalWeights'),
+  calculateXAxisLabels: function() {
+    "use strict";
+    var dates = [],
+        totalWeights = this.get('totalWeights'),
+        currentDate = false,
+        lastAddedDate = false,
+        countWhenAdded = 0,
+        weighedDates = this.get('content').mapBy('date').reverse(),
+        skipDateAmount = totalWeights * 0.10;
+
+    for (var i = 0; i < totalWeights; i++) {
+      currentDate = window.moment(weighedDates[i]).format('MMMM, YYYY');
+      if(i === 0) {
+        dates[i] = currentDate;
+        lastAddedDate = currentDate;
+        countWhenAdded = i;
+      } else if(i === totalWeights - 1) {
+        dates[i] = currentDate;
+      } else {
+        if(lastAddedDate !== currentDate && (i - countWhenAdded) > skipDateAmount) {
+          dates[i] = currentDate;
+          lastAddedDate = currentDate;
+          countWhenAdded = i;
+        } else {
+          dates[i] = '';
+        }
+      }
+    }
+
+    return dates;
+
+  }
 });

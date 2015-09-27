@@ -1,8 +1,30 @@
 
 <div id="graph">
   {{ember-chart type='Line' data=chartData
-                height=550 width=680
+                height=550 width=680 legend=false
                 options=chartOptions}}
+  <ul class="line-legend">
+    <li>
+      <span class="label" style="background-color:#AAA;">&nbsp;</span>
+      Current weight
+    </li>
+    <li>
+      <span class="label" style="background-color:#9AF;">&nbsp;</span>
+      Target weight
+    </li>
+    <li>
+      <span class="label" style="background-color:#FF0000;">&nbsp;</span>
+      Obese
+    </li>
+    <li>
+      <span class="label" style="background-color:rgba(255,127,0,0.5);">&nbsp;</span>
+      Overweight/Underweight
+    </li>
+    <li>
+      <span class="label" style="background-color:rgba(0,255,0,0.5);">&nbsp;</span>
+      Normal weight
+    </li>
+  </ul>
 </div>
 
 <div id="left_container">

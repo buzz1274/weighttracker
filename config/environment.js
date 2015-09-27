@@ -22,7 +22,7 @@ module.exports = function(environment) {
       'font-src': "'self'",
       'connect-src': "'self' ws://dev.weighttracker.zz50.co.uk:35729 dev.weighttracker.zz50.co.uk",
       'img-src': "'self'",
-      'style-src': "'self'",
+      'style-src': "'self' 'unsafe-inline'",
       'media-src': "'self'"
     }
 

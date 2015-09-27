@@ -1,4 +1,5 @@
 import Ember from 'ember';
+//import EmberChart from 'ember-cli-chart/components/ember-chart';
 
 export default Ember.ArrayController.extend({
   sortProperties: ['date'],
@@ -42,7 +43,7 @@ export default Ember.ArrayController.extend({
           data: Array.apply(null, new Array(this.get('totalWeights'))).map(
             Number.prototype.valueOf, Math.round(Number(obeseWeight))),
           fillColor: "rgba(255,0,0,0.05)",
-          strokeColor: "transparent",
+          strokeColor: "#FF0000",
         },
         {
           label: "Overweight",
@@ -75,7 +76,7 @@ export default Ember.ArrayController.extend({
           label: "Target Weight",
           data: Array.apply(null, new Array(this.get('totalWeights'))).map(
             Number.prototype.valueOf, this.get('targetWeight')),
-          strokeColor: "#9Af",
+          strokeColor: "#9AF",
         },
       ]
     };
@@ -118,6 +119,8 @@ export default Ember.ArrayController.extend({
     },
     updateArrangedContent: function() {
       "use strict";
+
+      console.log(window.ember)
 
       this.set('updateArrangedContent', true);
 

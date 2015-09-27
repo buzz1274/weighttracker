@@ -115,6 +115,7 @@ div#graph {
 ul.line-legend {
   list-style-type: none;
   float:left;
+  margin-left:10px;
 }
 ul.line-legend li {
   float:left;

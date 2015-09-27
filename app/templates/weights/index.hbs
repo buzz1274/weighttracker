@@ -40,21 +40,21 @@
       <tbody>
         {{#each controller.stats as |stat|}}
           <tr>
-            <td class="stats_title">Start weight(Kg)</td>
+            <td class="stats_title">Start weight(kg)</td>
             <td>
               {{weight-format stat.startWeight}}&nbsp;
               ({{date-format stat.accountCreated}})
             </td>
           </tr>
           <tr>
-            <td class="stats_title">Current weight(Kg)</td>
+            <td class="stats_title">Current weight(kg)</td>
             <td>
               {{weight-format stat.currentWeight.weight}}&nbsp;
               ({{date-format stat.currentWeight.weighed_date}})
             </td>
           </tr>
           <tr>
-            <td class="stats_title">Target weight(Kg)</td>
+            <td class="stats_title">Target weight(kg)</td>
             <td>
               {{weight-format stat.targetWeight}}&nbsp;
               {{#if stat.dateToTarget}}
@@ -63,7 +63,7 @@
             </td>
           </tr>
           <tr>
-            <td class="stats_title">Weight to target(Kg)</td>
+            <td class="stats_title">Weight to target(kg)</td>
             <td>
               {{weight-format stat.weightToTarget}}&nbsp;
               {{#if stat.dateToTarget}}
@@ -72,21 +72,21 @@
             </td>
           </tr>
           <tr>
-            <td class="stats_title">Lowest weight(Kg)</td>
+            <td class="stats_title">Lowest weight(kg)</td>
             <td>
               {{weight-format stat.minWeight.weight}}&nbsp;
               ({{date-format stat.minWeight.weighed_date}})
             </td>
           </tr>
           <tr>
-            <td class="stats_title">Highest weight(Kg)</td>
+            <td class="stats_title">Highest weight(kg)</td>
             <td>
               {{weight-format stat.maxWeight.weight}}&nbsp;
               ({{date-format stat.maxWeight.weighed_date}})
             </td>
           </tr>
           <tr>
-            <td class="stats_title">Change last week(Kg)</td>
+            <td class="stats_title">Change last week(kg)</td>
             <td class="{{table-cell-class stat.changeLastWeek
                          controller.currentWeight.weight
                          controller.targetWeight}} weight">
@@ -94,7 +94,7 @@
             </td>
           </tr>
           <tr>
-            <td class="stats_title">Change last month(Kg)</td>
+            <td class="stats_title">Change last month(kg)</td>
               <td class="{{table-cell-class stat.changeLastMonth
                            controller.currentWeight.weight
                            controller.targetWeight}} weight">
@@ -102,7 +102,7 @@
             </td>
           </tr>
           <tr>
-            <td class="stats_title">Change last year(Kg)</td>
+            <td class="stats_title">Change last year(kg)</td>
               <td class="{{table-cell-class stat.changeLastYear
                            controller.currentWeight.weight
                            controller.targetWeight}} weight">
@@ -110,7 +110,7 @@
             </td>
           </tr>
           <tr>
-            <td class="stats_title">Change all time(Kg)</td>
+            <td class="stats_title">Change all time(kg)</td>
               <td class="{{table-cell-class stat.changeAllTime
                            controller.currentWeight.weight
                            controller.targetWeight}} weight">
@@ -146,8 +146,8 @@
           </tr>
           <tr>
             <td class="date_width"><strong>Date</strong></td>
-            <td class="weight_width_20"><strong>Weight(Kg)</strong></td>
-            <td class="weight_width_28"><strong>Wk Change(Kg)</strong></td>
+            <td class="weight_width_20"><strong>Weight(kg)</strong></td>
+            <td class="weight_width_28"><strong>Wk Change(kg)</strong></td>
             <td class="text-center">-</td>
           </tr>
         </thead>

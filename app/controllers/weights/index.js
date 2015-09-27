@@ -16,11 +16,10 @@ export default Ember.ArrayController.extend({
   updateArrangedContent: false,
   chartOptions: {pointDot: false,
                  animation: false,
-                 height: 700,
                  scaleShowHorizontalLines: true,
                  scaleShowVerticalLines: false,
                  scaleGridLineColor : "rgba(0,0,0,0.10)",
-
+                 scaleLabel : "<%= Number(value) + ' kg'%>",
                  showTooltips: false},
   chartData: Ember.computed('model', function() {
     "use strict";
@@ -70,6 +69,7 @@ export default Ember.ArrayController.extend({
           label: "Weight",
           fillColor: "transparent",
           strokeColor: "#AAA",
+          datasetStrokeWidth: 5,
           data: this.get('content').mapBy('weight').reverse()
         },
         {

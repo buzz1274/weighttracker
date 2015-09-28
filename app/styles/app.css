@@ -111,15 +111,19 @@ div#graph {
   width:680px;
   min-height:500px;
   margin:0px 0 10px 5px;
+  position:relative;
 }
 ul.line-legend {
   list-style-type: none;
   float:left;
-  margin-left:10px;
+  position:absolute;
+  top:20px;
+  left:30px;
+  width:350px;
 }
 ul.line-legend li {
   float:left;
-  padding-right:20px;
+  padding:5px 20px 0 0;
 }
 ul.line-legend span.label {
   padding:0 5px 0 5px;

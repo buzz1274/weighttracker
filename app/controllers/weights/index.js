@@ -166,7 +166,7 @@ export default Ember.ArrayController.extend({
         skipDateAmount = totalWeights * 0.10;
 
     for (var i = 0; i < totalWeights; i++) {
-      currentDate = window.moment(weighedDates[i]).format('MMMM, YYYY');
+      currentDate = window.moment(weighedDates[i]).format('MMMM DD, YYYY');
       if(i === 0) {
         dates[i] = currentDate;
         lastAddedDate = currentDate;
@@ -174,7 +174,8 @@ export default Ember.ArrayController.extend({
       } else if(i === totalWeights - 1) {
         dates[i] = currentDate;
       } else {
-        if(lastAddedDate !== currentDate && (i - countWhenAdded) > skipDateAmount) {
+        if((i - countWhenAdded) > skipDateAmount &&
+           (i + skipDateAmount) < totalWeights) {
           dates[i] = currentDate;
           lastAddedDate = currentDate;
           countWhenAdded = i;

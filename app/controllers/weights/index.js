@@ -1,5 +1,4 @@
 import Ember from 'ember';
-//import EmberChart from 'ember-cli-chart/components/ember-chart';
 
 export default Ember.ArrayController.extend({
   sortProperties: ['date'],
@@ -14,7 +13,6 @@ export default Ember.ArrayController.extend({
   stats: false,
   targetWeight: false,
   currentWeight: false,
-  updateArrangedContent: false,
   chartOptions: {pointDot: false,
                  animation: false,
                  scaleShowHorizontalLines: true,
@@ -118,12 +116,6 @@ export default Ember.ArrayController.extend({
       }
 
     },
-    updateArrangedContent: function() {
-      "use strict";
-
-      this.set('updateArrangedContent', true);
-
-    }
   },
   arrangedContent: function() {
     "use strict";
@@ -145,8 +137,6 @@ export default Ember.ArrayController.extend({
       this.set('prevDisabled', false);
     }
 
-    this.set('updateArrangedContent', false);
-
     return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
       content: this.get('model').toArray(),
       sortProperties: this.get('sortProperties'),
@@ -154,7 +144,7 @@ export default Ember.ArrayController.extend({
     }).slice(this.startRecord, this.startRecord + this.recordsPerPage);
 
   }.property('weight', 'page', 'totalPages', 'prevDisabled',
-             'nextDisabled', 'updateArrangedContent', 'totalWeights'),
+             'nextDisabled', 'totalWeights'),
   calculateXAxisLabels: function() {
     "use strict";
     var dates = [],
@@ -166,7 +156,7 @@ export default Ember.ArrayController.extend({
         skipDateAmount = totalWeights * 0.10;
 
     for (var i = 0; i < totalWeights; i++) {
-      currentDate = window.moment(weighedDates[i]).format('MMMM DD, YYYY');
+      currentDate = window.moment(weighedDates[i]).format('MMMM Do, YYYY');
       if(i === 0) {
         dates[i] = currentDate;
         lastAddedDate = currentDate;

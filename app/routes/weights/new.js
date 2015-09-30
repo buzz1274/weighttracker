@@ -12,5 +12,5 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
     var model = this.controllerFor('weights.new').get('model');
     model.rollback();
-  },
+  }
 });

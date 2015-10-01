@@ -2,6 +2,8 @@
 
     class weightModel extends dbModel {
 
+        public $errors = false;
+
         //db columns
         public $weight_id;
         public $user_id;
@@ -146,10 +148,10 @@
                                             $returnDate = false) {
             $results = self::find(
                 array('columns' => 'weight, weighed_date',
-                    'conditions' => "user_id = ?1",
-                    'bind' => array(1 => $userID, 2 => $date),
-                    'order' => "ABS(weighed_date - DATE(?2))",
-                    'limit' => 1))->toArray();
+                      'conditions' => "user_id = ?1",
+                      'bind' => array(1 => $userID, 2 => $date),
+                      'order' => "ABS(weighed_date - DATE(?2))",
+                      'limit' => 1))->toArray();
 
             if(is_array($results) && count($results) === 1) {
                 if($returnDate) {
@@ -162,6 +164,35 @@
             }
         }
         //end closestWeightToDate
+
+        /**
+         * validate the current weight
+         * @param $action (add|edit)
+         * @return boolean
+         */
+        public function validateWeight($action) {
+
+            if((float)$this->weight <= 0 || (float)$this->weight != $this->weight) {
+                $this->errors['weight'] = 'Please enter a valid weight';
+            }
+
+            if(!strtotime($this->weighed_date)) {
+                $this->errors['date'] = 'Please enter a valid date';
+            }
+
+            if($action == 'add' &&
+               self::find(array('conditions' => "weighed_date = ?1",
+                                'bind' => array(1 => $this->weighed_date)))->count()) {
+                $this->errors['date'] = 'Weight already added for this date';
+            } else if($action == 'edit') {
+                //validate that the dote does not already exist if
+                //it has changed
+            }
+
+            return !is_array($this->errors);
+
+        }
+        //end validateWeight
 
         /**
          * determine a users minimum & maximum weight

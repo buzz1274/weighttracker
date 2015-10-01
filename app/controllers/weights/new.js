@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  errors: false,
   actions: {
     save() {
       "use strict";
@@ -11,8 +12,17 @@ export default Ember.Controller.extend({
         this.get('model').set('date', date);
       }
 
+      var that = this;
+
       this.get('model').save().then(() => {
         this.transitionToRoute('weights.index');
+      }).catch(function(response) {
+        if(response.status === 500 || !response.responseJSON ||
+          !response.responseJSON.errors) {
+          that.transitionToRoute('error');
+        } else {
+          that.set('errors', response.responseJSON.errors);
+        }
       });
 
       return false;

@@ -3,9 +3,12 @@ import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixi
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
   showAddEditWeight: true,
-  model() {
+  setupController: function(controller) {
     "use strict";
-    return this.store.createRecord('weight');
+
+    controller.set('errors', false);
+    controller.set('model', this.store.createRecord('weight'));
+
   },
   deactivate: function() {
     "use strict";

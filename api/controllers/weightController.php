@@ -101,12 +101,23 @@
                 $this->weight->weighed_date = $this->request->weight->date;
                 $this->weight->user_id = $this->app->session->get('userID');
 
-                //validate weight
+                if(!$this->weight->validateWeight('add')) {
+
+                    $this->statusCode = 422;
+                    $this->statusMessage = 'invalid weight';
+
+                    $this->response = array('errors' => $this->weight->errors);
+
+                    return $this->generateResponse();
+
+                }
 
                 if(!$this->weight->save() || !isset($this->weight->weight_id) ||
                     !$this->weight->weight_id) {
 
                     $this->statusCode = '500';
+
+                    return $this->generateResponse();
 
                 } else {
 
@@ -122,11 +133,12 @@
                                                                              $date))));
 
                     $this->response =
-                        array('weight' => array('id' => $this->weight->weight_id,
-                            'date' => $this->weight->weighed_date,
-                            'weight' => $this->weight->weight,
-                            'changed' => round($this->weight->weight -
-                                               $changeLastWeek, 2)));
+                        array('weight' =>
+                            array('id' => $this->weight->weight_id,
+                                  'date' => $this->weight->weighed_date,
+                                  'weight' => $this->weight->weight,
+                                  'changed' => round($this->weight->weight -
+                                                     $changeLastWeek, 2)));
 
                     return $this->generateResponse();
 

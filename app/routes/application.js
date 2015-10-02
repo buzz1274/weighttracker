@@ -35,7 +35,10 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
 
     if(this.get('session').isAuthenticated &&
        app.idleTime >= app.idleMax) {
+
+      app.idleTime = 0;
       this.get('session').invalidate();
+
     }
 
   },

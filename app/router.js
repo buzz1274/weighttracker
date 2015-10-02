@@ -23,6 +23,7 @@ export default Router.map(function() {
 
   this.route('weights', function() {
     this.route('new');
+    this.route('edit', {path: ':weight_id/edit'});
   });
 
 });

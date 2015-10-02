@@ -17,6 +17,10 @@ export default Ember.ArrayController.extend({
                  animation: false,
                  scaleShowHorizontalLines: true,
                  scaleShowVerticalLines: false,
+                 //scaleOverride: true,
+                 //scaleSteps: 10,
+                 //scaleStepWidth: 5,
+                 //scaleStartValue: 65,
                  scaleGridLineColor : "rgba(0,0,0,0.10)",
                  scaleLabel : "<%= Number(value) + ' kg'%>",
                  showTooltips: false},
@@ -31,6 +35,8 @@ export default Ember.ArrayController.extend({
     } else {
       obeseWeight = Number(this.get('stats').objectAt(0).get('maxWeight.weight')) + 5;
     }
+
+    console.log(obeseWeight);
 
     var dataset =  {
       labels: this.calculateXAxisLabels(),
@@ -116,6 +122,14 @@ export default Ember.ArrayController.extend({
       }
 
     },
+    edit: function(weight) {
+      "use strict";
+
+      this.transitionTo('/weights/'+weight.id+'/edit');
+
+      console.log(weight);
+
+    }
   },
   arrangedContent: function() {
     "use strict";

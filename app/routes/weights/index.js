@@ -5,9 +5,17 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   model: function() {
     "use strict";
 
+    var that = this;
+
     return Ember.RSVP.hash({
       stats: this.store.findAll('stat'),
       weights: this.store.findAll('weight')
+    }).catch(function(response) {
+      if (response.status === 401) {
+        that.get('session').invalidate();
+      } else {
+        that.transitionToRoute('error');
+      }
     });
   },
   setupController: function(controller, model) {

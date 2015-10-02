@@ -202,4 +202,7 @@ table.weights td.stats_title {
 .modal {
   background-color:rgba(0,0,0,0.2);
 }
+a.black {
+  color:#000000;
+}
 

@@ -11,32 +11,47 @@ export default Ember.ArrayController.extend({
   prevDisabled: true,
   nextDisabled: true,
   stats: false,
-  targetWeight: false,
   currentWeight: false,
   chartOptions: {pointDot: false,
                  animation: false,
                  scaleShowHorizontalLines: true,
                  scaleShowVerticalLines: false,
-                 //scaleOverride: true,
-                 //scaleSteps: 10,
-                 //scaleStepWidth: 5,
-                 //scaleStartValue: 65,
                  scaleGridLineColor : "rgba(0,0,0,0.10)",
                  scaleLabel : "<%= Number(value) + ' kg'%>",
                  showTooltips: false},
   chartData: Ember.computed('model', function() {
     "use strict";
 
-    var obeseWeight = 0;
+    var obeseWeight = 0,
+        roundWeightToNearest = 5,
+        weightCushion = 5,
+        minWeight = Number(this.get('stats').objectAt(0).get('minWeight.weight')),
+        maxWeight = Number(this.get('stats').objectAt(0).get('maxWeight.weight')),
+        maxNormalWeight = Number(this.get('stats').objectAt(0).get('maxNormalWeight')),
+        maxUnderweightWeight = Number(this.get('stats').objectAt(0).get('maxUnderweightWeight')),
+        targetWeight = Number(this.get('stats').objectAt(0).get('targetWeight')),
+        maxOverweightWeight = Number(this.get('stats').objectAt(0).get('maxOverweightWeight'));
 
-    if(this.get('stats').objectAt(0).get('maxOverweightWeight') >
-       this.get('stats').objectAt(0).get('maxWeight')) {
-      obeseWeight = Number(this.get('stats').objectAt(0).get('maxOverweightWeight')) + 5;
+    if((maxOverweightWeight + weightCushion) > maxWeight) {
+      obeseWeight =
+        roundWeightToNearest * Math.round((maxOverweightWeight + weightCushion) / roundWeightToNearest);
     } else {
-      obeseWeight = Number(this.get('stats').objectAt(0).get('maxWeight.weight')) + 5;
-    }
+      if(minWeight < targetWeight) {
+        this.chartOptions.scaleStartValue =
+          roundWeightToNearest * Math.round((minWeight - weightCushion) / roundWeightToNearest);
+      } else {
+        this.chartOptions.scaleStartValue =
+          roundWeightToNearest * Math.round((targetWeight - weightCushion) / roundWeightToNearest);
+      }
 
-    console.log(obeseWeight);
+      obeseWeight =
+        roundWeightToNearest * Math.round((maxWeight + weightCushion) / roundWeightToNearest);
+
+      this.chartOptions.scaleOverride = true;
+      this.chartOptions.scaleStepWidth = 5;
+      this.chartOptions.scaleSteps =
+        (obeseWeight - this.chartOptions.scaleStartValue) / this.chartOptions.scaleStepWidth;
+    }
 
     var dataset =  {
       labels: this.calculateXAxisLabels(),
@@ -45,28 +60,28 @@ export default Ember.ArrayController.extend({
         {
           label: "Obese",
           data: Array.apply(null, new Array(this.get('totalWeights'))).map(
-            Number.prototype.valueOf, Math.round(Number(obeseWeight))),
+            Number.prototype.valueOf, obeseWeight),
           fillColor: "rgba(255,0,0,0.05)",
           strokeColor: "#FF0000",
         },
         {
           label: "Overweight",
           data: Array.apply(null, new Array(this.get('totalWeights'))).map(
-            Number.prototype.valueOf, this.get('stats').objectAt(0).get('maxOverweightWeight')),
+            Number.prototype.valueOf, maxOverweightWeight),
           fillColor: "rgba(255,255,0,0.05)",
           strokeColor: "rgba(255,127,0,0.5)",
         },
         {
           label: "Normal Weight",
           data: Array.apply(null, new Array(this.get('totalWeights'))).map(
-            Number.prototype.valueOf, this.get('stats').objectAt(0).get('maxNormalWeight')),
+            Number.prototype.valueOf, maxNormalWeight),
           fillColor: "rgba(0,255,255,0.05)",
           strokeColor: "rgba(0,255,0,0.5)",
         },
         {
           label: "Underweight",
           data: Array.apply(null, new Array(this.get('totalWeights'))).map(
-            Number.prototype.valueOf, this.get('stats').objectAt(0).get('maxUnderweightWeight')),
+            Number.prototype.valueOf, maxUnderweightWeight),
           fillColor: "rgba(255,0,0,0.05)",
           strokeColor: "rgba(0,255,0,0.5)",
         },
@@ -80,23 +95,19 @@ export default Ember.ArrayController.extend({
         {
           label: "Target Weight",
           data: Array.apply(null, new Array(this.get('totalWeights'))).map(
-            Number.prototype.valueOf, this.get('targetWeight')),
+            Number.prototype.valueOf, targetWeight),
           strokeColor: "#9AF",
         },
       ]
     };
 
-    if(this.get('stats').objectAt(0).get('minWeight') >
-       this.get('stats').objectAt(0).get('maxUnderweightWeight') + 5 ||
-       this.get('targetWeight') >
-       this.get('stats').objectAt(0).get('maxUnderweightWeight') + 5) {
+    if(minWeight > (maxUnderweightWeight + weightCushion) ||
+       targetWeight > (maxUnderweightWeight + weightCushion)) {
       dataset.datasets[3].data = [];
     }
 
-    if(this.get('stats').objectAt(0).get('maxWeight') <
-      this.get('stats').objectAt(0).get('maxOverweightWeight') + 5 ||
-      this.get('targetWeight') >
-      this.get('stats').objectAt(0).get('maxOverweightWeight') + 5) {
+    if(maxWeight < (maxOverweightWeight + weightCushion) ||
+       targetWeight > (maxOverweightWeight + weightCushion)) {
       dataset.datasets[0].data = [];
     }
 
@@ -126,8 +137,6 @@ export default Ember.ArrayController.extend({
       "use strict";
 
       this.transitionTo('/weights/'+weight.id+'/edit');
-
-      console.log(weight);
 
     }
   },

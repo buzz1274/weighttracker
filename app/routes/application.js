@@ -6,8 +6,15 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   actions: {
     invalidateSession() {
       "use strict";
+
       this.get('session').invalidate();
-    }
+    },
+    sessionInvalidationSucceeded() {
+      "use strict";
+
+      this.transitionTo('login');
+
+    },
   },
   setupAutoLogout: function() {
     "use strict";
@@ -37,6 +44,8 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
        app.idleTime >= app.idleMax) {
 
       app.idleTime = 0;
+
+      this.controllerFor('login').set('autoLogout', true);
       this.get('session').invalidate();
 
     }

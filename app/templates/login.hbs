@@ -18,6 +18,11 @@
     {{#if errorMessage}}
       <p class="text-danger"><strong>{{errorMessage}}</strong></p>
     {{/if}}
+    {{#if autoLogout}}
+      <p class="text-danger">
+          <strong>You have been logged out automatically</strong>
+      </p>
+    {{/if}}
     <span class="pull-right">
       {{#link-to 'index' class="button"}}
         <button type="button" class="btn btn-default">

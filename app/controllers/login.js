@@ -3,6 +3,7 @@ import app from '../app';
 
 export default Ember.Controller.extend({
   errorMessage: false,
+  autoLogout:false,
   actions: {
     authenticate() {
       "use strict";

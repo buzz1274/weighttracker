@@ -12,5 +12,12 @@ export default Ember.Route.extend({
     controller.set('username', '');
     controller.set('password', '');
 
+  },
+  deactivate: function() {
+    "use strict";
+
+    this._super();
+    this.controllerFor('login').set('autoLogout', false);
+
   }
 });

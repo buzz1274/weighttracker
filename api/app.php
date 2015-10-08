@@ -11,13 +11,11 @@
     $app->response->setHeader('Access-Control-Allow-Methods',
                               'HEAD,GET,PUT,POST,DELETE,OPTIONS');
 
-    /*
-    $app->put('/weights(/[0-9]{1,})?', function() use($app) {
-        $app->response->setJsonContent(array('success' => true));
 
-        return $app->response;
+    $app->put('/weights(/[0-9]{1,})?', function() use($app) {
+        $controller = new weightController($app);
+        return $controller->editWeight();
     });
-    */
 
     $app->post('/weights(/[0-9]{1,})?', function() use($app) {
         $controller = new weightController($app);

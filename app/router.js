@@ -7,7 +7,7 @@ var Router = Ember.Router.extend({
     error: function() {
       "use strict";
 
-      this.transitionTo('not-found', 'application-error');
+      this.transitionTo('error', 'application-error');
     }
   }
 });
@@ -18,6 +18,7 @@ export default Router.map(function() {
   this.route('index', {path: '/'});
   this.route('login');
   this.route('error');
+  this.route('404');
   this.route('register');
   this.route('not-found', {path: '/*path'});
 

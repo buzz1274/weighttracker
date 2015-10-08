@@ -17,6 +17,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
         that.transitionToRoute('error');
       }
     });
+
   },
   setupController: function(controller, model) {
     "use strict";

@@ -5,19 +5,30 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   model: function (params) {
     "use strict";
 
-    //return this.modelFor('weight').findBy('id', params.id);
+    var that = this;
+
+    return Ember.RSVP.hash({
+      weight: this.store.find('weight', params.weight_id)
+    }).catch(function(response) {
+      if (response.status === 401) {
+        that.get('session').invalidate();
+      } else {
+        that.transitionToRoute('error');
+      }
+    });
+
   },
-  setupController: function(controller) {
+  setupController: function(controller, model) {
     "use strict";
 
     controller.set('errors', false);
-    controller.set('model', this.get('model'));
+    controller.set('model', model.weight);
 
   },
   deactivate: function() {
     "use strict";
 
-    //var model = this.controllerFor('weights.edit').get('model');
-    //model.rollback();
+      this.controllerFor('weights.edit').get('model').rollback();
+
   }
 });

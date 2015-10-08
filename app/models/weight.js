@@ -1,14 +1,14 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
+  weight_id: DS.attr('number'),
   weight: DS.attr('number'),
   date: DS.attr('date'),
   change: DS.attr('number'),
-  weight_id: function() {
+  formatted_date: function() {
     "use strict";
 
-    console.log("derp");
+    return window.moment(this.get('date')).format('MMMM D, YYYY');
 
-    return this.get('weight');
-  }
+  }.property('date')
 });

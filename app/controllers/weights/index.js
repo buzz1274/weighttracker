@@ -136,7 +136,7 @@ export default Ember.ArrayController.extend({
     edit: function(weight) {
       "use strict";
 
-      this.transitionTo('/weights/'+weight.id+'/edit');
+      this.transitionToRoute('/weights/'+weight.id+'/edit');
 
     }
   },

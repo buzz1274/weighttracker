@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   errors: false,
+  action_edit: true,
   actions: {
     save() {
       "use strict";
@@ -17,8 +18,12 @@ export default Ember.Controller.extend({
       this.get('model').save().then(() => {
         this.transitionToRoute('weights.index');
       }).catch(function(response) {
-        if(response.status === 500 || !response.responseJSON ||
-          !response.responseJSON.errors) {
+        if(response.status === 401) {
+          that.get('session').invalidate();
+        } else if(response.status === 404) {
+          that.transitionToRoute('not-found', '');
+        } else if(response.status === 500 || !response.responseJSON ||
+                  !response.responseJSON.errors) {
           that.transitionToRoute('error');
         } else {
           that.set('errors', response.responseJSON.errors);
@@ -30,6 +35,7 @@ export default Ember.Controller.extend({
     cancel() {
       "use strict";
 
+      this.get('model').rollback();
       this.transitionToRoute('weights.index');
 
       return false;

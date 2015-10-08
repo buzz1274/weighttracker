@@ -1,12 +1,11 @@
 <div class="form">
   <fieldset>
-    <legend>Add Weight</legend>
+      <legend>{{#if action_add}}Add{{else}}Edit{{/if}} Weight</legend>
     <form>
       <div class="form-group">
         <label for="date">Date</label>
         {{jqui-datepicker  class="form-control" readonly="readonly"
-          dateFormat="MM d, yy"
-          value=model.formatted_date}}
+          dateFormat="MM d, yy" value=model.formatted_date}}
         {{#if errors.date}}
             <div class="error clear">{{errors.date}}</div>
         {{/if}}
@@ -26,20 +25,16 @@
         {{action "cancel" on="click"}}>
           Cancel
       </button>
-      {{#if weight}}
-          <button type="button" class="btn btn-danger"
-            {{action "deleteWeight" on="click"}}>
-              Delete
-          </button>
-          <button type="button" class="btn btn-primary"
-            {{action "editWeight" on="click"}}>
-              Edit
-          </button>
+      {{#if action_edit}}
+        <button type="button" class="btn btn-primary"
+          {{action "save" on="click"}}>
+            Edit
+        </button>
       {{else}}
-          <button type="button" class="btn btn-primary"
-            {{action "save" on="click"}}>
-              Add
-          </button>
+        <button type="button" class="btn btn-primary"
+          {{action "save" on="click"}}>
+            Add
+        </button>
       {{/if}}
     </div>
   </fieldset>

@@ -185,9 +185,12 @@
                                 'bind' => array(1 => $this->weighed_date,
                                                 2 => $this->user_id)))->count()) {
                 $this->errors['date'] = 'Weight already added for this date';
-            } else if($action == 'edit') {
-                //validate that the dote does not already exist if
-                //it has changed
+            } else if($action == 'edit' &&
+                        self::find(array('conditions' => "weighed_date = ?1 AND weight_id != ?2 AND user_id = ?3",
+                                         'bind' => array(1 => $this->weighed_date,
+                                                         2 => $this->weight_id,
+                                                         3 => $this->user_id)))->count()) {
+                $this->errors['date'] = 'Weight already added for this date';
             }
 
             return !is_array($this->errors);

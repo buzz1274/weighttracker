@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   errors: false,
+  action_add: true,
   actions: {
     save() {
       "use strict";

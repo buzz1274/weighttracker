@@ -7,6 +7,8 @@ export default DS.RESTAdapter.extend({
     "use strict";
 
     hash.xhrFields = {withCredentials: true};
+
     return this._super(url, method, hash);
+
   }
 });

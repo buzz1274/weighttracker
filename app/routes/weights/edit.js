@@ -8,10 +8,12 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     var that = this;
 
     return Ember.RSVP.hash({
-      weight: this.store.find('weight', params.weight_id)
+      weight: this.store.find('weight', params.id)
     }).catch(function(response) {
       if (response.status === 401) {
         that.get('session').invalidate();
+      } else if(response.status === 404) {
+        that.transitionToRoute('not-found', '');
       } else {
         that.transitionToRoute('error');
       }

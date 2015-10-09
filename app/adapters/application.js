@@ -6,6 +6,10 @@ export default DS.RESTAdapter.extend({
   ajax: function(url, method, hash) {
     "use strict";
 
+    if(typeof hash === 'undefined') {
+      hash = {};
+    }
+
     hash.xhrFields = {withCredentials: true};
 
     return this._super(url, method, hash);

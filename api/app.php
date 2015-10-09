@@ -17,12 +17,12 @@
         return $controller->editWeight();
     });
 
-    $app->post('/weights(/[0-9]{1,})?', function() use($app) {
+    $app->post('/weights', function() use($app) {
         $controller = new weightController($app);
         return $controller->addWeight();
     });
 
-    $app->get('/weights', function() use($app) {
+    $app->get('/weights(/[0-9]{1,})?', function() use($app) {
         $controller = new weightController($app);
         return $controller->weights();
     });

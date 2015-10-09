@@ -46,6 +46,14 @@ a.button:hover {
   color:#FFF;
   text-decoration:none;
 }
+div#messageModalDialog {
+  top:150px;
+  background-color:#FFF;
+  padding:10px;
+}
+h5.modal-title {
+  font-weight: bold;
+}
 div#home_text {
   width:80%;
   padding-top:50px;

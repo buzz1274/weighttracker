@@ -1,4 +1,13 @@
 
+<div id="messageModal" class="modal fade">
+  <div id="messageModalDialog" class="modal-dialog">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h5 class="modal-title">{{modalMessage}}</h5>
+  </div>
+</div>
+
 <div id="graph">
   {{ember-chart type='Line' data=chartData
                 height=700 width=680 legend=false

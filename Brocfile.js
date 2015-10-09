@@ -10,6 +10,7 @@ var app = new EmberApp({
 });
 
 app.import('bower_components/bootstrap/dist/css/bootstrap.css');
+app.import('bower_components/bootstrap/dist/js/bootstrap.js');
 app.import('bower_components/moment/moment.js');
 app.import('bower_components/jquery-ui/jquery-ui.js');
 app.import('bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff', {

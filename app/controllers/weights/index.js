@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.ArrayController.extend({
   sortProperties: ['date'],
   sortAscending: false,
+  modalMessage: false,
   recordsPerPage: 10,
   startRecord: 1,
   page: 1,

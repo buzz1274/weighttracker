@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   errors: false,
   action_add: true,
+  needs: ['weights/index'],
   actions: {
     save() {
       "use strict";
@@ -16,6 +17,7 @@ export default Ember.Controller.extend({
       var that = this;
 
       this.get('model').save().then(() => {
+        this.get('controllers.weights/index').set('modalMessage', 'Weight added');
         this.transitionToRoute('weights.index');
       }).catch(function(response) {
         if(response.status === 500 || !response.responseJSON ||

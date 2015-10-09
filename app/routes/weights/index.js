@@ -29,5 +29,11 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
     this._super(controller, model.weights);
 
-  }
+  },
+  removeModalMessage: function() {
+    "use strict";
+
+    this.get('controller').set('modalMessage', false);
+
+  }.on('deactivate')
 });

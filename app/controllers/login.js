@@ -17,6 +17,7 @@ export default Ember.Controller.extend({
           that.transitionToRoute('error');
         } else {
           that.set('errorMessage', message);
+          that.set('autoLogout', false);
           that.set('username', '');
           that.set('password', '');
         }

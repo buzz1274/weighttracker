@@ -16,9 +16,9 @@
         return $controller->deleteWeight($weightID);
     });
 
-    $app->put('/weights(/[0-9]{1,})?', function() use($app) {
+    $app->put('/weights/{weightID}', function($weightID) use($app) {
         $controller = new weightController($app);
-        return $controller->editWeight();
+        return $controller->editWeight($weightID);
     });
 
     $app->post('/weights', function() use($app) {

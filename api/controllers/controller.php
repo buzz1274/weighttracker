@@ -19,9 +19,26 @@
 
         /**
          * generates the json response to return to the client
+         * @param $statusCode
+         * @param $statusMessage
+         * @param $response
          * @return mixed
          */
-        protected function generateResponse() {
+        protected function generateResponse($statusCode = false,
+                                            $statusMessage = false,
+                                            $response = false) {
+
+            if($statusCode) {
+                $this->statusCode = $statusCode;
+            }
+
+            if($statusMessage) {
+                $this->statusMessage = $statusMessage;
+            }
+
+            if($response) {
+                $this->response = $response;
+            }
 
             $this->app->response->setStatusCode($this->statusCode,
                                                 $this->statusMessage);

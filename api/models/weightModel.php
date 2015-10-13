@@ -53,6 +53,20 @@
         //end weights
 
         /**
+         * gets weight
+         * @param $userID
+         * @param $weightID
+         */
+        public function weight($userID, $weightID) {
+
+            return weightModel::findFirst(
+                         array('conditions' => "weight_id = ?1 AND user_id = ?2",
+                               'bind' => array(1 => $weightID, 2 => $userID)));
+
+        }
+        //end weight
+
+        /**
          * get weight loss stats for supplied userID
          * @param $user
          * @return array

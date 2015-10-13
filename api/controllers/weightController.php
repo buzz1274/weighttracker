@@ -18,9 +18,7 @@
         public function weights() {
 
             if(!$this->app->session->get('userID')) {
-                $this->statusCode = '401';
-
-                return $this->generateResponse();
+                return $this->generateResponse(401);
             }
 
             if((!$weights = $this->weight->weights($this->app->session->get('userID')))) {
@@ -54,17 +52,11 @@
 
             if(!$this->app->session->get('userID') ||
                !($user = $user->findFirst($this->app->session->get('userID')))) {
-                $this->statusCode = '401';
-
-                return $this->generateResponse();
-
+                return $this->generateResponse(401);
             }
 
             if(!($stats = $this->weight->stats($user))) {
-                $this->statusCode = '404';
-
-                return $this->generateResponse();
-
+                return $this->generateResponse(200, false, array('stats' => false));
             }
 
             $data[] = ['id' => $user->user_id,
@@ -99,10 +91,7 @@
         public function addWeight() {
 
             if(!$this->app->session->get('userID')) {
-                $this->statusCode = '401';
-
-                return $this->generateResponse();
-
+                return $this->generateResponse(401);
             }
 
             $this->weight->weight = $this->request->weight->weight;
@@ -110,23 +99,13 @@
             $this->weight->user_id = $this->app->session->get('userID');
 
             if(!$this->weight->validateWeight('add')) {
-
-                $this->statusCode = 422;
-                $this->statusMessage = 'invalid weight';
-
-                $this->response = array('errors' => $this->weight->errors);
-
-                return $this->generateResponse();
-
+                return $this->generateResponse(422, 'invalid weight',
+                                               $this->weight->errors);
             }
 
             if(!$this->weight->save() || !isset($this->weight->weight_id) ||
                !$this->weight->weight_id) {
-
-                $this->statusCode = '500';
-
-                return $this->generateResponse();
-
+                return $this->generateResponse(500);
             }
 
             $date = strtotime($this->request->weight->date);
@@ -162,43 +141,26 @@
         public function editWeight($weightID) {
 
             if(!$this->app->session->get('userID')) {
-                $this->statusCode = '401';
-
-                return $this->generateResponse();
-
+                return $this->generateResponse(401);
             }
 
-            $weight =
-                weightModel::findFirst(
-                    array('conditions' => "weight_id = ?1 AND user_id = ?2",
-                          'bind' => array(1 => $this->request->weight->weight_id,
-                                          2 => $this->app->session->get('userID'))));
+            $weight = $this->weight->weight($this->app->session->get('userID'),
+                                            $weightID);
 
-            if(!$weight) {
-                $this->statusCode = '404';
-
-                return $this->generateResponse();
-
+            if(!($weight)) {
+                return $this->generateResponse(404);
             }
 
             $weight->weighed_date = $this->request->weight->date;
             $weight->weight = $this->request->weight->weight;
 
             if(!$weight->validateWeight('edit')) {
-                $this->statusCode = 422;
-                $this->statusMessage = 'invalid weight';
-
-                $this->response = array('errors' => $weight->errors);
-
-                return $this->generateResponse();
-
+                return $this->generateResponse(422, 'invalid weight',
+                                               array('errors' => $weight->errors));
             }
 
             if(!$weight->save()) {
-                $this->statusCode = 500;
-
-                return $this->generateResponse();
-
+                return $this->generateResponse(500);
             }
 
             $date = strtotime($this->request->weight->date);
@@ -224,34 +186,28 @@
         }
         //end editWeight
 
+        /**
+         * deletes a weight
+         * @param $weightID
+         * @return mixed
+         */
         public function deleteWeight($weightID) {
             if(!$this->app->session->get('userID')) {
-                $this->statusCode = '401';
-
-                return $this->generateResponse();
-
+                return $this->generateResponse(401);
             }
 
-            $weight =
-                weightModel::findFirst(
-                    array('conditions' => "weight_id = ?1 AND user_id = ?2",
-                        'bind' => array(1 => $weightID,
-                                        2 => $this->app->session->get('userID'))));
+            $weight = $this->weight->weight($this->app->session->get('userID'),
+                                            $weightID);
 
-            if(!$weight) {
-                $this->statusCode = '404';
-
-                return $this->generateResponse();
-
+            if(!($weight)) {
+                return $this->generateResponse(404);
             }
 
             if($weight->delete()) {
-                $this->statusCode = 204;
+                return $this->generateResponse(204);
             } else {
-                $this->statusCode = 500;
+                return $this->generateResponse(500);
             }
-
-            return $this->generateResponse();
 
         }
         //end deleteWeight

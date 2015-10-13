@@ -25,10 +25,7 @@
                 $this->response['errors'] =
                     'Please enter a valid username and password';
 
-                $this->statusCode = 422;
-                $this->statusMessage = 'user failed authentication';
-
-                return $this->generateResponse();
+                return $this->generateResponse(422, 'user failed authentication');
 
             }
 

@@ -6,6 +6,7 @@ export default Ember.ArrayController.extend({
   modalMessage: false,
   recordsPerPage: 10,
   startRecord: 1,
+  weightToDelete: false,
   page: 1,
   totalPages: 1,
   totalWeights: 0,
@@ -138,6 +139,51 @@ export default Ember.ArrayController.extend({
       "use strict";
 
       this.transitionToRoute('/weights/'+weight.id+'/edit');
+
+    },
+    delete: function() {
+      "use strict";
+
+      var that = this;
+
+      this.get('weightToDelete').destroyRecord(this.get('weightToDelete')).then(() => {
+
+        this.set('weightToDelete', false);
+        this.set('modalMessage', 'Weight deleted');
+
+        Ember.$('#deleteModal').modal('hide');
+        Ember.$('#messageModal').modal({
+          show: true
+        });
+
+      }).catch(function(response) {
+        this.set('weightToDelete', false);
+
+        if (response.status === 401) {
+          that.get('session').invalidate();
+        } else if (response.status === 404) {
+          that.transitionToRoute('not-found', '');
+        } else {
+          that.transitionToRoute('error');
+        }
+      });
+
+    },
+    cancelDelete: function() {
+      "use strict";
+
+      this.set('weightToDelete', false);
+      Ember.$('#deleteModal').modal('hide');
+
+    },
+    deleteModal: function(weight) {
+      "use strict";
+
+      this.set('weightToDelete', weight);
+
+      Ember.$('#deleteModal').modal({
+        show: true
+      });
 
     }
   },

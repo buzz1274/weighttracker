@@ -1,10 +1,38 @@
 
 <div id="messageModal" class="modal fade">
-  <div id="messageModalDialog" class="modal-dialog">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <h5 class="modal-title">{{modalMessage}}</h5>
+  <div class="modal-dialog">
+      <div id="messageModalContent" class="modal-content">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">{{modalMessage}}</h5>
+      </div>
+  </div>
+</div>
+
+<div id="deleteModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Delete weight</h4>
+      </div>
+      <div class="modal-body">
+          <p>Warning!!! This action is permanent and cannot be reverted.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          Cancel
+        </button>
+        <a {{action 'delete' weight}} class="black" title="Delete Weight">
+          <button type="button" class="btn btn-primary">
+            Delete
+          </button>
+        </a>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -182,7 +210,9 @@
                 <a {{action 'edit' weight}} class="black" title="Edit Weight">
                   <i class="glyphicon glyphicon-edit"></i>
                 </a>
-                <i class="glyphicon glyphicon-trash"></i>
+                <a {{action 'deleteModal' weight}} class="black" title="Delete Weight">
+                  <i class="glyphicon glyphicon-trash"></i>
+                </a>
               </td>
             </tr>
           {{/each}}

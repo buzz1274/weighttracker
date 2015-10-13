@@ -45,6 +45,9 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
 
       app.idleTime = 0;
 
+      Ember.$('#deleteModal').modal('hide');
+      Ember.$('#messageModal').modal('hide');
+
       this.controllerFor('login').set('autoLogout', true);
       this.get('session').invalidate();
 

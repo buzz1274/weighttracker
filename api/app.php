@@ -11,6 +11,10 @@
     $app->response->setHeader('Access-Control-Allow-Methods',
                               'HEAD,GET,PUT,POST,DELETE,OPTIONS');
 
+    $app->delete('/weights/{weightID}', function($weightID) use($app) {
+        $controller = new weightController($app);
+        return $controller->deleteWeight($weightID);
+    });
 
     $app->put('/weights(/[0-9]{1,})?', function() use($app) {
         $controller = new weightController($app);

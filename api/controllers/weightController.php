@@ -6,6 +6,7 @@
             parent::__construct($app);
 
             $this->weight = new weightModel();
+            $this->user = new userModel();
 
         }
         //end __construct
@@ -158,7 +159,7 @@
          * edit a weight
          * @return mixed
          */
-        public function editWeight() {
+        public function editWeight($weightID) {
 
             if(!$this->app->session->get('userID')) {
                 $this->statusCode = '401';
@@ -222,5 +223,37 @@
 
         }
         //end editWeight
+
+        public function deleteWeight($weightID) {
+            if(!$this->app->session->get('userID')) {
+                $this->statusCode = '401';
+
+                return $this->generateResponse();
+
+            }
+
+            $weight =
+                weightModel::findFirst(
+                    array('conditions' => "weight_id = ?1 AND user_id = ?2",
+                        'bind' => array(1 => $weightID,
+                                        2 => $this->app->session->get('userID'))));
+
+            if(!$weight) {
+                $this->statusCode = '404';
+
+                return $this->generateResponse();
+
+            }
+
+            if($weight->delete()) {
+                $this->statusCode = 204;
+            } else {
+                $this->statusCode = 500;
+            }
+
+            return $this->generateResponse();
+
+        }
+        //end deleteWeight
 
     }

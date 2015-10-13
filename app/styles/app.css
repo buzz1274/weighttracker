@@ -46,8 +46,10 @@ a.button:hover {
   color:#FFF;
   text-decoration:none;
 }
-div#messageModalDialog {
+div.modal-dialog {
   top:150px;
+}
+div#messageModalContent {
   background-color:#FFF;
   padding:10px;
 }

@@ -20,6 +20,9 @@ export default Router.map(function() {
   this.route('error');
   this.route('404');
   this.route('register');
+  this.route('profile');
+  this.route('forgotten_password');
+  this.route('change_password');
   this.route('not-found', {path: '/*path'});
 
   this.route('weights', function() {

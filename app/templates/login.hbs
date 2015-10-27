@@ -20,7 +20,7 @@
     {{/if}}
     {{#if autoLogout}}
       <p class="text-danger">
-          <strong>You have been logged out automatically</strong>
+        <strong>You have been logged out automatically</strong>
       </p>
     {{/if}}
     <span class="pull-right">
@@ -40,10 +40,11 @@
       </button>
     </span>
     <span class="pull-left">
-      <button type="button" class="btn btn-default"
-        {{action "cancel" on="click"}}>
+      {{#link-to 'reset-password' class="button"}}
+        <button type="button" class="btn btn-default">
           Reset Password
-      </button>
+        </button>
+      {{/link-to}}
     </span>
   </fieldset>
 </div>

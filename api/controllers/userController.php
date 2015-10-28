@@ -12,6 +12,40 @@
         //end __construct
 
         /**
+         * returns user details for the currently logged in user
+         * @return mixed
+         */
+        public function user() {
+            if(!$this->app->session->get('userID') ||
+               !($user = $this->user->findFirst($this->app->session->get('userID')))) {
+                return $this->generateResponse(401);
+            }
+
+            $data[] = array('id' => $user->user_id,
+                            'email' => $user->email,
+                            'name' => $user->name,
+                            'date_of_birth' => $user->date_of_birth,
+                            'height' => $user->height,
+                            'sex' => $user->sex == 'm' ? 'Male' : 'Female',
+                            'target_weight' => $user->target_weight);
+
+            $this->response = array('user' => $data);
+
+            return $this->generateResponse();
+
+        }
+        //end user
+
+        /**
+         * edits the user profile for the currently logged in user
+         * @return mixed
+         */
+        public function edit() {
+
+        }
+        //end edit
+
+        /**
          * authenticates the user using the supplied credentials
          * @return mixed
          */
@@ -31,6 +65,7 @@
 
             $this->app->session->set('userID', $user->user_id);
             $this->response = array('token' => session_id(),
+                                    'userID' => $user->user_id,
                                     'name' => $user->name);
 
             return $this->generateResponse();

@@ -9,5 +9,11 @@ export default DS.Model.extend({
   sex: DS.attr('string'),
   height: DS.attr('number'),
   weight: DS.attr('number'),
-  target_weight: DS.attr('number')
+  target_weight: DS.attr('number'),
+  formatted_date: function() {
+    "use strict";
+
+    return window.moment(this.get('date_of_birth')).format('MMMM D, YYYY');
+
+  }.property('date_of_birth')
 });

@@ -18,7 +18,7 @@ export default Base.extend({
         Ember.run(function() {
           response = JSON.parse(response);
           resolve({token: response.token,
-                   userId: response.userId,
+                   userID: response.userID,
                    name: response.name});
         });
       }, function(xhr) {

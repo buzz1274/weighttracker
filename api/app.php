@@ -46,6 +46,16 @@
         return $controller->login();
     });
 
+    $app->get('/users(/[0-9]{1,})?', function() use($app) {
+        $controller = new userController($app);
+        return $controller->user();
+    });
+
+    $app->put('/users(/[0-9]{1,})?', function() use($app) {
+        $controller = new userController($app);
+        return $controller->edit();
+    });
+
     $app->post('/users(/[0-9]{1,})?', function() use($app) {
         $controller = new userController($app);
         return $controller->register();

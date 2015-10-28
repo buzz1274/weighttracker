@@ -100,7 +100,7 @@
 
             if(!$this->weight->validateWeight('add')) {
                 return $this->generateResponse(422, 'invalid weight',
-                                               $this->weight->errors);
+                                               array('errors' => $this->weight->errors));
             }
 
             if(!$this->weight->save() || !isset($this->weight->weight_id) ||

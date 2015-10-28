@@ -12,7 +12,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     sessionInvalidationSucceeded() {
       "use strict";
 
-      this.transitionTo('login');
+      window.location = '/login';
     }
   },
   setupAutoLogout: function() {

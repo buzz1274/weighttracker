@@ -2,9 +2,11 @@
 <div id="messageModal" class="modal fade">
   <div class="modal-dialog">
       <div id="messageModalContent" class="modal-content">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <a {{action 'closeModal' weight}}>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </a>
         <h5 class="modal-title">{{modalMessage}}</h5>
       </div>
   </div>

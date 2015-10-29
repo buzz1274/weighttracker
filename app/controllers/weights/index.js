@@ -165,6 +165,11 @@ export default Ember.ArrayController.extend({
       this.transitionToRoute('/weights/'+weight.id+'/edit');
 
     },
+    closeModal: function() {
+      "use strict";
+      //force page reload when modal is closed so graph is re-drawn
+      window.location = '/weights';
+    },
     delete: function() {
       "use strict";
 

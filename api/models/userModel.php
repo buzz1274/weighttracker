@@ -15,7 +15,7 @@
         public $height;
         public $account_created;
         public $target_weight;
-        private $validationErrors = false;
+        public $validationErrors = false;
 
         public function initialize() {
             $this->setSource('user');
@@ -97,36 +97,44 @@
 
         /**
          * validate user
+         * @param $user
+         * @param $validationType
+         * @return boolean
          */
-        private function isValidUser($user, $validationType) {
+        public function isValidUser($user, $validationType) {
             $this->validationErrors = false;
 
             if(!isset($user->user->email) || !$user->user->email) {
                 $this->validationErrors['email'] =
                     "Please enter an email address.";
             } elseif(($validationType == 'register' ||
-                     ($validationType == 'edit' && $user->user->email != $user->email)) &&
+                     ($validationType == 'edit' && isset($user->user->current_email) &&
+                      $user->user->email != $user->user->current_email)) &&
                       self::findFirst(array('conditions' => "email = ?1",
                                             'bind' => array(1 => $user->user->email)))) {
                 $this->validationErrors['email'] =
                     "Email address is already in use.";
             }
 
-            if(!isset($user->user->password) || !$user->user->password) {
-                $this->validationErrors['password'] =
-                    "Please enter a password.";
-            }
+            if($validationType == 'register') {
+                if(!isset($user->user->password) || !$user->user->password) {
+                    $this->validationErrors['password'] =
+                        "Please enter a password.";
+                }
 
-            if(!isset($user->user->repeat_password) ||
-               !$user->user->repeat_password) {
-                $this->validationErrors['repeat_password'] =
-                    "Please enter password again.";
-            } elseif(!isset($this->validationErrors['password']) &&
-                     $user->user->repeat_password != $user->user->password) {
-                $this->validationErrors['password'] =
-                    "Passwords do not match.";
-                $this->validationErrors['repeat_password'] =
-                    "Passwords do not match.";
+                if(!isset($user->user->repeat_password) ||
+                    !$user->user->repeat_password
+                ) {
+                    $this->validationErrors['repeat_password'] =
+                        "Please enter password again.";
+                } elseif(!isset($this->validationErrors['password']) &&
+                    $user->user->repeat_password != $user->user->password
+                ) {
+                    $this->validationErrors['password'] =
+                        "Passwords do not match.";
+                    $this->validationErrors['repeat_password'] =
+                        "Passwords do not match.";
+                }
             }
 
             if(!isset($user->user->name) || !$user->user->name) {
@@ -154,11 +162,13 @@
                     "Please enter a positive integer value for height.";
             }
 
-            if(!isset($user->user->weight) || !$user->user->weight) {
-                $this->validationErrors['weight'] = "Please enter a weight.";
-            } elseif((float)$user->user->weight <= 0) {
-                $this->validationErrors['weight'] =
-                    "Please enter a positive decimal value for weight.";
+            if($validationType == 'register') {
+                if(!isset($user->user->weight) || !$user->user->weight) {
+                    $this->validationErrors['weight'] = "Please enter a weight.";
+                } elseif((float)$user->user->weight <= 0) {
+                    $this->validationErrors['weight'] =
+                        "Please enter a positive decimal value for weight.";
+                }
             }
 
             if(!isset($user->user->target_weight) || !$user->user->target_weight) {

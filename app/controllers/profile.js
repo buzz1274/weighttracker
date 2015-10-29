@@ -2,9 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   sex: ["-", "Male", "Female"],
+  needs: ['weights/index'],
   errors: false,
   actions: {
-
     register() {
       "use strict";
 
@@ -16,7 +16,9 @@ export default Ember.Controller.extend({
       var that = this;
 
       this.get('model').save().then(() => {
-        this.transitionToRoute('login');
+        this.get('controllers.weights/index').set('modalMessage', 'Profile edited');
+        this.set('session.secure.name', this.get('model.name'));
+        this.transitionToRoute('weights');
       }).catch(function(response) {
         if(response.status === 500 || !response.responseJSON ||
           !response.responseJSON.errors) {

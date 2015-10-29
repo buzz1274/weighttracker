@@ -41,6 +41,30 @@
          * @return mixed
          */
         public function edit() {
+            if(!$this->app->session->get('userID') ||
+               !($user = userModel::findFirst($this->app->session->get('userID')))) {
+                return $this->generateResponse(401);
+            }
+
+            $this->request->user->current_email = $user->email;
+
+            if(!$this->user->isValidUser($this->request, 'edit')) {
+                return $this->generateResponse(422, 'invalid user',
+                                               array('errors' => $this->user->validationErrors));
+            }
+
+            $user->email = $this->request->user->email;
+            $user->name = $this->request->user->name;
+            $user->date_of_birth = date('Y-m-d', strtotime($this->request->user->date_of_birth));
+            $user->sex = (strtolower($this->request->user->sex) === 'male' ? 'm' : 'f');
+            $user->height = $this->request->user->height;
+            $user->target_weight = $this->request->user->target_weight;
+
+            if(!$user->save()) {
+                return $this->generateResponse(500);
+            }
+
+            return $this->generateResponse();
 
         }
         //end edit

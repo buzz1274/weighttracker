@@ -13,6 +13,12 @@
         throw new \Exception('no settings file');
     }
 
+    require '../vendor/autoload.php';
+
+    define('MAILGUN_API_KEY', $config['mailgun_api_key']);
+    define('MAILGUN_DOMAIN', $config['mailgun_domain']);
+    define('EMAIL_ADDRESS', $config['email_address']);
+
     /**
      * handle fatal errors
      * @param bool|false $message
@@ -43,6 +49,8 @@
 
         'MAINSITE_URL' => $config['mainsite_url'],
         'MAINSITE_URL_PORT' => $config['port'] ? ':'.$config['port'] : '',
+        'MAILGUN_DOMAIN' => $config['mailgun_domain'],
+        'MAILGUN_API_KEY' => $config['mailgun_api_key'],
 
         'database' => array(
             'host'       => $config['db_host'],

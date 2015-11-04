@@ -1,5 +1,7 @@
 <?php
 
+    use Mailgun\Mailgun;
+
     class userController extends controller {
 
         private $user = false;
@@ -133,6 +135,37 @@
 
         }
         //end register
+
+        /**
+         * sends reset password email if supplied email
+         * exists in the database
+         * @return mixed
+         */
+        public function reset_password() {
+
+            if(!$this->app->request->getPost('email')) {
+                //|| email not in db
+                //return error message not such email
+                //return $this->generateResponse(200);
+            }
+
+            $mgClient = new Mailgun(MAILGUN_API_KEY);
+            $result = $mgClient->sendMessage(MAILGUN_DOMAIN, array(
+                'from'    => EMAIL_ADDRESS,
+                'to'      => $this->app->request->getPost('email'),
+                'subject' => 'Password reset on weighttracker.zz50.co.uk',
+                'text'    => 'Testing some Mailgun awesomness!'
+            ));
+
+            if(is_object($result) && isset($result->http_response_code) &&
+               $result->http_response_code == 200) {
+                return $this->generateResponse(200);
+            } else {
+                return $this->generateResponse(500);
+            }
+
+        }
+        //end reset_password
 
 
     }

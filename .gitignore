@@ -20,3 +20,4 @@ testem.log
 .idea/
 weights.csv
 config.ini
+api/vendor

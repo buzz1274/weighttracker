@@ -102,7 +102,8 @@
                                                date('Y-m-d', mktime(0, 0, 0,
                                                                     date('n') - 1,
                                                                     date('j'),
-                                                                    date('Y'))));
+                                                                    date('Y'))),
+                                               true);
 
                 $changeLastYear =
                     $this->closestWeightToDate($user->user_id,
@@ -118,7 +119,7 @@
 
                 if($changeLastMonth) {
                     $changeLastMonth = round($currentWeight['weight'] -
-                                             $changeLastMonth, 2);
+                                             $changeLastMonth['weight'], 2);
                 }
 
                 if($changeLastYear) {
@@ -147,7 +148,9 @@
                     'minWeight' => $this->minMaxWeight($user->user_id, true),
                     'maxWeight' => $this->minMaxWeight($user->user_id, false),
                     'dateToTarget' => $this->dateToTarget($user->user_id,
-                                                          $user->target_weight)];
+                                                          $user->target_weight,
+                                                          $currentWeight,
+                                                          $changeLastMonth)];
         }
         //end stats
 
@@ -269,48 +272,44 @@
          * @return bool|string
          */
         private function dateToTarget($userID, $targetWeight) {
-            $endDate = date('Y-m-d', strtotime('now'));
-            $startDate = date('Y-m-d', mktime(0, 0, 0, date('n'),
-                                              date('j') - 28, date('Y')));
 
-            $results = self::find(
-                array('columns' => 'weight, weighed_date',
-                      'conditions' => "user_id = ?1 AND weighed_date BETWEEN ?2 AND ?3",
-                      'bind' => array(1 => $userID,
-                                      2 => $startDate,
-                                      3 => $endDate),
-                      'order' => 'weighed_date ASC'))->toArray();
-
-            if(!is_array($results) || count($results) === 1) {
+            if(!$userID || !$targetWeight) {
                 return false;
-            } else {
-                $currentWeight = $results[0]['weight'];
-
-                if(count($results) < 28) {
-                    $dayCount = date_diff(date_create($startDate),
-                                          date_create($endDate))->format('%a');
-                } else {
-                    $dayCount = 28;
-                }
-
-                $averageWeightChange = ($results[count($results) - 1]['weight'] -
-                                        $results[0]['weight']) / $dayCount;
-
-                if($targetWeight === $currentWeight ||
-                   ($targetWeight > $currentWeight && $averageWeightChange < 0) ||
-                   ($targetWeight < $currentWeight && $averageWeightChange > 0)) {
-                    return false;
-                }
-
-                $daysToTarget = abs(ceil((108.1 - 78)/$averageWeightChange));
-                $dateToTarget = date('Y-m-d', mktime(0, 0, 0,
-                                                     date('n'),
-                                                     date('j') + $daysToTarget,
-                                                     date('Y')));
-
-                return $dateToTarget;
-
             }
+
+            $currentWeight = $this->closestWeightToDate($userID, date('Y-m-d'), true);
+            $changeLastMonth = $this->closestWeightToDate($userID,
+                                           date('Y-m-d', mktime(0, 0, 0,
+                                                                date('n') - 1,
+                                                                date('j'),
+                                                                date('Y'))),
+                                           true);
+
+            if(!$currentWeight || !$changeLastMonth) {
+                return false;
+            }
+
+            $dayCount = date_diff(date_create($changeLastMonth['weighed_date']),
+                                  date_create($currentWeight['weighed_date']))->format('%a');
+
+            $averageWeightChange = ($currentWeight['weight'] -
+                                    $changeLastMonth['weight']) / $dayCount;
+
+            if($targetWeight === $currentWeight['weight'] ||
+               ($targetWeight > $currentWeight['weight'] && $averageWeightChange < 0) ||
+               ($targetWeight < $currentWeight['weight'] && $averageWeightChange > 0)) {
+                return false;
+            }
+
+            $daysToTarget = abs(ceil(($currentWeight['weight'] - $targetWeight) /
+                                     $averageWeightChange));
+
+            $dateToTarget = date('Y-m-d', mktime(0, 0, 0,
+                                                 date('n'),
+                                                 date('j') + $daysToTarget,
+                                                 date('Y')));
+
+            return $dateToTarget;
 
         }
         //end dateToTarget

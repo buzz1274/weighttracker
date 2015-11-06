@@ -72,19 +72,48 @@
         /**
          * authenticates the user using the supplied credentials
          * @return mixed
+         * @throws Exception
          */
         public function login() {
 
-            if(!isset($this->request->username) || !$this->request->username ||
-               !isset($this->request->password) || !$this->request->password ||
-               !($user = $this->user->login($this->request->username,
-                                            $this->request->password))) {
+            if(isset($this->request->hash)) {
+                $user = $this->user->findFirst(
+                    array('conditions' => "reset_password_hash = ?1",
+                          'bind' => array(1 => $this->request->hash)));
 
-                $this->response['errors'] =
-                    'Please enter a valid username and password';
+                if(!$user) {
+                    return $this->generateResponse(422, 'invalid hash',
+                                                   array('errors' => 'Unrecognized reset password link.'));
+                }
 
-                return $this->generateResponse(422, 'user failed authentication');
+                if(date_create($user->reset_password_hash_expiry) < date_create()) {
+                    return $this->generateResponse(422, 'invalid hash',
+                            array('errors' => 'Reset password link expired. Please request a new one'));
+                }
 
+                $user->reset_password_hash_expiry = null;
+                $user->reset_password_hash = null;
+
+                if(!$user->save()) {
+                    throw new Exception("error deleting user password reset hash");
+                }
+
+                return $this->generateResponse();
+
+
+            } else {
+                if(!isset($this->request->username) || !$this->request->username ||
+                   !isset($this->request->password) || !$this->request->password ||
+                   !($user = $this->user->login($this->request->username,
+                                                $this->request->password))) {
+
+                    $this->response['errors'] =
+                        'Please enter a valid username and password';
+
+                    return $this->generateResponse(422,
+                                                   'user failed authentication');
+
+                }
             }
 
             $this->app->session->set('userID', $user->user_id);
@@ -93,6 +122,7 @@
                                     'name' => $user->name);
 
             return $this->generateResponse();
+
         }
         //end login
 

@@ -22,7 +22,7 @@ export default Router.map(function() {
   this.route('register');
   this.route('profile');
   this.route('reset-password');
-  this.route('change_password');
+  this.route('change-password');
   this.route('not-found', {path: '/*path'});
 
   this.route('weights', function() {

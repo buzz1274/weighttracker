@@ -19,8 +19,12 @@ export default Ember.Controller.extend({
         that.set('passwordResetMessage', 'Password reset email sent');
         that.set('errorMessage', false);
         that.set('email', '');
-      }).fail(function() {
-        that.transitionToRoute('error');
+      }).fail(function(response) {
+          if(response.status === 422 && response.responseText) {
+            that.set('errorMessage', Ember.$.parseJSON(response.responseText).errors);
+          } else {
+            that.transitionToRoute('error');
+          }
       });
 
       return false;

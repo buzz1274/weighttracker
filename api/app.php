@@ -63,7 +63,7 @@
 
     $app->post('/users/reset_password', function() use($app) {
         $controller = new userController($app);
-        return $controller->reset_password();
+        return $controller->resetPassword();
     });
 
     $app->options('/(weights|users|login|logout|error|users/reset_password)(/[0-9]{1,})?/?',

@@ -1,0 +1,6 @@
+Hi,
+To reset your password, please click the following link,
+or copy and paste it into your web browser:
+{{Link}}
+
+--weighttracker.zz50.co.uk

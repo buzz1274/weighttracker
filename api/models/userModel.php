@@ -15,6 +15,10 @@
         public $height;
         public $account_created;
         public $target_weight;
+        public $reset_password_hash;
+        public $reset_password_hash_expiry;
+
+        //class vars
         public $validationErrors = false;
 
         public function initialize() {
@@ -94,6 +98,23 @@
 
         }
         //end login
+
+        /**
+         * sets reset password hash on current user
+         * @throws Exception
+         */
+        public function setPasswordHash() {
+            $this->reset_password_hash = substr(bin2hex(openssl_random_pseudo_bytes(60)), 0, 60);
+            $this->reset_password_hash_expiry = date("Y-m-d H:i:s", mktime(date('H') + 8));
+
+            if(!$this->save()) {
+                throw new Exception("failed to save reset password hash");
+            }
+
+            return true;
+
+        }
+        //end setPasswordHash
 
         /**
          * validate user

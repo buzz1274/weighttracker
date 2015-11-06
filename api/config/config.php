@@ -14,10 +14,12 @@
     }
 
     require '../vendor/autoload.php';
+    require 'mail.class.inc.php';
 
     define('MAILGUN_API_KEY', $config['mailgun_api_key']);
     define('MAILGUN_DOMAIN', $config['mailgun_domain']);
     define('EMAIL_ADDRESS', $config['email_address']);
+    define('MAINSITE_URL', $config['mainsite_url']);
 
     /**
      * handle fatal errors

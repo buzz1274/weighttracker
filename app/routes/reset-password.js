@@ -14,10 +14,7 @@ export default Ember.Route.extend({
       this.get('session').authenticate('authenticator:custom',
                                        {hash: search[1]}).then(null, function(message) {
 
-        console.log(message);
-
         if(message) {
-          console.log(message);
           controller.set('errorMessage', message);
         }
 
@@ -27,6 +24,8 @@ export default Ember.Route.extend({
     controller.set('errorMessage', false);
     controller.set('passwordResetMessage', false);
     controller.set('email', '');
+
+    return false;
 
   }
 });

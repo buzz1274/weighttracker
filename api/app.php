@@ -66,7 +66,12 @@
         return $controller->resetPassword();
     });
 
-    $app->options('/(weights|users|login|logout|error|users/reset_password)(/[0-9]{1,})?/?',
+    $app->post('/users/change_password', function() use($app) {
+        $controller = new userController($app);
+        return $controller->changePassword();
+    });
+
+    $app->options('/(weights|users|login|logout|error|users/(reset_password|change_password))(/[0-9]{1,})?/?',
         function() use($app) {
             return $app->response;
         }

@@ -91,15 +91,9 @@
                             array('errors' => 'Reset password link expired. Please request a new one'));
                 }
 
-                $user->reset_password_hash_expiry = null;
-                $user->reset_password_hash = null;
-
-                if(!$user->save()) {
-                    throw new Exception("error deleting user password reset hash");
+                if(!$user->setPasswordHash(true)) {
+                    $this->generateResponse(500);
                 }
-
-                return $this->generateResponse();
-
 
             } else {
                 if(!isset($this->request->username) || !$this->request->username ||
@@ -197,5 +191,38 @@
             }
         }
         //end reset_password
+
+        /**
+         * change the users password
+         * @return mixed
+         * @throws Exception
+         */
+        public function changePassword() {
+            if(!$this->app->session->get('userID') ||
+               !($user = $this->user->findFirst($this->app->session->get('userID')))) {
+                return $this->generateResponse(401);
+            }
+
+            if(!$this->app->request->getPost('password') ||
+               !$this->app->request->getPost('passwordRepeat')) {
+                return $this->generateResponse(422, 'missing password',
+                                               array('errors' => 'Please enter password in both fields'));
+            }
+
+            if($this->app->request->getPost('password') !==
+               $this->app->request->getPost('passwordRepeat')) {
+                return $this->generateResponse(422, 'missing password',
+                                               array('errors' => 'Passwords do not match'));
+            }
+
+            if(!$user->changePassword($this->app->request->getPost('password'))) {
+                return $this->generateResponse(500);
+            } else {
+                return $this->generateResponse();
+            }
+
+        }
+        //end changePassword
+
 
     }

@@ -76,10 +76,11 @@
       </button>
     </div>
     <div class="pull-left">
-      <button type="button" class="btn btn-default"
-        {{action "cancel" on="click"}}>
+      {{#link-to 'change-password'}}
+        <button type="button" class="btn btn-default">
           Change Password
-      </button>
+        </button>
+      {{/link-to}}
     </div>
   </fieldset>
 </div>

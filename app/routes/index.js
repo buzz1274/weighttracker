@@ -5,7 +5,13 @@ export default Ember.Route.extend({
     "use strict";
 
     if(this.get('session').isAuthenticated) {
-      this.transitionTo('weights');
+      var hash = window.location.search.substring(1).split('=')[0];
+
+      if(hash === 'hash') {
+        this.transitionTo('change-password');
+      } else {
+        this.transitionTo('weights');
+      }
     }
 
   }

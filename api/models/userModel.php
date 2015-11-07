@@ -77,6 +77,26 @@
         //end register
 
         /**
+         * changes the users password
+         * @param $password
+         * @return boolean
+         * @throws Exception
+         */
+        public function changePassword($password) {
+            $security = new Security();
+
+            $this->password = $security->hash($password);
+
+            if(!$this->save()) {
+                throw new Exception('unable to save users password');
+            }
+
+            return true;
+
+        }
+        //end changePassword
+
+        /**
          * returns user details if email & password match a user
          * @param $email
          * @param $password
@@ -103,9 +123,16 @@
          * sets reset password hash on current user
          * @throws Exception
          */
-        public function setPasswordHash() {
-            $this->reset_password_hash = substr(bin2hex(openssl_random_pseudo_bytes(60)), 0, 60);
-            $this->reset_password_hash_expiry = date("Y-m-d H:i:s", mktime(date('H') + 8));
+        public function setPasswordHash($reset = false) {
+            if($reset) {
+                $this->reset_password_hash_expiry = null;
+                $this->reset_password_hash = null;
+            } else {
+                $this->reset_password_hash = substr(bin2hex(openssl_random_pseudo_bytes(60)),
+                                                    0, 60);
+                $this->reset_password_hash_expiry = date("Y-m-d H:i:s",
+                                                         mktime(date('H') + 8));
+            }
 
             if(!$this->save()) {
                 throw new Exception("failed to save reset password hash");

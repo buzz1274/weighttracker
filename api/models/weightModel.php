@@ -76,7 +76,9 @@
             $changeLastWeek = false;
             $changeLastMonth = false;
             $changeLastYear = false;
+            $changeGreatest = false;
             $startWeight = $this->startWeight($user->user_id);
+            $maxWeight = $this->minMaxWeight($user->user_id, false);
             $currentWeight = $this->closestWeightToDate($user->user_id,
                                                         date('Y-m-d'), true);
 
@@ -127,26 +129,24 @@
                                             $changeLastYear, 2);
                 }
 
-                if($startWeight) {
-                    $changeAllTime = round($currentWeight['weight'] -
-                                           $startWeight, 2);
+                if($maxWeight) {
+                    $changeGreatest = round($currentWeight['weight'] -
+                                            $maxWeight['weight'], 2);
                 }
 
             }
-
-            $this->minMaxWeight($user->user_id);
 
             return ['currentWeight' => $currentWeight,
                     'changeLastWeek' => $changeLastWeek,
                     'changeLastMonth' => $changeLastMonth,
                     'changeLastYear' => $changeLastYear,
-                    'changeAllTime' => $changeAllTime,
+                    'changeGreatest' => $changeGreatest,
                     'startWeight' => $startWeight,
                     'maxUnderweightWeight' => $maxUnderweightWeight,
                     'maxNormalWeight' => $maxNormalWeight,
                     'maxOverweightWeight' => $maxOverweightWeight,
                     'minWeight' => $this->minMaxWeight($user->user_id, true),
-                    'maxWeight' => $this->minMaxWeight($user->user_id, false),
+                    'maxWeight' => $maxWeight,
                     'dateToTarget' => $this->dateToTarget($user->user_id,
                                                           $user->target_weight,
                                                           $currentWeight,
@@ -291,6 +291,10 @@
 
             $dayCount = date_diff(date_create($changeLastMonth['weighed_date']),
                                   date_create($currentWeight['weighed_date']))->format('%a');
+
+            if(!$dayCount) {
+                return false;
+            }
 
             $averageWeightChange = ($currentWeight['weight'] -
                                     $changeLastMonth['weight']) / $dayCount;

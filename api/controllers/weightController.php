@@ -74,7 +74,7 @@
                        'changeLastWeek' => $stats['changeLastWeek'],
                        'changeLastMonth' => $stats['changeLastMonth'],
                        'changeLastYear' => $stats['changeLastYear'],
-                       'changeAllTime' => $stats['changeAllTime'],
+                       'changeGreatest' => $stats['changeGreatest'],
                        'dateToTarget' => $stats['dateToTarget']];
 
             $this->response = array('stats' => $data);

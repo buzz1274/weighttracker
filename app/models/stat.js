@@ -4,7 +4,7 @@ export default DS.Model.extend({
   changeLastWeek: DS.attr('number'),
   changeLastMonth: DS.attr('number'),
   changeLastYear: DS.attr('number'),
-  changeAllTime: DS.attr('number'),
+  changeGreatest: DS.attr('number'),
   dateToTarget: DS.attr('date'),
   accountCreated: DS.attr('date'),
   maxUnderweightWeight: DS.attr('number'),

@@ -2,6 +2,10 @@ import Ember from 'ember';
 
 export default Ember.View.extend({
   templateName: 'weights/index',
+  initialize: function() {
+    "use strict";
+
+  },
   didInsertElement: function() {
     "use strict";
 
@@ -9,8 +13,12 @@ export default Ember.View.extend({
       Ember.$('#messageModal').modal({
         show: true
       });
+
+      Ember.$('#messageModal').on('hidden.bs.modal', function() {
+        window.location = '/weights';
+      });
     }
 
-  },
+  }
 
 });

@@ -172,11 +172,6 @@ export default Ember.ArrayController.extend({
       this.transitionToRoute('/weights/'+weight.id+'/edit');
 
     },
-    closeModal: function() {
-      "use strict";
-      //force page reload when modal is closed so graph is re-drawn
-      window.location = '/weights';
-    },
     delete: function() {
       "use strict";
 
@@ -190,6 +185,10 @@ export default Ember.ArrayController.extend({
         Ember.$('#deleteModal').modal('hide');
         Ember.$('#messageModal').modal({
           show: true
+        });
+
+        Ember.$('#messageModal').on('hidden.bs.modal', function() {
+          window.location = '/weights';
         });
 
       }).catch(function(response) {

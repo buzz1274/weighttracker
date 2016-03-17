@@ -29,6 +29,7 @@ export default Ember.ArrayController.extend({
     var obeseWeight = 0,
         roundWeightToNearest = 5,
         weightCushion = 5,
+        averageWeight = Number(this.get('stats').objectAt(0).get('averageWeight')),
         minWeight = Number(this.get('stats').objectAt(0).get('minWeight.weight')),
         maxWeight = Number(this.get('stats').objectAt(0).get('maxWeight.weight')),
         maxNormalWeight = Number(this.get('stats').objectAt(0).get('maxNormalWeight')),
@@ -106,6 +107,12 @@ export default Ember.ArrayController.extend({
           strokeColor: "#AAA",
           datasetStrokeWidth: 5,
           data: this.get('content').mapBy('weight').reverse()
+        },
+        {
+          label: "Average Weight",
+          data: Array.apply(null, new Array(this.get('totalWeights'))).map(
+            Number.prototype.valueOf, averageWeight),
+          strokeColor: "#000",
         },
         {
           label: "Target Weight",

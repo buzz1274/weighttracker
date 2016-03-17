@@ -67,6 +67,7 @@
                        'startWeight' => $stats['startWeight'],
                        'maxWeight' => $stats['maxWeight'],
                        'minWeight' => $stats['minWeight'],
+                       'averageWeight' => $stats['averageWeight'],
                        'maxUnderweightWeight' => $stats['maxUnderweightWeight'],
                        'maxNormalWeight' => $stats['maxNormalWeight'],
                        'maxOverweightWeight' => $stats['maxOverweightWeight'],

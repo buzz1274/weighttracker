@@ -60,6 +60,10 @@
       Overweight/Underweight
     </li>
     <li>
+      <span class="label" style="background-color:#000;">&nbsp;</span>
+      Average weight
+    </li>
+    <li>
       <span class="label" style="background-color:rgba(0,255,0,0.5);">&nbsp;</span>
       Normal weight
     </li>
@@ -123,6 +127,12 @@
               {{weight-format stat.maxWeight.weight}}&nbsp;
               ({{date-format stat.maxWeight.weighed_date}})
             </td>
+          </tr>
+          <tr>
+              <td class="stats_title">Average weight(kg)</td>
+              <td>
+                {{weight-format stat.averageWeight}}&nbsp;
+              </td>
           </tr>
           <tr>
             <td class="stats_title">Change last week(kg)</td>

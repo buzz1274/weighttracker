@@ -145,6 +145,7 @@
                     'maxUnderweightWeight' => $maxUnderweightWeight,
                     'maxNormalWeight' => $maxNormalWeight,
                     'maxOverweightWeight' => $maxOverweightWeight,
+                    'averageWeight' => $this->averageWeight($user->user_id),
                     'minWeight' => $this->minMaxWeight($user->user_id, true),
                     'maxWeight' => $maxWeight,
                     'dateToTarget' => $this->dateToTarget($user->user_id,
@@ -244,7 +245,7 @@
         //end minMaxWeight
 
         /**
-         * get first weight entered
+         * determine average weight for supplied user
          * @param $userID
          * @return mixed
          */
@@ -258,6 +259,25 @@
 
             if(is_array($weights) && count($weights) === 1) {
                 return $weights[0]['weight'];
+            } else {
+                return false;
+            }
+        }
+        //end averageWeight
+
+        /**
+         * get first weight entered
+         * @param $userID
+         * @return mixed
+         */
+        private function averageWeight($userID) {
+            $weights =
+                self::find(array('columns' => 'AVG(weight) as average_weight',
+                                 'conditions' => "user_id = ?1",
+                                 'bind' => array(1 => $userID)))->toArray();
+
+            if(is_array($weights) && count($weights) === 1) {
+                return round($weights[0]['average_weight'], 2);
             } else {
                 return false;
             }

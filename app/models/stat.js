@@ -12,6 +12,7 @@ export default DS.Model.extend({
   maxOverweightWeight: DS.attr('number'),
   currentWeight: DS.attr(),
   targetWeight: DS.attr('number'),
+  averageWeight: DS.attr('number'),
   weightToTarget: DS.attr('number'),
   startWeight: DS.attr('number'),
   maxWeight: DS.attr(),

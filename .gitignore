@@ -21,3 +21,8 @@ testem.log
 weights.csv
 config.ini
 api/vendor
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

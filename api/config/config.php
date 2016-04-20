@@ -8,9 +8,19 @@
 
     define('APP_PATH', realpath('..'));
 
-    if(!file_exists(__DIR__."/../config/config.ini") ||
-       !is_array($config = parse_ini_file(__DIR__."/../config/config.ini"))) {
+    if(!getenv('EB_HOSTED') &&
+       (!file_exists(__DIR__."/../config/config.ini") ||
+        !is_array($config = parse_ini_file(__DIR__."/../config/config.ini")))) {
         throw new \Exception('no settings file');
+    } elseif(getenv('EB_HOSTED')) {
+        foreach(array('db_host', 'dbname', 'mailgun_api_key',
+                      'development_mode', 'email_address',
+                      'mailgun_api_key', 'mailgun_domain', 'port',
+                      'mainsite_url', 'password', 'username') as $key) {
+            $config[$key] = getenv($key);
+        }
+    } else {
+        throw new \Exception('unable to create config');
     }
 
     require '../vendor/autoload.php';

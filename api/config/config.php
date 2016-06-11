@@ -19,7 +19,9 @@
                       'mainsite_url', 'password', 'username') as $key) {
             $config[$key] = getenv($key);
         }
-    } else {
+    }
+
+    if(!$config) {
         throw new \Exception('unable to create config');
     }
 

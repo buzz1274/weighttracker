@@ -17,7 +17,11 @@ export default Base.extend({
         },
       }).then(function(response) {
         Ember.run(function() {
-          response = JSON.parse(response);
+          try {
+            response = JSON.parse(response);
+          } catch(error) {
+            
+          }
           resolve({token: response.token,
                    userID: response.userID,
                    name: response.name});

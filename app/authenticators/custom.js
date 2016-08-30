@@ -20,7 +20,7 @@ export default Base.extend({
           try {
             response = JSON.parse(response);
           } catch(error) {
-            
+
           }
           resolve({token: response.token,
                    userID: response.userID,

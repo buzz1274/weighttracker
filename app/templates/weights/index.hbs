@@ -44,26 +44,32 @@
     <li>
       <span class="label" style="background-color:#AAA;">&nbsp;</span>
       Current weight
-    </li>
-    <li>
-      <span class="label" style="background-color:#9AF;">&nbsp;</span>
-      Target weight
-    </li>
-    <li>
-      <span class="label" style="background-color:#FF0000;">&nbsp;</span>
-      Obese
-    </li>
-    <li>
-      <span class="label" style="background-color:rgba(255,127,0,0.5);">&nbsp;</span>
-      Overweight/Underweight
+      (<strong>{{weight-format controller.stats.firstObject.currentWeight.weight}}kg</strong>)
     </li>
     <li>
       <span class="label" style="background-color:#000;">&nbsp;</span>
       Average weight
+      (<strong>{{weight-format controller.stats.firstObject.averageWeight}}kg</strong>)
+    </li>
+    <li>
+      <span class="label" style="background-color:#9AF;">&nbsp;</span>
+      Target weight
+      (<strong>{{weight-format controller.stats.firstObject.targetWeight}}kg</strong>)
+    </li>
+    <li>
+      <span class="label" style="background-color:#FF0000;">&nbsp;</span>
+      Obese
+      (<strong>&gt;{{weight-format controller.stats.firstObject.maxOverweightWeight}}kg</strong>)
+    </li>
+    <li>
+      <span class="label" style="background-color:rgba(255,127,0,0.5);">&nbsp;</span>
+      Overweight/Underweight
+      (<strong>&lt;{{weight-format controller.stats.firstObject.maxOverweightWeight}}kg</strong>)
     </li>
     <li>
       <span class="label" style="background-color:rgba(0,255,0,0.5);">&nbsp;</span>
       Normal weight
+      (<strong>&lt;{{weight-format controller.stats.firstObject.maxNormalWeight}}kg</strong>)
     </li>
   </ul>
 </div>

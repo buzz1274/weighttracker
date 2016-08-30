@@ -272,14 +272,18 @@
          */
         private function averageWeight($userID) {
             $weights =
-                self::find(array('columns' => 'AVG(weight) as average_weight',
+                self::find(array('columns' => 'weight',
                                  'conditions' => "user_id = ?1",
+                                 'order' => 'weight',
                                  'bind' => array(1 => $userID)))->toArray();
 
-            if(is_array($weights) && count($weights) === 1) {
-                return round($weights[0]['average_weight'], 2);
+            $totalWeights = count($weights);
+
+            if($totalWeights % 2) {
+                return round(($weights[floor($totalWeights / 2)]['weight'] +
+                              $weights[ceil($totalWeights / 2)]['weight']) / 2, 2);
             } else {
-                return false;
+                return $weights[(int)$totalWeights / 2]['weight'];
             }
         }
         //end startWeight

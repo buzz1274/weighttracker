@@ -20,6 +20,7 @@ testem.log
 weights.csv
 config.ini
 api/vendor
+.venv
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

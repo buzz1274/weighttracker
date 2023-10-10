@@ -22,6 +22,8 @@ config.ini
 api/vendor
 .venv
 db.sqlite3
+media/admin
+*.pyc
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

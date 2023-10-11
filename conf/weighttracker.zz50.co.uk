@@ -1,0 +1,18 @@
+server {
+    listen 80;
+    server_name weighttracker.zz50.co.uk;
+
+    location /media/ {
+        root /opt/weighttracker.zz50.co.uk/;
+    }
+
+    location /admin/ {
+        include proxy_params;
+        proxy_pass http://127.0.0.1:8000/admin/;
+    }
+
+    location / {
+        root /opt/weighttracker.zz50.co.uk/frontend/dist/;
+    }
+
+}

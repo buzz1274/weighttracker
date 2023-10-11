@@ -1,4 +1,4 @@
-FROM python:3.11-slim-bullseye AS base-image
+FROM python:3.11-slim-bookworm AS base-image
 
 ARG ENVIRONMENT
 
@@ -20,9 +20,13 @@ RUN apt-get update && \
     vim \
     curl \
     postgresql-client \
-    nodejs
+    nodejs \
+    npm \
+    nginx && \
+    npm install -g npx
 
 RUN curl -sSL https://install.python-poetry.org | python3 -
+RUN rm /etc/nginx/sites-enabled/default
 
 WORKDIR $WORKDIR_PATH
 COPY pyproject.toml pyproject.toml

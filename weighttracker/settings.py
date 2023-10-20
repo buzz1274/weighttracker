@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-2p0)&i6nmw7o8(no$fh=%rwtfl#5ihaq13f0s*m_c-+zh5-w*x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['weighttracker.zz50.co.uk', '127.0.0.1']
+ALLOWED_HOSTS = ['weighttracker.zz50.co.uk', '127.0.0.1', 'dev.weighttracker.zz50.co.uk']
 
 
 # Application definition

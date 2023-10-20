@@ -1,0 +1,34 @@
+  weighttracker.zz50.co.uk:
+    container_name: weighttracker
+    hostname: ##HOSTNAME_PREFIX##weighttracker.zz50.co.uk
+    restart: always
+    image: weighttracker.zz50.co.uk
+    logging:
+      options:
+        max-size: "5m"
+        max-file: "3"      
+    build:
+        context: ../mounts/websites/weighttracker/
+    tty: true
+    ports:
+    ##PRODUCTION##  - 80
+    ##PRODUCTION##  - 443
+    ##DEVELOPMENT##  - 8000:80   
+    volumes:
+      - ../mounts/websites/weighttracker:/opt/weighttracker.zz50.co.uk
+      - ../backups/weighttrackerk:/mnt/backups
+      - ../mounts/websites/weighttracker/conf/weighttracker.zz50.co.uk:/etc/nginx/sites-enabled/weighttracker.zz50.co.uk
+    depends_on:
+      - postgres12
+      - nginx
+    external_links:
+      - postgres12:postgres
+    working_dir: /opt/weighttracker.zz50.co.uk/
+    entrypoint: ['bash', '-c', './bin/start_container.sh']
+    environment:
+      - VIRTUAL_HOST=##HOSTNAME_PREFIX##weighttracker.zz50.co.uk    
+      - DB_NAME=weight_tracker  
+      - DB_USERNAME=weight_tracker  
+      - DB_PASSWORD=weight_tracker
+      - DB_HOST=postgres
+      - ENVIRONMENT=##ENVIRONMENT##

@@ -23,6 +23,8 @@ if [ "$ENVIRONMENT" == "PRODUCTION" ] ; then
     #add housekeeping job to cron with no duplication if housekeeping script exists
     #( crontab -l | grep -v -F "$croncmd" ; echo "$cronjob" ) | crontab -
 
+    #add loop to check if node is in restarting state the stop and rm
+
 fi
 
 if [ "$ENVIRONMENT" == "DEVELOPMENT" ] ; then

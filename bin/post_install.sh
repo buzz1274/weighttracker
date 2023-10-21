@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 ENVIRONMENT=$1
+PROJECT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"/../
 
 docker exec postgres12 bash -c "psql -v ON_ERROR_STOP=1 --username 'postgres' <<-EOSQL
     CREATE DATABASE weight_tracker;
@@ -15,8 +16,11 @@ python manage.py migrate --noinput
 python manage.py collectstatic --noinput
 "
 
-if [ "$ENVIRONMENT" == "PRODUCTION" ] ; then 
+if [ "$ENVIRONMENT" == "PRODUCTION" ] ; then
     echo "FIXING FILE PERMISSIONS"
-    cd "$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"/../.. \
-    && sudo chown -R ec2-user:ec2-user weighttracker.zz50.co.uk 
+    cd "$PROJECT_DIR"/.. && sudo chown -R ec2-user:ec2-user weighttracker.zz50.co.uk
+fi
+
+if [ "$ENVIRONMENT" == "DEVELOPMENT" ] ; then
+    pre-commit install
 fi

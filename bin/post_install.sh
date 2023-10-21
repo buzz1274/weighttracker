@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 ENVIRONMENT=$1
 
 docker exec postgres12 bash -c "psql -v ON_ERROR_STOP=1 --username 'postgres' <<-EOSQL
@@ -11,9 +13,10 @@ docker exec weighttracker-backend bash -c \
 "
 python manage.py migrate --noinput
 python manage.py collectstatic --noinput
-cd /opt/weighttracker.zz50.co.uk/frontend/ && npm install && npm run build
 "
 
-#echo "Fixing File Permissions"
-#cd "$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"/../.. \
-#&& sudo chown -R ec2-user:ec2-user weighttracker.zz50.co.uk 
+if [ "$ENVIRONMENT" == "PRODUCTION" ] ; then 
+    echo "FIXING FILE PERMISSIONS"
+    cd "$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"/../.. \
+    && sudo chown -R ec2-user:ec2-user weighttracker.zz50.co.uk 
+fi

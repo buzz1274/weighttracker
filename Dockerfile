@@ -22,7 +22,6 @@ RUN apt-get update && \
     postgresql-client
 
 RUN curl -sSL https://install.python-poetry.org | python3 -
-RUN rm /etc/nginx/sites-enabled/default
 
 WORKDIR $WORKDIR_PATH
 COPY pyproject.toml pyproject.toml

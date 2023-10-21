@@ -26,8 +26,8 @@ SECRET_KEY = 'django-insecure-2p0)&i6nmw7o8(no$fh=%rwtfl#5ihaq13f0s*m_c-+zh5-w*x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['weighttracker.zz50.co.uk', '127.0.0.1', 'dev.weighttracker.zz50.co.uk']
-
+ALLOWED_HOSTS = ['weighttracker-backend', '127.0.0.1', 'dev.weighttracker.zz50.co.uk']
+CSRF_TRUSTED_ORIGINS = ["http://dev.weighttracker.zz50.co.uk"]
 
 # Application definition
 
@@ -126,4 +126,4 @@ STATIC_URL = 'media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-STATIC_ROOT = 'media/'
+STATIC_ROOT = 'frontend/public/media/'

@@ -7,7 +7,7 @@ docker exec postgres12 bash -c "psql -v ON_ERROR_STOP=1 --username 'postgres' <<
     ALTER USER weight_tracker WITH PASSWORD 'weight_tracker';
 EOSQL"
 
-docker exec weighttracker bash -c \
+docker exec weighttracker-backend bash -c \
 "
 python manage.py migrate --noinput
 python manage.py collectstatic --noinput

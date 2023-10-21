@@ -19,11 +19,7 @@ RUN apt-get update && \
     sudo \
     vim \
     curl \
-    postgresql-client \
-    nodejs \
-    npm \
-    nginx && \
-    npm install -g npx
+    postgresql-client
 
 RUN curl -sSL https://install.python-poetry.org | python3 -
 RUN rm /etc/nginx/sites-enabled/default

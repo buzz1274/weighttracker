@@ -9,5 +9,6 @@ else
         cd frontend && npm install && npm run dev
     else
         cd frontend && npm install && npm run build
+        sleep infinity
     fi
 fi

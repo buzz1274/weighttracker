@@ -17,6 +17,7 @@ python manage.py collectstatic --noinput
 "
 
 if [ "$ENVIRONMENT" == "PRODUCTION" ] ; then
+    sleep 10
     echo "FIXING FILE PERMISSIONS"
     cd "$PROJECT_DIR"/.. && sudo chown -R ec2-user:ec2-user weighttracker
 

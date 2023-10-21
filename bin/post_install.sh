@@ -18,7 +18,7 @@ python manage.py collectstatic --noinput
 
 if [ "$ENVIRONMENT" == "PRODUCTION" ] ; then
     echo "FIXING FILE PERMISSIONS"
-    cd "$PROJECT_DIR"/.. && sudo chown -R ec2-user:ec2-user weighttracker.zz50.co.uk
+    cd "$PROJECT_DIR"/.. && sudo chown -R ec2-user:ec2-user weighttracker
 
     #add housekeeping job to cron with no duplication if housekeeping script exists
     #( crontab -l | grep -v -F "$croncmd" ; echo "$cronjob" ) | crontab -

@@ -2,6 +2,7 @@
 
 ENVIRONMENT=$1
 PROJECT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"/../
+CRON_JOB="@daily $PROJECT_DIR bin/housekeeping.sh"
 
 docker exec postgres12 bash -c "psql -v ON_ERROR_STOP=1 --username 'postgres' <<-EOSQL
     CREATE DATABASE weight_tracker;
@@ -21,11 +22,7 @@ if [ "$ENVIRONMENT" == "PRODUCTION" ] ; then
     sleep 10
     cd "$PROJECT_DIR"/.. && sudo chown -R ec2-user:ec2-user weighttracker
 
-    #add housekeeping job to cron with no duplication if housekeeping script exists
-    #( crontab -l | grep -v -F "$croncmd" ; echo "$cronjob" ) | crontab -
-
-    #add loop to check if node is in restarting state the stop and rm
-
+    ( crontab -l | grep -v -F "$CRON_JOB" ; echo "$CRON_JOB" ) | crontab -
 fi
 
 if [ "$ENVIRONMENT" == "DEVELOPMENT" ] ; then

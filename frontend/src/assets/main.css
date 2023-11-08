@@ -2,34 +2,36 @@
 
 #app {
   max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
+  min-height: 1100px;
   font-weight: normal;
+  margin: 1em auto;
+  border:1px solid #000;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
+main {
+  padding:10px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+header {
+  background-color: #000;
+  width:100%;
+  height:30px;
+  color:#FFF;
+  padding-left:10px;
+  line-height:30px;
+  font-size:0.9em;
+  font-weight:bold;
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+main.full_screen {
+  display: flex;
+  height:100%;
+  align-items: flex-start;
+  padding-top:150px;
+  margin: 0 auto;
+  width:40%;
+  flex-direction: column;
+  padding-bottom:2em;
 }

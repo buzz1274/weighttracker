@@ -1,3 +1,13 @@
-from django.shortcuts import render
+from rest_framework import viewsets
+from rest_framework.response import Response
 
-# Create your views here.
+from .queries.weight_history import WeightHistory
+from .serializers import WeightSerializer
+
+
+class WeightViewSet(viewsets.ViewSet):
+    def list(self, request):
+        queryset = WeightHistory().weight_history()
+        serializer = WeightSerializer(queryset, many=True)
+
+        return Response(serializer.data)

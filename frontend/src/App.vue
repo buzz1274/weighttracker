@@ -34,7 +34,7 @@ header {
 }
 nav {
   float:right;
-  text-align: left;
+  text-align: right;
   margin-left: auto;
   order:2;
   font-size: 0.85rem;

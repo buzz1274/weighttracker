@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
+sleep 10
+
 ENVIRONMENT=$1
 PROJECT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"/../
-CRON_JOB="@daily $PROJECT_DIR bin/housekeeping.sh"
+CRON_JOB="@daily $PROJECT_DIRbin/housekeeping.sh"
 
 docker exec postgres12 bash -c "psql -v ON_ERROR_STOP=1 --username 'postgres' <<-EOSQL
     CREATE DATABASE weight_tracker;

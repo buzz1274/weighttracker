@@ -4,6 +4,9 @@
 <template>
   <div class="stats_container">
     <header>Stats</header>
+    <ul>
+      <li>Start weight(kg)</li>
+    </ul>
     <table class="weights table table-condensed table-hover">
       <tbody>
       <tr>
@@ -57,10 +60,8 @@
 
 <style scoped>
 .stats_container {
-  display: flex;
-  flex-direction: column;
   order:1;
   border:1px solid #000;
-  margin:0 10px 10px 0;
+  margin-bottom:10px;
 }
 </style>

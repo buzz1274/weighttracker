@@ -9,7 +9,7 @@ else
     if [ "$ENVIRONMENT" == "DEVELOPMENT" ] ; then
         cd frontend && npm install && npm run dev
     else
-        cd frontend && npm install && npm run build
+        cd frontend && npm install && npm run build-only
         sleep infinity
     fi
 fi

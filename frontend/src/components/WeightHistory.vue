@@ -27,9 +27,7 @@ const edit_weight = (id) => {
 }
 
 const total_pages = computed(() => {
-  if(store.weights) {
-    return Math.floor(store.weights.length / paging_limit)
-  }
+  return Math.floor(store.weights.length / paging_limit)
 })
 
 const paginate = (next_page) => {
@@ -58,8 +56,8 @@ const changeClass = (change) => {
           <th class="text-center">-</th>
         </tr>
       </thead>
-      <tbody>
-        <tr v-if="weights" v-for="weight in weights" :key="weight.id">
+      <tbody v-if="weights">
+        <tr v-for="weight in weights" :key="weight.id">
           <td style="width:45%">{{ moment(weight.date).format('MMMM Do, YYYY') }}</td>
           <td class="text-end" style="width:10%">{{ weight.weight }}</td>
           <td :class='changeClass(weight.change)' style="width:10%">{{ weight.change }}</td>
@@ -72,7 +70,9 @@ const changeClass = (change) => {
             </span>
           </td>
         </tr>
-        <tr v-else>
+      </tbody>
+      <tbody v-else>
+        <tr>
           <td colspan="4" class="text-center">Loading...</td>
         </tr>
       </tbody>

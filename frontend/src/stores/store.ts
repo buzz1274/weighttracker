@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, } from 'vue';
 
 export const useStore = defineStore('store', () => {
   const weights = ref([])

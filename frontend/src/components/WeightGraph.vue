@@ -25,10 +25,8 @@ ChartJS.register(
     Legend
 )
 
-const name = 'WeightGraph'
 const store = useStore()
 const { loaded, weights_weights, weights_labels, } = storeToRefs(store)
-const components = { Line }
 const chartData = computed(() => {
   return ({
     labels: weights_labels.value,
@@ -72,7 +70,7 @@ const chartOptions = {
   scales: {
     y: {
       ticks: {
-        callback: function(value, index, ticks) {
+        callback: function(value: number) {
           return value + 'kg';
         },
       },

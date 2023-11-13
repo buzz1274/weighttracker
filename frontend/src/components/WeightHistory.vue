@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useStore } from '@/stores/store'
 import moment from 'moment';
@@ -8,12 +8,10 @@ const page = ref(1)
 const paging_limit = 10
 
 const weights = computed(() => {
-  if(store.weights) {
-    return store.weights.slice(
-        (page.value - 1) * paging_limit,
-        (page.value * paging_limit)
-    )
-  }
+  return store.weights.slice(
+      (page.value - 1) * paging_limit,
+      (page.value * paging_limit)
+  )
 })
 
 const add_weight = () => {
@@ -41,7 +39,6 @@ const paginate = (next_page) => {
 const changeClass = (change) => {
   return (change < 0 ? 'table-success text-success' : 'table-danger text-danger') + ' text-end fw-bold'
 };
-
 </script>
 
 <template>

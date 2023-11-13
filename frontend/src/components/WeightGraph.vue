@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { Line } from 'vue-chartjs'
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'

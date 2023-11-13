@@ -47,7 +47,7 @@ const changeClass = (change) => {
 <template>
   <div class="weight_history_container">
     <header>
-      Weight History
+      History
       <span class="float-end add_weight">
         <font-awesome-icon icon="fa-solid fa-plus" @click="add_weight()" />
       </span>

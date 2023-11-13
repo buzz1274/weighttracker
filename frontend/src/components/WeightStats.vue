@@ -14,6 +14,10 @@
         <td></td>
       </tr>
       <tr>
+        <td class="stats_title">BMI</td>
+        <td></td>
+      </tr>
+      <tr>
         <td class="stats_title">Current weight(kg)</td>
         <td></td>
       </tr>

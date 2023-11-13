@@ -2,6 +2,7 @@
 import WeightStats from '../components/WeightStats.vue'
 import WeightGraph from '../components/WeightGraph.vue'
 import WeightHistory from '../components/WeightHistory.vue'
+import WeightForm from '../components/WeightForm.vue'
 </script>
 
 <template>
@@ -11,6 +12,7 @@ import WeightHistory from '../components/WeightHistory.vue'
       <WeightHistory />
     </nav>
     <WeightGraph />
+    <WeightForm />
   </main>
 </template>
 

@@ -1,8 +1,22 @@
+from typing import Union
+
 from weights.models import Weight
 
 
 class WeightHistory:
-    def weight_history(self):
+    def weight_history(self, user_id: int) -> list:
+        """
+        response = []
+        weights =  Weight.objects.filter(user_id=user_id)
+
+        for index, weight in enumerate(weights):
+            for w in weights[index + 1:index + 7]
+                print(weight)
+            response.append(weight)
+
+        return weights
+        """
+
         return Weight.objects.raw(
             """
             SELECT w.id, weights.date,

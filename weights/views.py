@@ -7,7 +7,7 @@ from .serializers import WeightSerializer
 
 class WeightViewSet(viewsets.ViewSet):
     def list(self, request):
-        queryset = WeightHistory().weight_history()
+        queryset = WeightHistory().weight_history(1)
         serializer = WeightSerializer(queryset, many=True)
 
         return Response(serializer.data)

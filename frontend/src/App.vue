@@ -46,7 +46,6 @@ a {
   padding-top:1em;
 }
 .main {
-  min-height: 990px;
 }
 footer {
   width: 100%;

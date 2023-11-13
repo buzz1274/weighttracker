@@ -5,7 +5,7 @@ import moment from 'moment';
 
 const store = useStore()
 const page = ref(1)
-const paging_limit = 10
+const paging_limit = 20
 
 const weights = computed(() => {
   return store.weights.slice(

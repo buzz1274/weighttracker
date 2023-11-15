@@ -1,5 +1,12 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import {useStore} from "@/stores/store";
+import {storeToRefs} from "pinia";
+
+const store = useStore()
+const { user } = storeToRefs(store)
+
+
 </script>
 
 <template>
@@ -7,8 +14,12 @@ import { RouterLink, RouterView } from 'vue-router'
     <RouterLink to="/">
       <h1>WeightTracker</h1>
     </RouterLink>
-    <nav>
-      Welcome Back Dave, user | logout
+    <nav v-if="user">
+      Welcome Back, {{ user.name }} |
+      edit |
+      logout
+    </nav>
+    <nav v-else>
       <RouterLink to="/login">Login</RouterLink>
     </nav>
   </header>

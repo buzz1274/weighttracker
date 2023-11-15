@@ -6,6 +6,17 @@ export const useStore = defineStore('store', () => {
   const weights_labels = ref([])
   const loaded = ref(false)
   const weights_weights = ref([])
+  const user = ref([])
+
+  function retrieveUser() {
+    fetch('/api/user/2', {method: "GET"}).then(
+        response => response.json()
+    ).then(data => {
+      user.value = data
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
 
   function retrieveWeights() {
     fetch('/api/weights/', {method: "GET"}).then(
@@ -38,8 +49,9 @@ export const useStore = defineStore('store', () => {
 
   onMounted(() => {
     retrieveWeights()
+    retrieveUser()
   })
 
-  return { weights, weights_weights, weights_labels, loaded, }
+  return { weights, weights_weights, weights_labels, loaded, user }
 
 });

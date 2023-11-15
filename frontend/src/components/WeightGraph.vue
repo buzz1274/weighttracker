@@ -26,40 +26,88 @@ ChartJS.register(
 )
 
 const store = useStore()
-const { loaded, weights_weights, weights_labels, } = storeToRefs(store)
+const { loaded, weights_weights, weights_labels, user } = storeToRefs(store)
 const chartData = computed(() => {
   return ({
     labels: weights_labels.value,
     datasets: [
       {
-        label: 'Current Weight',
-        backgroundColor: '#000',
-        borderColor: '#000',
+        label: 'remove',
         pointStyle: 'line',
-        data: weights_weights.value,
+        borderColor: 'rgba(220, 53, 69, 0.1)',
+        backgroundColor: 'rgba(220, 53, 69, 0.1)',
+        fill: '1',
+        order: 1,
+        data: new Array(weights_weights.value.length).fill(user.value.stats.max_weight_kg),
       },
       {
-        label: 'Target Weight',
-        backgroundColor: '#0A9506FF',
-        borderColor: '#0A9506FF',
+        label: 'Obese',
         pointStyle: 'line',
-        data: new Array(weights_weights.value.length).fill(81),
-      },
-      {
-        label: 'Normal Weight',
-        pointStyle: 'line',
-        backgroundColor: '#eeeeee',
-        borderColor: '#eeeeee',
-        fill: false,
-        data: new Array(weights_weights.value.length).fill(61.3)
+        borderColor: 'rgba(220, 53, 69, 0.0)',
+        backgroundColor: 'rgba(220, 53, 69, 0.1)',
+        fill: '-1',
+        order: 1,
+        data: new Array(weights_weights.value.length).fill(user.value.bmi_boundaries.obese)
       },
       {
         label: 'remove',
         pointStyle: 'line',
-        borderColor: '#eeeeee',
-        backgroundColor: '#eeeeee',
+        borderColor: 'rgba(243, 171, 133, 0.0)',
+        backgroundColor: 'rgba(243, 171, 133, 0.3)',
         fill: '-1',
-        data: new Array(weights_weights.value.length).fill(82.8)
+        order: 1,
+        data: new Array(weights_weights.value.length).fill(user.value.bmi_boundaries.obese)
+      },
+      {
+        label: 'Overweight',
+        pointStyle: 'line',
+        borderColor: 'rgba(243, 171, 133, 0.0)',
+        backgroundColor: 'rgba(243, 171, 133, 0.3)',
+        fill: '-2',
+        order: 1,
+        data: new Array(weights_weights.value.length).fill(user.value.bmi_boundaries.overweight)
+      },
+      {
+        label: 'Normal',
+        pointStyle: 'line',
+        borderColor: 'rgba(155, 238, 105, 0.0)',
+        backgroundColor: 'rgba(155, 238, 105, 0.3)',
+        fill: false,
+        order: 1,
+        data: new Array(weights_weights.value.length).fill(user.value.bmi_boundaries.normal)
+      },
+      {
+        label: 'remove',
+        pointStyle: 'line',
+        borderColor: 'rgba(155, 238, 105, 0.0)',
+        backgroundColor: 'rgba(155, 238, 105, 0.3)',
+        fill: '-1',
+        order: 1,
+        data: new Array(weights_weights.value.length).fill(user.value.bmi_boundaries.overweight)
+      },
+      {
+        label: 'Current Weigh',
+        borderColor: 'rgba(0, 0, 0, 1)',
+        backgroundColor: 'rgba(0, 0, 0, 1)',
+        pointStyle: 'line',
+        borderWidth: '1',
+        data: weights_weights.value,
+      },
+      {
+        label: 'Average Weight',
+        borderColor: 'rgba(128, 126, 126, 1)',
+        backgroundColor: 'rgba(128, 126, 126, 1)',
+        pointStyle: 'line',
+        borderWidth: '1',
+        data: new Array(weights_weights.value.length).fill(user.value.stats.average_weight_kg),
+      },
+      {
+        label: 'Target Weight',
+        borderColor: 'rgba(10, 149, 6, 1)',
+        backgroundColor: 'rgba(10, 149, 6, 1)',
+        pointStyle: 'line',
+        borderWidth: '1',
+        data: new Array(weights_weights.value.length).fill(user.value.target_weight_kg),
       },
     ]
   })

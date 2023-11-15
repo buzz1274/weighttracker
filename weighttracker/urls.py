@@ -18,11 +18,12 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 
-from weights.views import WeightViewSet
+from weights.views import WeightUserViewSet, WeightViewSet
 
 router = routers.DefaultRouter()
 
 router.register(r"weights", WeightViewSet, basename="Weight")
+router.register(r"user", WeightUserViewSet, basename="User")
 
 urlpatterns = [
     path("api/", include(router.urls)),

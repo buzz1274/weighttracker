@@ -1,31 +1,28 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed } from 'vue'
 import { useStore } from '@/stores/store'
-import moment from 'moment';
-import {storeToRefs} from "pinia";
+import moment from 'moment'
+import { storeToRefs } from 'pinia'
 
 const store = useStore()
-const { loaded, weights } = storeToRefs(store)
+const { weights } = storeToRefs(store)
 const page = ref(1)
 const paging_limit = 20
 
 const weights_history = computed(() => {
-  return weights.value.slice(
-      (page.value - 1) * paging_limit,
-      (page.value * paging_limit)
-  )
+  return weights.value.slice((page.value - 1) * paging_limit, page.value * paging_limit)
 })
 
 const add_weight = () => {
-  console.log("ADD WEIGHT")
+  console.log('ADD WEIGHT')
 }
 
 const delete_weight = (id) => {
-  console.log("DELETE WEIGHT " + id)
+  console.log('DELETE WEIGHT ' + id)
 }
 
 const edit_weight = (id) => {
-  console.log("EDIT WEIGHT " + id)
+  console.log('EDIT WEIGHT ' + id)
 }
 
 const total_pages = computed(() => {
@@ -37,8 +34,10 @@ const paginate = (next_page) => {
 }
 
 const changeClass = (change) => {
-  return (change < 0 ? 'table-success text-success' : 'table-danger text-danger') + ' text-end fw-bold'
-};
+  return (
+    (change < 0 ? 'table-success text-success' : 'table-danger text-danger') + ' text-end fw-bold'
+  )
+}
 </script>
 
 <template>
@@ -60,9 +59,9 @@ const changeClass = (change) => {
       </thead>
       <tbody v-if="weights_history">
         <tr v-for="weight in weights_history" :key="weight.id">
-          <td style="width:45%">{{ moment(weight.date).format('MMMM Do, YYYY') }}</td>
-          <td class="text-end" style="width:10%">{{ weight.weight }}</td>
-          <td :class='changeClass(weight.change)' style="width:10%">{{ weight.change }}</td>
+          <td style="width: 45%">{{ moment(weight.date).format('MMMM Do, YYYY') }}</td>
+          <td class="text-end" style="width: 10%">{{ weight.weight }}</td>
+          <td :class="changeClass(weight.change)" style="width: 10%">{{ weight.change }}</td>
           <td class="text-center">
             <span class="action">
               <font-awesome-icon icon="fa-solid fa-pen-to-square" @click="edit_weight(weight.id)" />
@@ -80,7 +79,9 @@ const changeClass = (change) => {
       </tbody>
     </table>
     <div v-if="weights_history" class="history_navigation">
-      <p v-if="page < total_pages" class="float-end" @click="paginate(page + 1)">Next&raquo;&raquo;</p>
+      <p v-if="page < total_pages" class="float-end" @click="paginate(page + 1)">
+        Next&raquo;&raquo;
+      </p>
       <p v-if="page > 1" @click="paginate(page - 1)">&laquo;&laquo;Previous</p>
     </div>
   </div>
@@ -88,36 +89,37 @@ const changeClass = (change) => {
 
 <style scoped>
 font-awesome-icon {
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
 }
 .weight_history_container {
-  order:2;
+  order: 2;
 }
 .history_navigation {
-  width:70%;
-  margin:0 auto;
+  width: 70%;
+  margin: 0 auto;
   cursor: pointer;
 }
 table {
-  font-size:0.75em;
+  font-size: 0.75em;
   line-height: 15px;
-  margin-bottom:10px;
+  margin-bottom: 10px;
 }
 .add_weight {
-  margin-right:20px;
+  margin-right: 20px;
   cursor: pointer;
 }
 th {
   font-weight: bold;
 }
 span.action {
-  margin-right:5px;
+  margin-right: 5px;
   cursor: pointer;
 }
 p {
-  font-size:0.75em;
+  font-size: 0.75em;
   font-weight: bold;
-  margin:0; padding:0;
+  margin: 0;
+  padding: 0;
 }
 </style>

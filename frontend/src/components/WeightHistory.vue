@@ -2,13 +2,15 @@
 import { ref, computed } from 'vue';
 import { useStore } from '@/stores/store'
 import moment from 'moment';
+import {storeToRefs} from "pinia";
 
 const store = useStore()
+const { loaded, weights } = storeToRefs(store)
 const page = ref(1)
 const paging_limit = 20
 
-const weights = computed(() => {
-  return store.weights.slice(
+const weights_history = computed(() => {
+  return weights.value.slice(
       (page.value - 1) * paging_limit,
       (page.value * paging_limit)
   )
@@ -27,7 +29,7 @@ const edit_weight = (id) => {
 }
 
 const total_pages = computed(() => {
-  return Math.floor(store.weights.length / paging_limit)
+  return Math.floor(weights.value.length / paging_limit)
 })
 
 const paginate = (next_page) => {
@@ -56,8 +58,8 @@ const changeClass = (change) => {
           <th class="text-center">-</th>
         </tr>
       </thead>
-      <tbody v-if="weights">
-        <tr v-for="weight in weights" :key="weight.id">
+      <tbody v-if="weights_history">
+        <tr v-for="weight in weights_history" :key="weight.id">
           <td style="width:45%">{{ moment(weight.date).format('MMMM Do, YYYY') }}</td>
           <td class="text-end" style="width:10%">{{ weight.weight }}</td>
           <td :class='changeClass(weight.change)' style="width:10%">{{ weight.change }}</td>

@@ -6,7 +6,10 @@ export const useStore = defineStore('store', () => {
   const weights_labels = ref([])
   const loaded = ref(false)
   const weights_weights = ref([])
-  const user = ref([])
+  const user = ref({
+    'bmi_boundaries': [],
+    'stats': []
+  })
 
   function retrieveUser() {
     fetch('/api/user/2', {method: "GET"}).then(

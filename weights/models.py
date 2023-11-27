@@ -39,9 +39,6 @@ class WeightUser(models.Model):
             "normal": round(
                 (self.height_m * self.height_m) * self.BMI_RANGES["NORMAL"], 1
             ),
-            "underweight": round(
-                (self.height_m * self.height_m) * self.BMI_RANGES["NORMAL"], 1
-            ),
         }
 
     def current_weight(self):

@@ -27,9 +27,16 @@ ChartJS.register(
 
 const store = useStore()
 const { loaded, weights_weights, weights_labels, user } = storeToRefs(store)
+const labels = computed( () => {
+  return weights_labels.value.reverse()
+})
+const data = computed( () => {
+  return weights_weights.value.reverse()
+})
+
 const chartData = computed(() => {
   return ({
-    labels: weights_labels.value,
+    labels: labels.value,
     datasets: [
       {
         label: 'remove',
@@ -91,7 +98,7 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(0, 0, 0, 1)',
         pointStyle: 'line',
         borderWidth: '1',
-        data: weights_weights.value,
+        data: data.value,
       },
       {
         label: 'Average Weight',

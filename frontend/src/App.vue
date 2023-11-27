@@ -57,6 +57,7 @@ a {
   padding-top:1em;
 }
 .main {
+  min-height:900px;
 }
 footer {
   width: 100%;

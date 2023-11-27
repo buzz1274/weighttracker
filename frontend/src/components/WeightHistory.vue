@@ -29,7 +29,7 @@ const edit_weight = (id) => {
 }
 
 const total_pages = computed(() => {
-  return Math.floor(weights.value.length / paging_limit)
+  return Math.ceil(weights.value.length / paging_limit)
 })
 
 const paginate = (next_page) => {
@@ -79,7 +79,7 @@ const changeClass = (change) => {
         </tr>
       </tbody>
     </table>
-    <div v-if="weights" class="history_navigation">
+    <div v-if="weights_history" class="history_navigation">
       <p v-if="page < total_pages" class="float-end" @click="paginate(page + 1)">Next&raquo;&raquo;</p>
       <p v-if="page > 1" @click="paginate(page - 1)">&laquo;&laquo;Previous</p>
     </div>

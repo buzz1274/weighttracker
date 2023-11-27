@@ -69,6 +69,6 @@ table {
   margin-bottom: 10px;
 }
 td:first-child {
-  padding-left: 0.9em;
+  padding-left: 0.8em;
 }
 </style>

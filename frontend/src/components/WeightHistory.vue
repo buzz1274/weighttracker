@@ -113,10 +113,10 @@ th {
   font-weight: bold;
 }
 th:first-child {
-  padding-left: 0.9em;
+  padding-left: 0.8em;
 }
 td:first-child {
-  padding-left: 0.9em;
+  padding-left: 0.8em;
 }
 span.action {
   margin-right: 5px;

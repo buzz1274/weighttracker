@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="stats_container">
@@ -61,12 +60,15 @@
 
 <style scoped>
 .stats_container {
-  order:1;
-  margin-bottom:10px;
+  order: 1;
+  margin-bottom: 10px;
 }
 table {
-  font-size:0.75em;
+  font-size: 0.75em;
   line-height: 15px;
-  margin-bottom:10px;
+  margin-bottom: 10px;
+}
+td:first-child {
+  padding-left: 0.9em;
 }
 </style>

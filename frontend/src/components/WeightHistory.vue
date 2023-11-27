@@ -112,6 +112,12 @@ table {
 th {
   font-weight: bold;
 }
+th:first-child {
+  padding-left: 0.9em;
+}
+td:first-child {
+  padding-left: 0.9em;
+}
 span.action {
   margin-right: 5px;
   cursor: pointer;

@@ -6,7 +6,13 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'weighttracker.settings')
+    environment = os.environ.get("ENVIRONMENT", "PRODUCTION").lower()
+
+    os.environ.setdefault(
+        "DJANGO_SETTINGS_MODULE",
+        f"weighttracker.settings.{environment}",
+    )
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -18,5 +24,5 @@ def main():
     execute_from_command_line(sys.argv)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

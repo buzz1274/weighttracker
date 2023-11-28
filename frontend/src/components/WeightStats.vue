@@ -2,16 +2,21 @@
 import { useStore } from '@/stores/store'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
+import moment from 'moment'
 
 const { user } = storeToRefs(useStore())
 
-const weight_to_target = computed(() => {
-  return (user.value.stats.current_weight - user.value.target_weight_kg).toFixed(2)
+const weightToTarget = computed(() => {
+  return (user.value.current_weight_kg - user.value.target_weight_kg).toFixed(2)
 })
 
-const total_weight_lost = computed(() => {
-  return (user.value.stats.current_weight - user.value.stats.max_weight_kg).toFixed(2)
+const totalWeightLost = computed(() => {
+  return (user.value.current_weight_kg - user.value.max_weight_kg).toFixed(2)
 })
+
+const changeClass = (change) => {
+  return change == '-' ? '' : change < 0 ? 'text-success' : 'text-danger'
+}
 </script>
 
 <template>
@@ -25,7 +30,7 @@ const total_weight_lost = computed(() => {
         </tr>
         <tr>
           <td>Current weight(kg)</td>
-          <td class="stats text-end">{{ user.stats.current_weight }}</td>
+          <td class="stats text-end">{{ user.current_weight_kg }}</td>
         </tr>
         <tr>
           <td>Target weight(kg)</td>
@@ -33,11 +38,11 @@ const total_weight_lost = computed(() => {
         </tr>
         <tr>
           <td>Weight to target(kg)</td>
-          <td class="stats text-end">{{ weight_to_target }}</td>
+          <td class="stats text-end">{{ weightToTarget }}</td>
         </tr>
         <tr>
           <td>Highest weight(kg)</td>
-          <td class="stats text-end">{{ user.stats.max_weight_kg }}</td>
+          <td class="stats text-end">{{ user.max_weight_kg }}</td>
         </tr>
         <tr>
           <td>Lowest weight(kg)</td>
@@ -49,27 +54,37 @@ const total_weight_lost = computed(() => {
         </tr>
         <tr>
           <td>Change last week(kg)</td>
-          <td class="stats text-end">{{ user.stats.change_last_week_kg }}</td>
+          <td :class="changeClass(user.stats.change_last_week_kg)" class="stats text-end">
+            {{ user.stats.change_last_week_kg }}
+          </td>
         </tr>
         <tr>
           <td>Change last month(kg)</td>
-          <td class="stats text-end">{{ user.stats.change_last_month_kg }}</td>
+          <td :class="changeClass(user.stats.change_last_month_kg)" class="stats text-end">
+            {{ user.stats.change_last_month_kg }}
+          </td>
         </tr>
         <tr>
           <td>Change last year(kg)</td>
-          <td class="stats text-end">{{ user.stats.change_last_year_kg }}</td>
+          <td :class="changeClass(user.stats.change_last_year_kg)" class="stats text-end">
+            {{ user.stats.change_last_year_kg }}
+          </td>
         </tr>
         <tr>
           <td>Total Weight Lost(kg)</td>
-          <td class="stats text-end">{{ total_weight_lost }}</td>
+          <td :class="changeClass(totalWeightLost)" class="stats text-end">
+            {{ totalWeightLost }}
+          </td>
         </tr>
         <tr>
-          <td>Target Hit Date</td>
-          <td class="stats text-end">~</td>
+          <td>Target Hit Date(approx)</td>
+          <td class="stats text-end">
+            {{ moment(user.target_hit_date).format('MMMM Do, YYYY') }}
+          </td>
         </tr>
         <tr>
           <td>BMI</td>
-          <td class="stats text-end">{{ user.stats.current_bmi }}</td>
+          <td class="stats text-end">{{ user.current_bmi }}</td>
         </tr>
       </tbody>
     </table>

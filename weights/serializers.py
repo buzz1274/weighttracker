@@ -22,6 +22,14 @@ class WeightUserSerializer(serializers.ModelSerializer):
     email = serializers.SerializerMethodField("email_field")
     bmi_boundaries = serializers.SerializerMethodField("bmi_boundaries_field")
     stats = serializers.SerializerMethodField("stats_field")
+    max_weight_kg = serializers.SerializerMethodField("max_weight_kg_field")
+    current_weight_kg = serializers.SerializerMethodField(
+        "current_weight_kg_field"
+    )
+    target_hit_date = serializers.SerializerMethodField(
+        "target_hit_date_field"
+    )
+    current_bmi = serializers.SerializerMethodField("current_bmi_field")
 
     def name_field(self, model):
         return model.user.username
@@ -31,6 +39,27 @@ class WeightUserSerializer(serializers.ModelSerializer):
 
     def bmi_boundaries_field(self, model):
         return model.bmi_boundaries()
+
+    def max_weight_kg_field(self, model):
+        try:
+            return f"{model.max_weight().weight:.2f}"
+        except AttributeError:
+            return "-"
+
+    def current_weight_kg_field(self, model):
+        try:
+            return f"{model.current_weight().weight:.2f}"
+        except AttributeError:
+            return "-"
+
+    def current_bmi_field(self, model):
+        try:
+            return f"{model.bmi():.2f}"
+        except TypeError:
+            return "-"
+
+    def target_hit_date_field(self, model):
+        return model.target_hit_date()
 
     def stats_field(self, model):
         year_change = model.weight_change_since(Dates().year_ago())
@@ -43,11 +72,8 @@ class WeightUserSerializer(serializers.ModelSerializer):
         week_change = f"{week_change:2f}" if week_change else "-"
 
         return {
-            "current_weight": f"{model.current_weight():.2f}",
             "average_weight_kg": f"{model.average_weight():.2f}",
-            "max_weight_kg": f"{model.max_weight():.2f}",
             "min_weight_kg": f"{model.min_weight():.2f}",
-            "current_bmi": f"{model.bmi():.2f}",
             "change_last_year_kg": year_change,
             "change_last_month_kg": month_change,
             "change_last_week_kg": week_change,

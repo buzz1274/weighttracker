@@ -15,27 +15,18 @@ import {
   LinearScale
 } from 'chart.js'
 
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Filler,
-    Title,
-    Legend
-)
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Title, Legend)
 
-const store = useStore()
-const { loaded, weights_weights, weights_labels, user } = storeToRefs(store)
-const labels = computed( () => {
-  return weights_labels.value.reverse()
+const { loaded, weights_weights, weights_labels, user } = storeToRefs(useStore())
+const labels = computed(() => {
+  return weights_labels.value.slice(0).reverse()
 })
-const data = computed( () => {
-  return weights_weights.value.reverse()
+const data = computed(() => {
+  return weights_weights.value.slice(0).reverse()
 })
 
 const chartData = computed(() => {
-  return ({
+  return {
     labels: labels.value,
     datasets: [
       {
@@ -45,7 +36,7 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(220, 53, 69, 0.1)',
         fill: '1',
         order: 1,
-        data: new Array(weights_weights.value.length).fill(user.value.stats.max_weight_kg),
+        data: new Array(weights_weights.value.length).fill(user.value.max_weight_kg)
       },
       {
         label: 'Obese',
@@ -98,7 +89,7 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(0, 0, 0, 1)',
         pointStyle: 'line',
         borderWidth: '1',
-        data: data.value,
+        data: data.value
       },
       {
         label: 'Average Weight',
@@ -106,7 +97,7 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(128, 126, 126, 1)',
         pointStyle: 'line',
         borderWidth: '1',
-        data: new Array(weights_weights.value.length).fill(user.value.stats.average_weight_kg),
+        data: new Array(weights_weights.value.length).fill(user.value.stats.average_weight_kg)
       },
       {
         label: 'Target Weight',
@@ -114,10 +105,10 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(10, 149, 6, 1)',
         pointStyle: 'line',
         borderWidth: '1',
-        data: new Array(weights_weights.value.length).fill(user.value.target_weight_kg),
-      },
+        data: new Array(weights_weights.value.length).fill(user.value.target_weight_kg)
+      }
     ]
-  })
+  }
 })
 const chartOptions = {
   responsive: true,
@@ -125,9 +116,9 @@ const chartOptions = {
   scales: {
     y: {
       ticks: {
-        callback: function(value: number) {
-          return value + 'kg';
-        },
+        callback: function (value: number) {
+          return value + 'kg'
+        }
       },
       grid: {
         display: false
@@ -142,7 +133,7 @@ const chartOptions = {
   plugins: {
     legend: {
       labels: {
-        filter: item => item.text !== 'remove'
+        filter: (item) => item.text !== 'remove'
       }
     }
   }
@@ -158,8 +149,8 @@ const chartOptions = {
 
 <style scoped>
 .graph_container {
-  width:868px;
-  order:2;
-  height:700px;
+  width: 868px;
+  order: 2;
+  height: 700px;
 }
 </style>

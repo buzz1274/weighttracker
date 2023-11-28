@@ -25,6 +25,7 @@ db.sqlite3
 media/admin
 *.pyc
 frontend/public/media/admin
+frontend/public/media/rest_framework/
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

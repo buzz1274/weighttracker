@@ -1,4 +1,18 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useStore } from '@/stores/store'
+import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
+
+const { user } = storeToRefs(useStore())
+
+const weight_to_target = computed(() => {
+  return (user.value.stats.current_weight - user.value.target_weight_kg).toFixed(2)
+})
+
+const total_weight_lost = computed(() => {
+  return (user.value.stats.current_weight - user.value.stats.max_weight_kg).toFixed(2)
+})
+</script>
 
 <template>
   <div class="stats_container">
@@ -6,52 +20,56 @@
     <table class="table table-sm table-hover">
       <tbody>
         <tr>
-          <td class="stats_title">Start weight(kg)</td>
-          <td></td>
+          <td>Start weight(kg)</td>
+          <td class="stats text-end">{{ user.starting_weight_kg }}</td>
         </tr>
         <tr>
-          <td class="stats_title">Current weight(kg)</td>
-          <td></td>
+          <td>Current weight(kg)</td>
+          <td class="stats text-end">{{ user.stats.current_weight }}</td>
         </tr>
         <tr>
-          <td class="stats_title">Target weight(kg)</td>
-          <td></td>
+          <td>Target weight(kg)</td>
+          <td class="stats text-end">{{ user.target_weight_kg }}</td>
         </tr>
         <tr>
-          <td class="stats_title">Weight to target(kg)</td>
-          <td></td>
+          <td>Weight to target(kg)</td>
+          <td class="stats text-end">{{ weight_to_target }}</td>
         </tr>
         <tr>
-          <td class="stats_title">Lowest weight(kg)</td>
-          <td></td>
+          <td>Highest weight(kg)</td>
+          <td class="stats text-end">{{ user.stats.max_weight_kg }}</td>
         </tr>
         <tr>
-          <td class="stats_title">Highest weight(kg)</td>
-          <td></td>
+          <td>Lowest weight(kg)</td>
+          <td class="stats text-end">{{ user.stats.min_weight_kg }}</td>
         </tr>
         <tr>
-          <td class="stats_title">Average weight(kg)</td>
-          <td></td>
+          <td>Average weight(kg)</td>
+          <td class="stats text-end">{{ user.stats.average_weight_kg }}</td>
         </tr>
         <tr>
-          <td class="stats_title">Change last week(kg)</td>
-          <td></td>
+          <td>Change last week(kg)</td>
+          <td class="stats text-end">{{ user.stats.change_last_week_kg }}</td>
         </tr>
         <tr>
-          <td class="stats_title">Change last month(kg)</td>
-          <td></td>
+          <td>Change last month(kg)</td>
+          <td class="stats text-end">{{ user.stats.change_last_month_kg }}</td>
         </tr>
         <tr>
-          <td class="stats_title">Change last year(kg)</td>
-          <td></td>
+          <td>Change last year(kg)</td>
+          <td class="stats text-end">{{ user.stats.change_last_year_kg }}</td>
         </tr>
         <tr>
-          <td class="stats_title">Change highest(kg)</td>
-          <td></td>
+          <td>Total Weight Lost(kg)</td>
+          <td class="stats text-end">{{ total_weight_lost }}</td>
         </tr>
         <tr>
-          <td class="stats_title">BMI</td>
-          <td></td>
+          <td>Target Hit Date</td>
+          <td class="stats text-end">~</td>
+        </tr>
+        <tr>
+          <td>BMI</td>
+          <td class="stats text-end">{{ user.stats.current_bmi }}</td>
         </tr>
       </tbody>
     </table>
@@ -70,5 +88,9 @@ table {
 }
 td:first-child {
   padding-left: 0.8em;
+  font-weight: bold;
+}
+td.stats {
+  padding-right: 0.8em;
 }
 </style>

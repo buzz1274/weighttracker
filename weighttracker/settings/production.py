@@ -90,7 +90,7 @@ DATABASES = {
         "PASSWORD": os.environ["DB_PASSWORD"],
         "HOST": os.environ["DB_HOST"],
         "PORT": "",
-    }
+    },
 }
 
 

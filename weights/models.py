@@ -1,4 +1,6 @@
 import decimal
+from datetime import date
+from typing import Union
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -26,7 +28,8 @@ class WeightUser(models.Model):
         choices=SEX_CHOICES,
     )
 
-    def bmi_boundaries(self):
+    def bmi_boundaries(self) -> dict:
+        """calculate bmi boundaries for current user"""
         return {
             "obese": round(
                 (self.height_m * self.height_m) * self.BMI_RANGES["OBESE"], 1
@@ -41,46 +44,107 @@ class WeightUser(models.Model):
             ),
         }
 
-    def current_weight(self):
+    def current_weight(self) -> decimal.Decimal:
         """get users current weight"""
         try:
-            return (
+            return decimal.Decimal(
                 Weight.objects.filter(user=self.user)
                 .order_by("-date")[0]
                 .weight
             )
         except IndexError:
-            return 0.0
+            return decimal.Decimal(0.00)
 
-    def average_weight(self):
+    def average_weight(self) -> decimal.Decimal:
         """get average weight for user"""
         try:
-            return round(
+            return decimal.Decimal(
                 Weight.objects.filter(user=self.user).aggregate(Avg("weight"))[
                     "weight__avg"
-                ],
-                1,
+                ]
             )
         except KeyError:
-            return 0.0
+            return decimal.Decimal(0.00)
 
-    def max_weight(self):
+    def max_weight(self) -> decimal.Decimal:
         """get average weight for user"""
         try:
-            return (
+            return decimal.Decimal(
                 Weight.objects.filter(user=self.user)
-                .order_by("-weight")[0]
+                .order_by("-weight", "-date")[0]
                 .weight
             )
         except IndexError:
-            return 0.0
+            return decimal.Decimal(0.00)
 
-    def stats(self):
-        return {
-            "current_weight": self.current_weight(),
-            "average_weight_kg": self.average_weight(),
-            "max_weight_kg": self.max_weight(),
-        }
+    def min_weight(self) -> decimal.Decimal:
+        """get average weight for user"""
+        try:
+            return decimal.Decimal(
+                Weight.objects.filter(user=self.user)
+                .order_by("weight")[0]
+                .weight
+            )
+        except IndexError:
+            return decimal.Decimal(0.00)
+
+    def bmi(self) -> decimal.Decimal:
+        """calculate users bmi"""
+        try:
+            return decimal.Decimal(
+                self.current_weight() / (self.height_m * self.height_m)
+            )
+        except ZeroDivisionError:
+            return decimal.Decimal(0.00)
+
+    def weight_change_since(
+        self, search_date: date, days_leeway: Union[int, None] = 2
+    ) -> Union[None, decimal.Decimal]:
+        """determine weight change since supplied date"""
+        greater_than_date = (
+            Weight.objects.filter(user=self.user, date__gte=search_date)
+            .order_by("date")
+            .first()
+        )
+        greater_than_date_diff = None
+
+        if greater_than_date:
+            if greater_than_date.date == search_date:
+                return decimal.Decimal(
+                    self.current_weight() - greater_than_date.weight
+                )
+            else:
+                greater_than_date_diff = (
+                    greater_than_date.date - search_date
+                ).days
+
+        less_than_date = (
+            Weight.objects.filter(user=self.user, date__lte=search_date)
+            .order_by("-date")
+            .first()
+        )
+        less_than_date_diff = None
+
+        if less_than_date:
+            less_than_date_diff = (search_date - less_than_date.date).days
+
+        if (
+            less_than_date_diff
+            and less_than_date_diff <= days_leeway
+            and (
+                greater_than_date_diff is None
+                or less_than_date_diff <= greater_than_date_diff
+            )
+        ):
+            return decimal.Decimal(
+                self.current_weight() - less_than_date.weight
+            )
+        elif greater_than_date_diff and greater_than_date_diff <= days_leeway:
+            return decimal.Decimal(
+                self.current_weight() - greater_than_date.weight
+            )
+
+        return None
 
 
 class Weight(models.Model):

@@ -1,3 +1,5 @@
+from datetime import date
+
 from rest_framework import serializers
 
 from weighttracker.helpers.dates import Dates
@@ -19,7 +21,7 @@ class WeightSerializer(serializers.ModelSerializer):
         return (
             "-"
             if model.week_weight_change_kg is None
-            else model.week_weight_change_kg
+            else f"{model.week_weight_change_kg:.2f}"
         )
 
 
@@ -71,8 +73,10 @@ class WeightUserSerializer(serializers.ModelSerializer):
         year_change = model.weight_at_date(Dates().year_ago())
         year_change = f"{year_change.weight_kg:2f}" if year_change else "-"
 
-        month_change = model.weight_at_date(Dates().month_ago())
-        month_change = f"{month_change.weight_kg:2f}" if month_change else "-"
+        month_change = model.change_between_dates(
+            Dates().month_ago(), date.today()
+        )
+        month_change = f"{month_change:2f}" if month_change else "-"
 
         week_change = model.weight_at_date(Dates().week_ago())
         week_change = f"{week_change.weight_kg:2f}" if week_change else "-"

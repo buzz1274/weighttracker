@@ -118,6 +118,20 @@ class WeightUser(models.Model):
         """determine weight change since supplied date"""
         return Weight.objects.filter(user=self, date=search_date).first()
 
+    def change_between_dates(
+        self, from_date: date, to_date: date
+    ) -> Union[None, decimal.Decimal]:
+        """determine weight change between dates"""
+        from_weight = self.weight_at_date(from_date)
+        to_weight = self.weight_at_date(to_date)
+
+        print(from_weight, to_weight)
+
+        if from_weight and to_weight:
+            return from_weight.weight_kg - to_weight.weight_kg
+
+        return None
+
     def _height_squared(self) -> decimal.Decimal:
         """square users height"""
         return decimal.Decimal(self.height_m * self.height_m)

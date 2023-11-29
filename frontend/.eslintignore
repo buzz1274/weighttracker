@@ -2,3 +2,4 @@
 *.toml
 *.py
 *.lock
+*.sh

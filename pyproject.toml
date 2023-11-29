@@ -10,6 +10,7 @@ psycopg2-binary = "^2.9.3"
 django = "^4.2.7"
 gunicorn = "^21.2.0"
 djangorestframework = "^3.14.0"
+model-bakery = "^1.17.0"
 
 [tool.poetry.dev-dependencies]
 pydevd-pycharm = "^222.3345.40"

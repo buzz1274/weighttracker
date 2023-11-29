@@ -3,7 +3,6 @@ import math
 from datetime import date, timedelta
 from typing import Union
 
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Avg, DateField, DecimalField
@@ -11,7 +10,7 @@ from django.db.models import Avg, DateField, DecimalField
 
 class Weight(models.Model):
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        "WeightUser",
         on_delete=models.CASCADE,
     )
     date = DateField()
@@ -45,26 +44,24 @@ class WeightUser(models.Model):
         """calculate bmi boundaries for current user"""
         return {
             "obese": round(
-                (self.height_m * self.height_m) * self.BMI_RANGES["OBESE"], 1
+                self._height_squared() * self.BMI_RANGES["OBESE"], 1
             ),
             "overweight": round(
-                (self.height_m * self.height_m)
-                * self.BMI_RANGES["OVERWEIGHT"],
-                1,
+                self._height_squared() * self.BMI_RANGES["OVERWEIGHT"], 1
             ),
             "normal": round(
-                (self.height_m * self.height_m) * self.BMI_RANGES["NORMAL"], 1
+                self._height_squared() * self.BMI_RANGES["NORMAL"], 1
             ),
         }
 
     def current_weight(self) -> Weight:
         """get users current weight"""
-        return Weight.objects.filter(user=self.user).order_by("-date").first()
+        return Weight.objects.filter(user=self).order_by("-date").first()
 
     def max_weight(self) -> Weight:
         """get average weight for user"""
         return (
-            Weight.objects.filter(user=self.user)
+            Weight.objects.filter(user=self)
             .order_by("-weight", "-date")
             .first()
         )
@@ -73,9 +70,7 @@ class WeightUser(models.Model):
         """get average weight for user"""
         try:
             return decimal.Decimal(
-                Weight.objects.filter(user=self.user)
-                .order_by("weight")[0]
-                .weight
+                Weight.objects.filter(user=self).order_by("weight")[0].weight
             )
         except IndexError:
             return decimal.Decimal(0.00)
@@ -84,7 +79,7 @@ class WeightUser(models.Model):
         """get average weight for user"""
         try:
             return decimal.Decimal(
-                Weight.objects.filter(user=self.user).aggregate(Avg("weight"))[
+                Weight.objects.filter(user=self).aggregate(Avg("weight"))[
                     "weight__avg"
                 ]
             )
@@ -95,7 +90,7 @@ class WeightUser(models.Model):
         """calculate users bmi"""
         try:
             return decimal.Decimal(
-                self.current_weight().weight / (self.height_m * self.height_m)
+                round(self.current_weight().weight / self._height_squared(), 2)
             )
         except (ZeroDivisionError, AttributeError):
             return None
@@ -124,7 +119,7 @@ class WeightUser(models.Model):
     ) -> Union[None, decimal.Decimal]:
         """determine weight change since supplied date"""
         greater_than_date = (
-            Weight.objects.filter(user=self.user, date__gte=search_date)
+            Weight.objects.filter(user=self, date__gte=search_date)
             .order_by("date")
             .first()
         )
@@ -141,7 +136,7 @@ class WeightUser(models.Model):
                 ).days
 
         less_than_date = (
-            Weight.objects.filter(user=self.user, date__lte=search_date)
+            Weight.objects.filter(user=self, date__lte=search_date)
             .order_by("-date")
             .first()
         )
@@ -167,3 +162,7 @@ class WeightUser(models.Model):
             )
 
         return None
+
+    def _height_squared(self) -> decimal.Decimal:
+        """square users height"""
+        return decimal.Decimal(self.height_m * self.height_m)

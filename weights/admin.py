@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from weights.models import Weight, WeightUser
+from .models.weight import Weight
+from .models.weight_user import WeightUser
 
 
 class WeightUserAdmin(admin.ModelAdmin):

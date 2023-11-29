@@ -1,12 +1,13 @@
 import decimal
+from datetime import date
 
 from django.test import TestCase
 from model_bakery import baker
 
-from ..models import WeightUser
+from ..models.weight_user import WeightUser
 
 
-class WeightModelTestCase(TestCase):
+class WeightUserModelTestCase(TestCase):
     def test_bmi_returns_correct_value(self) -> None:
         bmi_weights = baker.make_recipe(
             "weights.tests.bmi_weights", _quantity=1
@@ -48,3 +49,15 @@ class WeightModelTestCase(TestCase):
                 "normal": decimal.Decimal("61.3"),
             },
         )
+
+    def test_weight_change_since_returns_correctly(self):
+        bmi_weights = baker.make_recipe(
+            "weights.tests.bmi_weights", _quantity=1
+        )
+
+        user = WeightUser.objects.filter(pk=bmi_weights[0].user_id).get()
+
+        self.assertEqual(
+            user.weight_at_date(date(2023, 11, 29)).weight_kg, 100
+        )
+        self.assertIs(user.weight_at_date(date(2019, 1, 1)), None)

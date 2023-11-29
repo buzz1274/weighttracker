@@ -2,7 +2,8 @@ from rest_framework import serializers
 
 from weighttracker.helpers.dates import Dates
 
-from .models import Weight, WeightUser
+from .models.weight import Weight
+from .models.weight_user import WeightUser
 
 
 class WeightSerializer(serializers.ModelSerializer):
@@ -67,14 +68,14 @@ class WeightUserSerializer(serializers.ModelSerializer):
         return model.target_hit_date()
 
     def stats_field(self, model):
-        year_change = model.weight_change_since(Dates().year_ago())
-        year_change = f"{year_change:2f}" if year_change else "-"
+        year_change = model.weight_at_date(Dates().year_ago())
+        year_change = f"{year_change.weight_kg:2f}" if year_change else "-"
 
-        month_change = model.weight_change_since(Dates().month_ago())
-        month_change = f"{month_change:2f}" if month_change else "-"
+        month_change = model.weight_at_date(Dates().month_ago())
+        month_change = f"{month_change.weight_kg:2f}" if month_change else "-"
 
-        week_change = model.weight_change_since(Dates().week_ago())
-        week_change = f"{week_change:2f}" if week_change else "-"
+        week_change = model.weight_at_date(Dates().week_ago())
+        week_change = f"{week_change.weight_kg:2f}" if week_change else "-"
 
         return {
             "average_weight_kg": f"{model.average_weight():.2f}",

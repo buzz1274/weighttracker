@@ -1,7 +1,8 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 
-from .models import Weight, WeightUser
+from .models.weight import Weight
+from .models.weight_user import WeightUser
 from .serializers import WeightSerializer, WeightUserSerializer
 
 

@@ -6,15 +6,20 @@ from .models import Weight, WeightUser
 
 
 class WeightSerializer(serializers.ModelSerializer):
-    change = serializers.SerializerMethodField("change_field")
-
-    def change_field(self, model):
-        return model.change
+    week_weight_change_kg = serializers.SerializerMethodField(
+        "week_weight_change_kg_field"
+    )
 
     class Meta:
         model = Weight
+        fields = ["id", "date", "weight_kg", "week_weight_change_kg"]
 
-        fields = ["id", "date", "weight", "change"]
+    def week_weight_change_kg_field(self, model):
+        return (
+            "-"
+            if model.week_weight_change_kg is None
+            else model.week_weight_change_kg
+        )
 
 
 class WeightUserSerializer(serializers.ModelSerializer):
@@ -42,13 +47,13 @@ class WeightUserSerializer(serializers.ModelSerializer):
 
     def max_weight_kg_field(self, model):
         try:
-            return f"{model.max_weight().weight:.2f}"
+            return f"{model.max_weight().weight_kg:.2f}"
         except AttributeError:
             return "-"
 
     def current_weight_kg_field(self, model):
         try:
-            return f"{model.current_weight().weight:.2f}"
+            return f"{model.current_weight().weight_kg:.2f}"
         except AttributeError:
             return "-"
 
@@ -81,5 +86,4 @@ class WeightUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WeightUser
-
         fields = "__all__"

@@ -12,8 +12,9 @@ admin.site.register(WeightUser, WeightUserAdmin)
 
 
 class WeightAdmin(admin.ModelAdmin):
-    list_display = ["date", "user", "weight"]
+    list_display = ["date", "user", "weight_kg", "week_weight_change_kg"]
     list_filter = ["user"]
+    fields = ["date", "user", "weight_kg"]
 
 
 admin.site.register(Weight, WeightAdmin)

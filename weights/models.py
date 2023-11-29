@@ -4,6 +4,7 @@ from datetime import date, timedelta
 from typing import Union
 
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import Avg, DateField, DecimalField
 
@@ -12,12 +13,57 @@ class Weight(models.Model):
     user = models.ForeignKey(
         "WeightUser",
         on_delete=models.CASCADE,
+        related_name="weight_user",
     )
     date = DateField()
-    weight = DecimalField(max_digits=5, decimal_places=2)
+    weight_kg = DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        validators=[MinValueValidator(limit_value=30)],
+    )
+    week_weight_change_kg = DecimalField(
+        max_digits=3,
+        decimal_places=2,
+        null=True,
+        validators=[
+            MinValueValidator(limit_value=-6),
+            MaxValueValidator(limit_value=6),
+        ],
+    )
 
     class Meta:
         ordering = ("-date",)
+        unique_together = (
+            "user",
+            "date",
+        )
+
+    def save(self, *args, **kwargs):
+        self._update_weeks_weight_change()
+        super(Weight, self).save(*args, **kwargs)
+        self._update_weeks_weight_change_for_newer_weight()
+
+    def _update_weeks_weight_change(self):
+        """update the weeks weight change for submitted weight"""
+        if self.pk is None or self.week_weight_change_kg is None:
+            self.week_weight_change_kg = self.user.weight_change_since(
+                self.date - timedelta(days=7), 0
+            )
+
+    def _update_weeks_weight_change_for_newer_weight(self):
+        """update the weeks weight change for weight 7 days in advance"""
+        weight = Weight.objects.filter(
+            user_id=self.user.pk, date=(self.date + timedelta(days=7))
+        ).first()
+
+        if weight:
+            week_weight_change_kg = decimal.Decimal(
+                weight.weight_kg - self.weight_kg
+            )
+
+            if week_weight_change_kg != weight.week_weight_change_kg:
+                weight.week_weight_change_kg = week_weight_change_kg
+                weight.save()
 
 
 class WeightUser(models.Model):
@@ -39,6 +85,9 @@ class WeightUser(models.Model):
         max_length=2,
         choices=SEX_CHOICES,
     )
+
+    def __str__(self):
+        return self.user.username
 
     def bmi_boundaries(self) -> dict:
         """calculate bmi boundaries for current user"""
@@ -62,7 +111,7 @@ class WeightUser(models.Model):
         """get average weight for user"""
         return (
             Weight.objects.filter(user=self)
-            .order_by("-weight", "-date")
+            .order_by("-weight_kg", "-date")
             .first()
         )
 
@@ -70,7 +119,9 @@ class WeightUser(models.Model):
         """get average weight for user"""
         try:
             return decimal.Decimal(
-                Weight.objects.filter(user=self).order_by("weight")[0].weight
+                Weight.objects.filter(user=self)
+                .order_by("weight_kg")[0]
+                .weight_kg
             )
         except IndexError:
             return decimal.Decimal(0.00)
@@ -79,8 +130,8 @@ class WeightUser(models.Model):
         """get average weight for user"""
         try:
             return decimal.Decimal(
-                Weight.objects.filter(user=self).aggregate(Avg("weight"))[
-                    "weight__avg"
+                Weight.objects.filter(user=self).aggregate(Avg("weight_kg"))[
+                    "weight_kg__avg"
                 ]
             )
         except KeyError:
@@ -90,7 +141,9 @@ class WeightUser(models.Model):
         """calculate users bmi"""
         try:
             return decimal.Decimal(
-                round(self.current_weight().weight / self._height_squared(), 2)
+                round(
+                    self.current_weight().weight_kg / self._height_squared(), 2
+                )
             )
         except (ZeroDivisionError, AttributeError):
             return None
@@ -102,9 +155,9 @@ class WeightUser(models.Model):
             current_weight = self.current_weight()
 
             days_to_target = math.ceil(
-                (current_weight.weight - self.target_weight_kg)
+                (current_weight.weight_kg - self.target_weight_kg)
                 / (
-                    (max_weight.weight - current_weight.weight)
+                    (max_weight.weight_kg - current_weight.weight_kg)
                     / (current_weight.date - max_weight.date).days
                 )
             )
@@ -128,7 +181,8 @@ class WeightUser(models.Model):
         if greater_than_date:
             if greater_than_date.date == search_date:
                 return decimal.Decimal(
-                    self.current_weight().weight - greater_than_date.weight
+                    self.current_weight().weight_kg
+                    - greater_than_date.weight_kg
                 )
             else:
                 greater_than_date_diff = (
@@ -154,11 +208,11 @@ class WeightUser(models.Model):
             )
         ):
             return decimal.Decimal(
-                self.current_weight().weight - less_than_date.weight
+                self.current_weight().weight_kg - less_than_date.weight_kg
             )
         elif greater_than_date_diff and greater_than_date_diff <= days_leeway:
             return decimal.Decimal(
-                self.current_weight().weight - greater_than_date.weight
+                self.current_weight().weight_kg - greater_than_date.weight_kg
             )
 
         return None

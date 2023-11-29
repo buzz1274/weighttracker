@@ -35,7 +35,8 @@ const paginate = (next_page) => {
 
 const changeClass = (change) => {
   return (
-    (change < 0 ? 'table-success text-success' : 'table-danger text-danger') + ' text-end fw-bold'
+    (change == '-' ? '' : change < 0 ? 'table-success text-success' : 'table-danger text-danger') +
+    ' text-end fw-bold'
   )
 }
 </script>
@@ -59,9 +60,15 @@ const changeClass = (change) => {
       </thead>
       <tbody v-if="weights_history">
         <tr v-for="weight in weights_history" :key="weight.id">
-          <td style="width: 45%">{{ moment(weight.date).format('MMMM Do, YYYY') }}</td>
-          <td class="text-end" style="width: 10%">{{ weight.weight }}</td>
-          <td :class="changeClass(weight.change)" style="width: 10%">{{ weight.change }}</td>
+          <td style="width: 45%">
+            {{ moment(weight.date).format('MMMM Do, YYYY') }}
+          </td>
+          <td class="text-end" style="width: 10%">
+            {{ weight.weight_kg }}
+          </td>
+          <td :class="changeClass(weight.week_weight_change_kg)" style="width: 10%">
+            {{ weight.week_weight_change_kg }}
+          </td>
           <td class="text-center">
             <span class="action">
               <font-awesome-icon icon="fa-solid fa-pen-to-square" @click="edit_weight(weight.id)" />

@@ -1,14 +1,13 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 
-from .models import WeightUser
-from .queries.weight_history import WeightHistory
+from .models import Weight, WeightUser
 from .serializers import WeightSerializer, WeightUserSerializer
 
 
 class WeightViewSet(viewsets.ViewSet):
     def list(self, request):
-        queryset = WeightHistory().weight_history(1)
+        queryset = Weight.objects.filter(user_id=1).order_by("-date")
         serializer = WeightSerializer(queryset, many=True)
 
         return Response(serializer.data)

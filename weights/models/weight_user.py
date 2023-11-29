@@ -47,10 +47,6 @@ class WeightUser(models.Model):
             ),
         }
 
-    def current_weight(self) -> Weight:
-        """get users current weight"""
-        return Weight.objects.filter(user=self).order_by("-date").first()
-
     def max_weight(self) -> Weight:
         """get average weight for user"""
         return (
@@ -86,17 +82,17 @@ class WeightUser(models.Model):
         try:
             return decimal.Decimal(
                 round(
-                    self.current_weight().weight_kg / self._height_squared(), 2
+                    self.weight_at_date().weight_kg / self._height_squared(), 2
                 )
             )
         except (ZeroDivisionError, AttributeError):
             return None
 
-    def target_hit_date(self):
+    def target_hit_date(self) -> Union[None, date]:
         """determine approx date to hit weight target"""
         try:
-            max_weight = self.max_weight()
-            current_weight = self.current_weight()
+            max_weight = self.starting_weight_kg
+            current_weight = self.weight_at_date()
 
             days_to_target = math.ceil(
                 (current_weight.weight_kg - self.target_weight_kg)
@@ -111,11 +107,11 @@ class WeightUser(models.Model):
         except (ZeroDivisionError, AttributeError):
             return None
 
-    def weight_at_date(
-        self,
-        search_date: date,
-    ) -> Weight:
+    def weight_at_date(self, search_date: Union[None, date] = None) -> Weight:
         """determine weight change since supplied date"""
+        if not search_date:
+            search_date = date.today()
+
         return Weight.objects.filter(user=self, date=search_date).first()
 
     def change_between_dates(
@@ -124,8 +120,6 @@ class WeightUser(models.Model):
         """determine weight change between dates"""
         from_weight = self.weight_at_date(from_date)
         to_weight = self.weight_at_date(to_date)
-
-        print(from_weight, to_weight)
 
         if from_weight and to_weight:
             return from_weight.weight_kg - to_weight.weight_kg

@@ -97,7 +97,7 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(128, 126, 126, 1)',
         pointStyle: 'line',
         borderWidth: '1',
-        data: new Array(weights_weights.value.length).fill(user.value.stats.average_weight_kg)
+        data: new Array(weights_weights.value.length).fill(user.value.average_weight_kg)
       },
       {
         label: 'Target Weight',
@@ -143,14 +143,21 @@ const chartOptions = {
 <template>
   <div v-if="loaded" class="graph_container">
     <header>Graph</header>
-    <Line id="my-chart-id" :options="chartOptions" :data="chartData" />
+
+    <div class="graph">
+      <Line id="my-chart-id" :options="chartOptions" :data="chartData" />
+    </div>
   </div>
 </template>
 
 <style scoped>
 .graph_container {
   width: 868px;
-  order: 2;
   height: 700px;
+  order: 2;
+}
+.graph {
+  margin-top: 75px;
+  height: 100%;
 }
 </style>

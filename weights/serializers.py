@@ -29,7 +29,6 @@ class WeightUserSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField("name_field")
     email = serializers.SerializerMethodField("email_field")
     bmi_boundaries = serializers.SerializerMethodField("bmi_boundaries_field")
-    stats = serializers.SerializerMethodField("stats_field")
     max_weight_kg = serializers.SerializerMethodField("max_weight_kg_field")
     current_weight_kg = serializers.SerializerMethodField(
         "current_weight_kg_field"
@@ -38,6 +37,19 @@ class WeightUserSerializer(serializers.ModelSerializer):
         "target_hit_date_field"
     )
     current_bmi = serializers.SerializerMethodField("current_bmi_field")
+    change_last_year_kg = serializers.SerializerMethodField(
+        "change_last_year_kg_field"
+    )
+    change_last_month_kg = serializers.SerializerMethodField(
+        "change_last_month_kg_field"
+    )
+    change_last_week_kg = serializers.SerializerMethodField(
+        "change_last_week_kg_field"
+    )
+    average_weight_kg = serializers.SerializerMethodField(
+        "average_weight_kg_field"
+    )
+    min_weight_kg = serializers.SerializerMethodField("min_weight_kg_field")
 
     def name_field(self, model):
         return model.user.username
@@ -55,10 +67,10 @@ class WeightUserSerializer(serializers.ModelSerializer):
             return "-"
 
     def current_weight_kg_field(self, model):
-        try:
-            return f"{model.current_weight().weight_kg:.2f}"
-        except AttributeError:
-            return "-"
+        if current_weight := model.weight_at_date():
+            return f"{current_weight.weight_kg:.2f}"
+
+        return "-"
 
     def current_bmi_field(self, model):
         try:
@@ -69,25 +81,35 @@ class WeightUserSerializer(serializers.ModelSerializer):
     def target_hit_date_field(self, model):
         return model.target_hit_date()
 
-    def stats_field(self, model):
-        year_change = model.weight_at_date(Dates().year_ago())
-        year_change = f"{year_change.weight_kg:2f}" if year_change else "-"
+    def change_last_year_kg_field(self, model):
+        if year_change := model.change_between_dates(
+            Dates().year_ago(), date.today()
+        ):
+            return f"{year_change:2f}"
 
-        month_change = model.change_between_dates(
+        return "-"
+
+    def change_last_month_kg_field(self, model):
+        if month_change := model.change_between_dates(
             Dates().month_ago(), date.today()
-        )
-        month_change = f"{month_change:2f}" if month_change else "-"
+        ):
+            return f"{month_change:2f}"
 
-        week_change = model.weight_at_date(Dates().week_ago())
-        week_change = f"{week_change.weight_kg:2f}" if week_change else "-"
+        return "-"
 
-        return {
-            "average_weight_kg": f"{model.average_weight():.2f}",
-            "min_weight_kg": f"{model.min_weight():.2f}",
-            "change_last_year_kg": year_change,
-            "change_last_month_kg": month_change,
-            "change_last_week_kg": week_change,
-        }
+    def change_last_week_kg_field(self, model):
+        if week_change := model.change_between_dates(
+            Dates().week_ago(), date.today()
+        ):
+            return f"{week_change:2f}"
+
+        return "-"
+
+    def average_weight_kg_field(self, model):
+        return f"{model.average_weight():.2f}"
+
+    def min_weight_kg_field(self, model):
+        return f"{model.min_weight():.2f}"
 
     class Meta:
         model = WeightUser

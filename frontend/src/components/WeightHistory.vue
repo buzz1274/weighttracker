@@ -86,10 +86,14 @@ const changeClass = (change) => {
       </tbody>
     </table>
     <div v-if="weights_history" class="history_navigation">
-      <p v-if="page < total_pages" class="float-end" @click="paginate(page + 1)">
+      <p v-if="page < total_pages" class="float-end navigation_link" @click="paginate(page + 1)">
         Next&raquo;&raquo;
       </p>
-      <p v-if="page > 1" @click="paginate(page - 1)">&laquo;&laquo;Previous</p>
+      <p v-else class="float-end navigation_link_disabled">Next&raquo;&raquo;</p>
+      <p v-if="page > 1" class="navigation_link" @click="paginate(page - 1)">
+        &laquo;&laquo;Previous
+      </p>
+      <p v-else class="navigation_link_disabled">&laquo;&laquo;Previous</p>
     </div>
   </div>
 </template>
@@ -105,7 +109,6 @@ font-awesome-icon {
 .history_navigation {
   width: 70%;
   margin: 0 auto;
-  cursor: pointer;
 }
 table {
   font-size: 0.75em;
@@ -134,5 +137,11 @@ p {
   font-weight: bold;
   margin: 0;
   padding: 0;
+}
+p.navigation_link_disabled {
+  color: #b6b8ba;
+}
+p.navigation_link {
+  cursor: pointer;
 }
 </style>

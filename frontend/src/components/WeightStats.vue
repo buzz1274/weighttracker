@@ -46,28 +46,28 @@ const changeClass = (change) => {
         </tr>
         <tr>
           <td>Lowest weight(kg)</td>
-          <td class="stats text-end">{{ user.stats.min_weight_kg }}</td>
+          <td class="stats text-end">{{ user.min_weight_kg }}</td>
         </tr>
         <tr>
           <td>Average weight(kg)</td>
-          <td class="stats text-end">{{ user.stats.average_weight_kg }}</td>
+          <td class="stats text-end">{{ user.average_weight_kg }}</td>
         </tr>
         <tr>
           <td>Change last week(kg)</td>
-          <td :class="changeClass(user.stats.change_last_week_kg)" class="stats text-end">
-            {{ user.stats.change_last_week_kg }}
+          <td :class="changeClass(user.change_last_week_kg)" class="stats text-end">
+            {{ user.change_last_week_kg }}
           </td>
         </tr>
         <tr>
           <td>Change last month(kg)</td>
-          <td :class="changeClass(user.stats.change_last_month_kg)" class="stats text-end">
-            {{ user.stats.change_last_month_kg }}
+          <td :class="changeClass(user.change_last_month_kg)" class="stats text-end">
+            {{ user.change_last_month_kg }}
           </td>
         </tr>
         <tr>
           <td>Change last year(kg)</td>
-          <td :class="changeClass(user.stats.change_last_year_kg)" class="stats text-end">
-            {{ user.stats.change_last_year_kg }}
+          <td :class="changeClass(user.change_last_year_kg)" class="stats text-end">
+            {{ user.change_last_year_kg }}
           </td>
         </tr>
         <tr>
@@ -79,7 +79,7 @@ const changeClass = (change) => {
         <tr>
           <td>Target Hit Date(approx)</td>
           <td class="stats text-end">
-            {{ moment(user.target_hit_date).format('MMMM Do, YYYY') }}
+            {{ user.target_hit_date ? moment(user.target_hit_date).format('MMMM Do, YYYY') : '-' }}
           </td>
         </tr>
         <tr>

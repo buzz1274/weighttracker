@@ -82,8 +82,7 @@ class WeightUser(models.Model):
         try:
             return decimal.Decimal(
                 round(
-                    self.weight_at_date(None, True).weight_kg
-                    / self._height_squared(),
+                    self.weight_at_date().weight_kg / self._height_squared(),
                     2,
                 )
             )
@@ -109,10 +108,10 @@ class WeightUser(models.Model):
         except (ZeroDivisionError, AttributeError):
             return None
 
-    def weight_at_date(
-        self, search_date: Union[None, date] = None, latest: bool = False
-    ) -> Weight:
-        """determine weight change since supplied date"""
+    def weight_at_date(self, search_date: Union[None, date] = None) -> Weight:
+        """
+        determine weight change since supplied date
+        """
         if not search_date:
             search_date = date.today()
 
@@ -120,7 +119,7 @@ class WeightUser(models.Model):
             weight := Weight.objects.filter(
                 user=self, date=search_date
             ).first()
-        ) or not latest:
+        ) or search_date != date.today():
             return weight
         else:
             return Weight.objects.filter(user=self).order_by("-date").first()

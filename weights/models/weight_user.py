@@ -92,7 +92,7 @@ class WeightUser(models.Model):
     def target_hit_date(self) -> Union[None, date]:
         """determine approx date to hit weight target"""
         try:
-            max_weight = self.starting_weight_kg
+            max_weight = self.max_weight()
             current_weight = self.weight_at_date()
 
             days_to_target = math.ceil(

@@ -67,7 +67,7 @@ class WeightUserSerializer(serializers.ModelSerializer):
             return "-"
 
     def current_weight_kg_field(self, model):
-        if current_weight := model.weight_at_date():
+        if current_weight := model.weight_at_date(None, True):
             return f"{current_weight.weight_kg:.2f}"
 
         return "-"

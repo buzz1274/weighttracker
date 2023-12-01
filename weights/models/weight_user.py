@@ -132,7 +132,7 @@ class WeightUser(models.Model):
         to_weight = self.weight_at_date(to_date)
 
         if from_weight and to_weight:
-            return from_weight.weight_kg - to_weight.weight_kg
+            return to_weight.weight_kg - from_weight.weight_kg
 
         return None
 

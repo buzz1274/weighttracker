@@ -19,11 +19,7 @@ const { user } = storeToRefs(store)
             <td>
               Welcome back, {{ user.name }}
               &nbsp;|&nbsp;
-              <font-awesome-icon
-                title="Edit User"
-                style="padding-top: 2px"
-                icon="fa-solid fa-pen-to-square"
-              />
+              <font-awesome-icon style="padding-top: 2px" icon="fa-solid fa-pen-to-square" />
               &nbsp;|&nbsp;
             </td>
             <td>

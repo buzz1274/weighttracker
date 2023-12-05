@@ -66,7 +66,8 @@ class WeightUserModelTestCase(TestCase):
         user = WeightUser.objects.filter(pk=weights[0].user_id).get()
 
         self.assertEqual(
-            user.change_between_dates(date(2000, 11, 5), date(2000, 11, 11)), 1
+            user.change_between_dates(date(2000, 11, 5), date(2000, 11, 11)),
+            decimal.Decimal(-1.00),
         )
 
         self.assertIs(

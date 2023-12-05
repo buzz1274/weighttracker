@@ -1,5 +1,5 @@
 import calendar
-from datetime import date
+from datetime import date, timedelta
 from typing import Union
 
 
@@ -43,7 +43,7 @@ class Dates:
     def week_ago(self) -> Union[date, None]:
         """determine date for last week"""
         try:
-            return self.date.replace(day=self.date.day - self.DAYS_IN_WEEK)
+            return self.date - timedelta(days=self.DAYS_IN_WEEK)
         except ValueError:
             return self.date.replace(
                 year=self.date.year - 1,
@@ -52,5 +52,5 @@ class Dates:
                     self.DAYS_IN_DECEMBER - (self.DAYS_IN_WEEK - self.date.day)
                 ),
             )
-        except AttributeError:
+        except (AttributeError, TypeError):
             return None

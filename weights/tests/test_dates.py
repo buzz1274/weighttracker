@@ -51,6 +51,11 @@ class DatesTestCase(TestCase):
         )
 
         self.assertEqual(
+            Dates(date(year=2023, month=12, day=5)).week_ago(),
+            date(year=2023, month=11, day=28),
+        )
+
+        self.assertEqual(
             Dates(date(year=2023, month=1, day=4)).week_ago(),
             date(year=2022, month=12, day=28),
         )

@@ -7,6 +7,7 @@ class Dates:
     DAYS_IN_WEEK = 7
     DAYS_IN_DECEMBER = 31
     LAST_MONTH_OF_YEAR = 12
+    DAYS_IN_YEAR = 365
 
     def __init__(self, date_to_modify: Union[date, None] = None) -> None:
         if date_to_modify:
@@ -17,7 +18,7 @@ class Dates:
     def year_ago(self) -> Union[date, None]:
         """determine date for last year"""
         try:
-            return self.date.replace(year=self.date.year - 1)
+            return self.date - timedelta(days=self.DAYS_IN_YEAR)
         except AttributeError:
             return None
 

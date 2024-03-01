@@ -9,6 +9,7 @@ import App from './App.vue'
 import router from './router'
 import 'bootstrap/dist/css/bootstrap.css'
 import bootstrap from 'bootstrap/dist/js/bootstrap.js'
+import vue3GoogleLogin from 'vue3-google-login'
 
 const app = createApp(App)
 
@@ -17,6 +18,9 @@ library.add(faPenToSquare, faTrash, faPlus, faSignOut)
 app.use(createPinia())
 app.use(router)
 app.use(bootstrap)
+app.use(vue3GoogleLogin, {
+  clientId: '805742976196-aqedvppks13ff9vdhifbomtquf7q1rpp.apps.googleusercontent.com'
+})
 app.component('font-awesome-icon', FontAwesomeIcon)
 
 app.mount('#app')

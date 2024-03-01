@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import LoginView from '../views/LoginView.vue'
-import RegisterView from '../views/RegisterView.vue'
 import WeightsView from '../views/WeightsView.vue'
 
 const router = createRouter({
@@ -16,43 +14,27 @@ const router = createRouter({
       }
     },
     {
-      path: '/login',
-      name: 'login',
-      component: LoginView,
-      meta: {
-        requiresAuth: false
-      }
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: RegisterView,
-      meta: {
-        requiresAuth: false
-      }
-    },
-    {
       path: '/weights',
       name: 'weights',
       component: WeightsView,
       meta: {
         requiresAuth: false
       }
-    },
+    }
   ]
 })
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token')
     if (token) {
-      next();
+      next()
     } else {
-      next('/login');
+      next('/login')
     }
   } else {
-    next();
+    next()
   }
-});
+})
 
 export default router

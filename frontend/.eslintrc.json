@@ -14,5 +14,7 @@
     "parser": "@typescript-eslint/parser"
   },
   "plugins": ["@typescript-eslint", "vue"],
-  "rules": {}
+  "rules": {
+    "vue/comment-directive": 0
+  }
 }

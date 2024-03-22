@@ -36,7 +36,7 @@ const callback = (response) => {
 
 <style>
 .home_buttons {
-  padding-top: 40px;
+  padding-top: 20px;
   display: flex;
   justify-content: center;
   width: 100%;

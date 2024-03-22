@@ -19,7 +19,7 @@ app.use(createPinia())
 app.use(router)
 app.use(bootstrap)
 app.use(vue3GoogleLogin, {
-  clientId: '805742976196-aqedvppks13ff9vdhifbomtquf7q1rpp.apps.googleusercontent.com'
+  clientId: '805742976196-kl4thfduqpgso0v52rp31djh95kgmenu.apps.googleusercontent.com'
 })
 app.component('font-awesome-icon', FontAwesomeIcon)
 

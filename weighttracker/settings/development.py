@@ -2,5 +2,5 @@ from .production import *  # noqa: F403, F401
 
 DEBUG = True
 CSRF_TRUSTED_ORIGINS = [
-    "http://dev.weighttracker.zz50.co.uk",
+    "https://dev.weighttracker.zz50.co.uk",
 ]

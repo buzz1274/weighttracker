@@ -32,7 +32,7 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://weighttracker.zz50.co.uk",
+    "https://weighttracker.zz50.co.uk",
 ]
 
 # Application definition

@@ -24,8 +24,9 @@ api/vendor
 db.sqlite3
 media/admin
 *.pyc
-frontend/public/media/admin
-frontend/public/media/rest_framework/
+backend/public/media/
+backend/public/media/
+
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

@@ -1,8 +1,32 @@
 <script setup lang="ts">
+import { decodeCredential } from 'vue3-google-login'
+
+function authenticateUser(data) {
+  console.log(data)
+
+  const userData = decodeCredential(data.credential)
+
+  console.log(userData)
+
+  fetch('/api/user/login/', {
+    method: 'POST',
+    body: JSON.stringify({
+      authentication_method: 'GOOGLE',
+      credential: data.credential
+    }),
+    headers: { 'Content-Type': 'application/json' }
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
 const callback = (response) => {
-  // This callback will be triggered when the user selects or login to
-  // his Google account from the popup
-  console.log('Handle the response', response)
+  authenticateUser(response)
 }
 </script>
 

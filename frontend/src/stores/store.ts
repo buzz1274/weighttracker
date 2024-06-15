@@ -7,20 +7,14 @@ export const useStore = defineStore('store', () => {
   const loaded = ref(false)
   const weights_weights = ref([])
   const user = ref({
+    name: null,
+    logged_in: false,
+    access_token: null,
+    refresh_token: null,
+    registered: null,
     bmi_boundaries: [],
     stats: []
   })
-
-  function retrieveUser() {
-    fetch('/api/user/2', { method: 'GET' })
-      .then((response) => response.json())
-      .then((data) => {
-        user.value = data
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
 
   function retrieveWeights() {
     fetch('/api/weights/', { method: 'GET' })
@@ -47,7 +41,6 @@ export const useStore = defineStore('store', () => {
 
   onMounted(() => {
     retrieveWeights()
-    retrieveUser()
   })
 
   return { weights, weights_weights, weights_labels, loaded, user }

@@ -1,32 +1,47 @@
 <script setup lang="ts">
-import { decodeCredential } from 'vue3-google-login'
+import type { CallbackTypes } from 'vue3-google-login'
+import router from '../router/'
+import { onBeforeMount } from 'vue'
 
-function authenticateUser(data) {
-  console.log(data)
+let error = false
 
-  const userData = decodeCredential(data.credential)
+const NOT_REGISTERED_URL = '/register'
+const REGISTERED_URL = '/weights'
 
-  console.log(userData)
+onBeforeMount(() => {
+  if (localStorage.getItem('access_token')) {
+    if (localStorage.getItem('registered') && !localStorage.getItem('registered')) {
+      router.push(REGISTERED_URL)
+    } else {
+      router.push(NOT_REGISTERED_URL)
+    }
+  }
+})
 
-  fetch('/api/user/login/', {
+const callback: CallbackTypes.CodeResponseCallback = (response) => {
+  fetch('https://' + window.location.hostname + '/api/user/login/', {
     method: 'POST',
     body: JSON.stringify({
       authentication_method: 'GOOGLE',
-      credential: data.credential
+      code: response.code
     }),
     headers: { 'Content-Type': 'application/json' }
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-}
+      localStorage.setItem('access_token', data['access_token'])
+      localStorage.setItem('refresh_token', data['access_token'])
+      localStorage.setItem('registered', data['registered'])
 
-const callback = (response) => {
-  authenticateUser(response)
+      if ('registered' in data && !data['registered']) {
+        router.push(NOT_REGISTERED_URL)
+      } else {
+        router.push(REGISTERED_URL)
+      }
+    })
+    .catch(() => {
+      error = true
+    })
 }
 </script>
 
@@ -53,12 +68,21 @@ const callback = (response) => {
       neque placerat vel. Aliquam feugiat urna lorem, nec lobortis lectus pretium sed.
     </p>
     <div class="home_buttons">
-      <GoogleLogin :callback="callback" />
+      <GoogleLogin :callback="callback">
+        <div id="gSignInWrapper">
+          <div id="customBtn" class="customGPlusSignIn">
+            <span class="icon"></span>
+            <span class="buttonText">Login with Google</span>
+          </div>
+        </div>
+        <div id="name"></div>
+      </GoogleLogin>
     </div>
+    <div v-if="error">An error occurred</div>
   </main>
 </template>
 
-<style>
+<style scoped>
 .home_buttons {
   padding-top: 20px;
   display: flex;
@@ -67,5 +91,31 @@ const callback = (response) => {
 }
 button {
   margin-right: 20px;
+}
+#customBtn {
+  display: inline-block;
+  background: white;
+  color: #444;
+  width: 190px;
+  border-radius: 5px;
+  border: thin solid #888;
+  box-shadow: 1px 1px 1px grey;
+  white-space: nowrap;
+}
+#customBtn:hover {
+  cursor: pointer;
+}
+span.icon {
+  display: inline-block;
+  vertical-align: middle;
+  height: 42px;
+}
+span.buttonText {
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 33px;
+  padding-right: 42px;
+  font-size: 14px;
+  font-weight: bold;
 }
 </style>

@@ -35,7 +35,7 @@ const paginate = (next_page) => {
 
 const changeClass = (change) => {
   return (
-    (change == '-' ? '' : change < 0 ? 'table-success text-success' : 'table-danger text-danger') +
+    (change == '-' ? '' : change <= 0 ? 'table-success text-success' : 'table-danger text-danger') +
     ' text-end fw-bold'
   )
 }

@@ -3,7 +3,6 @@ FROM python:3.11-slim-bookworm AS base-image
 ARG ENVIRONMENT
 
 ENV POETRY_VIRTUALENVS_IN_PROJECT=false \
-    #POETRY_VIRTUALENVS_PATH="/opt/poetry" \
     POETRY_VIRTUALENVS_CREATE=false \
     POETRY_NO_INTERACTIONS=1 \
     WORKDIR_PATH="/opt/weighttracker.zz50.co.uk" \

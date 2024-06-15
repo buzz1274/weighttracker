@@ -12,10 +12,10 @@ const { user } = storeToRefs(store)
     <RouterLink to="/">
       <h1>WeightTracker</h1>
     </RouterLink>
-    <nav v-if="user">
+    <nav v-if="user.logged_in">
       <div>
         <table style="float: right">
-          <tr v-if="user">
+          <tr>
             <td>
               Welcome back, {{ user.name }}
               &nbsp;|&nbsp;
@@ -28,9 +28,6 @@ const { user } = storeToRefs(store)
           </tr>
         </table>
       </div>
-    </nav>
-    <nav v-else>
-      <RouterLink to="/login">Login</RouterLink>
     </nav>
   </header>
   <div class="main">

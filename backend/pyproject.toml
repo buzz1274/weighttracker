@@ -11,15 +11,18 @@ psycopg2-binary = "^2.9.3"
 django = "^5.0.6"
 gunicorn = "^22.0.0"
 djangorestframework = "^3.14.0"
-model-bakery = "^1.17.0"
 google-auth = "^2.29.0"
 google-api-python-client = "^2.128.0"
 django-cors-headers = "^4.3.1"
 requests = "^2.32.2"
+python-dateutil = "^2.9.0.post0"
+pyjwt = "^2.8.0"
+cryptography = "^42.0.8"
 
 [tool.poetry.dev-dependencies]
-pydevd-pycharm = "^222.3345.40"
+model-bakery = "^1.17.0"
 watchdog = {extras = ["watchmedo"], version = "^2.3.0"}
+pydevd-pycharm = "^242.10180.30"
 
 [tool.black]
 include = '\.py?$'

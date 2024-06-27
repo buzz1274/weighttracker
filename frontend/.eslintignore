@@ -3,4 +3,5 @@
 *.py
 *.lock
 *.sh
+*.css
 backend/public/media

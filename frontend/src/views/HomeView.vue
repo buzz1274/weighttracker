@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { CallbackTypes } from 'vue3-google-login'
 import router from '../router/'
-import { onBeforeMount } from 'vue'
-
-let error = false
+import { ref, onBeforeMount } from 'vue'
 
 const NOT_REGISTERED_URL = '/register'
 const REGISTERED_URL = '/weights'
+
+const error = ref('')
 
 onBeforeMount(() => {
   if (localStorage.getItem('access_token')) {
@@ -27,7 +27,12 @@ const callback: CallbackTypes.CodeResponseCallback = (response) => {
     }),
     headers: { 'Content-Type': 'application/json' }
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.ok) {
+        return response.json()
+      }
+      return Promise.reject(response)
+    })
     .then((data) => {
       localStorage.setItem('access_token', data['access_token'])
       localStorage.setItem('refresh_token', data['access_token'])
@@ -39,8 +44,14 @@ const callback: CallbackTypes.CodeResponseCallback = (response) => {
         router.push(REGISTERED_URL)
       }
     })
-    .catch(() => {
-      error = true
+    .catch((response) => {
+      response.json().then((json: string) => {
+        if ('error' in json && json['error']) {
+          error.value = json['error']
+        } else {
+          error.value = 'An error has occurred'
+        }
+      })
     })
 }
 </script>
@@ -67,6 +78,7 @@ const callback: CallbackTypes.CodeResponseCallback = (response) => {
       est, vitae pellentesque justo consequat scelerisque. Praesent interdum dolor felis, at aliquet
       neque placerat vel. Aliquam feugiat urna lorem, nec lobortis lectus pretium sed.
     </p>
+    <div v-if="error">{{ error }}</div>
     <div class="home_buttons">
       <GoogleLogin :callback="callback">
         <div id="gSignInWrapper">
@@ -75,23 +87,12 @@ const callback: CallbackTypes.CodeResponseCallback = (response) => {
             <span class="buttonText">Login with Google</span>
           </div>
         </div>
-        <div id="name"></div>
       </GoogleLogin>
     </div>
-    <div v-if="error">An error occurred</div>
   </main>
 </template>
 
 <style scoped>
-.home_buttons {
-  padding-top: 20px;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-button {
-  margin-right: 20px;
-}
 #customBtn {
   display: inline-block;
   background: white;

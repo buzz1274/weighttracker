@@ -34,3 +34,12 @@ main.full_screen {
   flex-direction: column;
   padding-bottom: 2em;
 }
+.home_buttons {
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.home_buttons > button {
+  margin-right: 10px;
+}

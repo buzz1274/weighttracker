@@ -78,7 +78,9 @@ const callback: CallbackTypes.CodeResponseCallback = (response) => {
       est, vitae pellentesque justo consequat scelerisque. Praesent interdum dolor felis, at aliquet
       neque placerat vel. Aliquam feugiat urna lorem, nec lobortis lectus pretium sed.
     </p>
-    <div v-if="error">{{ error }}</div>
+    <div v-if="error" class="w-100">
+      <div class="d-flex justify-content-center text-danger">{{ error }}</div>
+    </div>
     <div class="home_buttons">
       <GoogleLogin :callback="callback">
         <div id="gSignInWrapper">

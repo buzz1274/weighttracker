@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import router from '../router/'
+import { ref } from 'vue'
 
-function cancel_registration() {
+const error = ref('')
+
+const cancel_registration = () => {
   localStorage.removeItem('access_token')
   localStorage.removeItem('refresh_token')
   localStorage.removeItem('registered')
@@ -18,24 +21,24 @@ function cancel_registration() {
         <input type="email" class="form-control" id="email" disabled="disabled" />
       </div>
       <div class="form-group-lg mb-3">
-        <label for="exampleInputPassword1">Date of Birth</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Name" />
+        <label for="date_of_birth">Date of Birth</label>
+        <input type="text" class="form-control" id="date_of_birth" />
       </div>
       <div class="form-group-lg mb-3">
-        <label for="exampleInputPassword1">Sex</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Name" />
+        <label for="sex">Sex</label>
+        <input type="text" class="form-control" id="sex" />
       </div>
       <div class="form-group-lg mb-3">
-        <label for="exampleInputPassword1">Height(cm)</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Name" />
+        <label for="height_cm">Height(cm)</label>
+        <input type="text" class="form-control" id="height_cm" />
       </div>
       <div class="form-group-lg mb-3">
-        <label for="exampleInputPassword1">Weight(kg)</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Name" />
+        <label for="weight_kg">Weight(kg)</label>
+        <input type="text" class="form-control" id="weight_kg" />
       </div>
       <div class="form-group-lg mb-3">
-        <label for="exampleInputPassword1">Target Weight(kg)</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Name" />
+        <label for="target_weight_kg">Target Weight(kg)</label>
+        <input type="text" class="form-control" id="target_weight_kg" />
       </div>
       <div class="home_buttons">
         <button type="button" class="btn btn-secondary" @click="cancel_registration">Cancel</button>

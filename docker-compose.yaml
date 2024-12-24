@@ -15,10 +15,10 @@
       - ../mounts/websites/weighttracker/backend:/opt/weighttracker.zz50.co.uk
       - ../mounts/backups/weighttracker:/mnt/backups
     depends_on:
-      - postgres12
+      - postgres
       - nginx
     external_links:
-      - postgres12:postgres
+      - postgres:postgres
     working_dir: /opt/weighttracker.zz50.co.uk/
     entrypoint: ["bash", "-c", "./bin/start_container.sh"]
     environment:

@@ -15,11 +15,25 @@ class User(AbstractUser):
         ("M", "Male"),
         ("F", "Female"),
     ]
+    AUTHENTICATION_METHOD = [
+        ("google", "Google"),
+    ]
 
-    height_m = DecimalField(max_digits=3, decimal_places=2)
-    starting_weight_kg = DecimalField(max_digits=5, decimal_places=2)
-    target_weight_kg = DecimalField(max_digits=5, decimal_places=2)
+    height_m = DecimalField(
+        max_digits=3, decimal_places=2, blank=True, null=True
+    )
+    starting_weight_kg = DecimalField(
+        max_digits=5, decimal_places=2, blank=True, null=True
+    )
+    target_weight_kg = DecimalField(
+        max_digits=5, decimal_places=2, blank=True, null=True
+    )
     sex = models.CharField(
         max_length=2,
         choices=SEX_CHOICES,
+        blank=True,
+    )
+    authentication_method = models.CharField(
+        max_length=6,
+        choices=AUTHENTICATION_METHOD,
     )

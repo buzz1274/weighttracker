@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from .authentication.authentication import Authentication
 from .authentication.exceptions import AuthenticationException
 from .models import User
-from .serializers import LoginSerializer
+from .serializers import LoginSerializer, UserSerializer
 
 
 class LoginApi(APIView):
@@ -21,10 +21,9 @@ class LoginApi(APIView):
         validated_data = serializer.validated_data
 
         try:
+            authentication_method = validated_data.get("authentication_method")
             authenticator = Authentication(
-                authentication_method=validated_data.get(
-                    "authentication_method"
-                )
+                authentication_method=authentication_method
             ).authenticator
 
             token = authenticator.get_access_token(validated_data.get("code"))
@@ -36,21 +35,27 @@ class LoginApi(APIView):
 
         try:
             user = User.objects.get(email=user_data["email"])
-            response_data = {
-                "email": user["email"],
-            }
         except ObjectDoesNotExist:
-            response_data = {
-                "email": user_data["email"],
-                "registered": False,
-            }
+            user = User(
+                email=user_data["email"],
+                username=user_data["email"],
+                password="",
+                authentication_method=authentication_method,
+            )
+
+            user.save()
+
+        user = UserSerializer(data=user, partial=True)
+        user.is_valid(raise_exception=True)
+
+        user_data = user.data
 
         if token:
-            response_data.update(
+            user_data.update(
                 {
                     "refresh_token": token["refresh_token"],
                     "access_token": token["access_token"],
                 }
             )
 
-        return Response(response_data, status=status.HTTP_200_OK)
+        return Response(user_data, status=status.HTTP_200_OK)

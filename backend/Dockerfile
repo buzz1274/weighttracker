@@ -18,16 +18,19 @@ RUN apt-get update && \
     sudo \
     vim \
     curl \
+    git \
     postgresql-client
 
 RUN pip install --no-cache-dir --upgrade pip poetry
 
 WORKDIR $WORKDIR_PATH
 
-COPY pyproject.toml .
-RUN poetry install
+RUN cd .. && git clone https://github.com/buzz1274/weighttracker.git weighttracker
+RUN cd ../weighttracker && mv backend/* ../weighttracker.zz50.co.uk/
+RUN cd .. && rm -rf weighttracker
 
-COPY . .
+RUN poetry lock
+RUN poetry install
 
 ENTRYPOINT ["/bin/bash", "-c"]
 CMD ["sleep infinity"]

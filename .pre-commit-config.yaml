@@ -1,4 +1,4 @@
-exclude: ".git|k8s|helmfile|.conf|Dockerfile|migrations|docker-compose.yaml"
+exclude: ".git|k8s|helmfile|.conf|Dockerfile|migrations|docker-compose-PRODUCTION.yaml"
 default_stages: [commit, push]
 fail_fast: false
 

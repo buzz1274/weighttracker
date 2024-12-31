@@ -140,7 +140,7 @@ STATIC_URL = "media/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-STATIC_ROOT = "public/media/"
+STATIC_ROOT = "/opt/weighttracker_backend_public/media/"
 
 AUTH_USER_MODEL = "user.User"
 

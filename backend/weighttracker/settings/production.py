@@ -87,10 +87,10 @@ WSGI_APPLICATION = "weighttracker.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ["DB_NAME"],
-        "USER": os.environ["DB_USERNAME"],
-        "PASSWORD": os.environ["DB_PASSWORD"],
-        "HOST": os.environ["DB_HOST"],
+        "NAME": os.environ["DB_NAME"].strip(),
+        "USER": os.environ["DB_USERNAME"].strip(),
+        "PASSWORD": os.environ["DB_PASSWORD"].strip(),
+        "HOST": os.environ["DB_HOST"].strip(),
         "PORT": "",
     },
 }

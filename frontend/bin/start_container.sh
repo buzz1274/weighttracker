@@ -1,6 +1,6 @@
 if [ "$ENVIRONMENT" == "DEVELOPMENT" ] ; then
   npm install && npm run dev
 else
-  npm install && npm run build-only
+  cp -r ../weighttracker.zz50.co.uk/dist .
   sleep infinity
 fi

@@ -4,25 +4,7 @@ from rest_framework import serializers
 
 from backend.weighttracker.helpers.dates import Dates
 
-from .models.weight import Weight
 from .models.weight_user import WeightUser
-
-
-class WeightSerializer(serializers.ModelSerializer):
-    week_weight_change_kg = serializers.SerializerMethodField(
-        "week_weight_change_kg_field"
-    )
-
-    class Meta:
-        model = Weight
-        fields = ["id", "date", "weight_kg", "week_weight_change_kg"]
-
-    def week_weight_change_kg_field(self, model):
-        return (
-            "-"
-            if model.week_weight_change_kg is None
-            else f"{model.week_weight_change_kg:.2f}"
-        )
 
 
 class WeightUserSerializer(serializers.ModelSerializer):

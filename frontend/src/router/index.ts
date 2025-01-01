@@ -27,7 +27,7 @@ const router = createRouter({
       name: 'weights',
       component: WeightsView,
       meta: {
-        requiresAuth: true
+        requiresAuth: false
       }
     }
   ]

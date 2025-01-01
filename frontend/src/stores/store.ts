@@ -17,7 +17,7 @@ export const useStore = defineStore('store', () => {
   })
 
   function retrieveWeights() {
-    fetch('/api/weights/', { method: 'GET' })
+    fetch('https://' + window.location.hostname + '/api/user/weights/', { method: 'GET' })
       .then((response) => response.json())
       .then((data) => {
         weights.value = data

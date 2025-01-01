@@ -10,7 +10,7 @@ from .models.user import User
 from .serializers import LoginSerializer, UserSerializer
 
 
-class LoginApi(APIView):
+class Login(APIView):
     permission_classes = (AllowAny,)
     serializer_class = LoginSerializer
 

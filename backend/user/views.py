@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 
 from .authentication.authentication import Authentication
 from .authentication.exceptions import AuthenticationException
-from .models import User
+from .models.user import User
 from .serializers import LoginSerializer, UserSerializer
 
 

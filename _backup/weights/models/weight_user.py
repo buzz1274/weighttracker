@@ -98,20 +98,6 @@ class WeightUser(models.Model):
         except (ZeroDivisionError, AttributeError):
             return None
 
-    def weight_at_date(self, search_date: Union[None, date] = None) -> Weight:
-        """
-        determine weight change since supplied date
-        """
-        if not search_date:
-            search_date = date.today()
-
-        if (
-            weight := Weight.objects.filter(user=self, date=search_date).first()
-        ) or search_date != date.today():
-            return weight
-        else:
-            return Weight.objects.filter(user=self).order_by("-date").first()
-
     def change_between_dates(
         self, from_date: date, to_date: date
     ) -> Union[None, decimal.Decimal]:

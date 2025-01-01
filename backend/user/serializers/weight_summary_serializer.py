@@ -1,15 +1,29 @@
 from datetime import date
 
 from rest_framework import serializers
+from user.models.user import User
 
-from backend.weighttracker.helpers.dates import Dates
-
-from .models.weight_user import WeightUser
+from weighttracker.helpers.dates import Dates
 
 
-class WeightUserSerializer(serializers.ModelSerializer):
+class WeightSummarySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        exclude = [
+            "password",
+            "email",
+            "id",
+            "is_staff",
+            "is_active",
+            "date_joined",
+            "sex",
+            "is_superuser",
+            "authentication_method",
+            "groups",
+            "user_permissions",
+        ]
+
     name = serializers.SerializerMethodField("name_field")
-    email = serializers.SerializerMethodField("email_field")
     bmi_boundaries = serializers.SerializerMethodField("bmi_boundaries_field")
     max_weight_kg = serializers.SerializerMethodField("max_weight_kg_field")
     current_weight_kg = serializers.SerializerMethodField("current_weight_kg_field")
@@ -24,10 +38,7 @@ class WeightUserSerializer(serializers.ModelSerializer):
     min_weight_kg = serializers.SerializerMethodField("min_weight_kg_field")
 
     def name_field(self, model):
-        return model.user.username
-
-    def email_field(self, model):
-        return model.user.email
+        return str(model)
 
     def bmi_boundaries_field(self, model):
         return model.bmi_boundaries()
@@ -78,7 +89,3 @@ class WeightUserSerializer(serializers.ModelSerializer):
 
     def min_weight_kg_field(self, model):
         return f"{model.min_weight():.2f}"
-
-    class Meta:
-        model = WeightUser
-        fields = "__all__"

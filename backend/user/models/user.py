@@ -1,10 +1,11 @@
 import decimal
-from datetime import date
+import math
+from datetime import date, timedelta
 from typing import Optional
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.db.models import DecimalField
+from django.db.models import Avg, DecimalField
 
 from .weight import Weight
 
@@ -40,6 +41,9 @@ class User(AbstractUser):
         choices=AUTHENTICATION_METHOD,
     )
 
+    def __str__(self):
+        return self.username
+
     def weight_at_date(self, search_date: Optional[date] = None) -> Weight:
         """
         determine weight change since supplied date
@@ -53,3 +57,84 @@ class User(AbstractUser):
             return weight
         else:
             return Weight.objects.filter(user=self).order_by("-date").first()
+
+    def bmi_boundaries(self) -> dict:
+        """calculate bmi boundaries for current user"""
+        return {
+            "obese": round(self._height_squared() * self.BMI_RANGES["OBESE"], 1),
+            "overweight": round(
+                self._height_squared() * self.BMI_RANGES["OVERWEIGHT"], 1
+            ),
+            "normal": round(self._height_squared() * self.BMI_RANGES["NORMAL"], 1),
+        }
+
+    def _height_squared(self) -> decimal.Decimal:
+        """square users height"""
+        return decimal.Decimal(self.height_m * self.height_m)
+
+    def max_weight(self) -> Weight:
+        """get average weight for user"""
+        return Weight.objects.filter(user=self).order_by("-weight_kg", "-date").first()
+
+    def min_weight(self) -> decimal.Decimal:
+        """get average weight for user"""
+        try:
+            return decimal.Decimal(
+                Weight.objects.filter(user=self).order_by("weight_kg")[0].weight_kg
+            )
+        except IndexError:
+            return decimal.Decimal(0.00)
+
+    def average_weight(self) -> decimal.Decimal:
+        """get average weight for user"""
+        try:
+            return decimal.Decimal(
+                Weight.objects.filter(user=self).aggregate(Avg("weight_kg"))[
+                    "weight_kg__avg"
+                ]
+            )
+        except KeyError:
+            return decimal.Decimal(0.00)
+
+    def bmi(self) -> decimal.Decimal | None:
+        """calculate users bmi"""
+        try:
+            return decimal.Decimal(
+                round(
+                    self.weight_at_date().weight_kg / self._height_squared(),
+                    2,
+                )
+            )
+        except (ZeroDivisionError, AttributeError):
+            return None
+
+    def target_hit_date(self) -> date | None:
+        """determine approx date to hit weight target"""
+        try:
+            max_weight = self.max_weight()
+            current_weight = self.weight_at_date()
+
+            days_to_target = math.ceil(
+                (current_weight.weight_kg - self.target_weight_kg)
+                / (
+                    (max_weight.weight_kg - current_weight.weight_kg)
+                    / (current_weight.date - max_weight.date).days
+                )
+            )
+
+            return date.today() + timedelta(days=days_to_target)
+
+        except (ZeroDivisionError, AttributeError):
+            return None
+
+    def change_between_dates(
+        self, from_date: date, to_date: date
+    ) -> decimal.Decimal | None:
+        """determine weight change between dates"""
+        from_weight = self.weight_at_date(from_date)
+        to_weight = self.weight_at_date(to_date)
+
+        if from_weight and to_weight:
+            return to_weight.weight_kg - from_weight.weight_kg
+
+        return None

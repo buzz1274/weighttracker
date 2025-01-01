@@ -8,6 +8,7 @@ const store = useStore()
 const { weights } = storeToRefs(store)
 const page = ref(1)
 const paging_limit = 20
+const successful_percentage_weight_loss = -0.85
 
 const weights_history = computed(() => {
   return weights.value.slice((page.value - 1) * paging_limit, page.value * paging_limit)
@@ -33,10 +34,13 @@ const paginate = (next_page) => {
   page.value = next_page
 }
 
-const changeClass = (change) => {
+const changeClass = (change, value) => {
   return (
-    (change == '-' ? '' : change <= 0 ? 'table-success text-success' : 'table-danger text-danger') +
-    ' text-end fw-bold'
+    (change == '-'
+      ? ''
+      : change <= value
+        ? 'table-success text-success'
+        : 'table-danger text-danger') + ' text-end fw-bold'
   )
 }
 </script>
@@ -54,22 +58,29 @@ const changeClass = (change) => {
         <tr>
           <th>Date</th>
           <th>Weight(kg)</th>
+          <th>Change(%)</th>
           <th>Change(kg)</th>
           <th class="text-center">-</th>
         </tr>
       </thead>
       <tbody v-if="weights_history">
         <tr v-for="weight in weights_history" :key="weight.id">
-          <td style="width: 45%">
-            {{ moment(weight.date).format('MMMM Do, YYYY') }}
+          <td style="width: 40%">
+            {{ moment(weight.date).format('MMM Do, YYYY') }}
           </td>
-          <td class="text-end" style="width: 10%">
+          <td class="text-end" style="width: 8%">
             {{ weight.weight_kg }}
           </td>
-          <td :class="changeClass(weight.week_weight_change_kg)" style="width: 10%">
+          <td
+            :class="changeClass(weight.week_weight_change_kg, successful_percentage_weight_loss)"
+            style="width: 8%"
+          >
+            {{ weight.week_weight_change_percentage }}
+          </td>
+          <td :class="changeClass(weight.week_weight_change_kg, 0)" style="width: 8%">
             {{ weight.week_weight_change_kg }}
           </td>
-          <td class="text-center">
+          <td class="text-center" style="width: 15%">
             <span class="action">
               <font-awesome-icon icon="fa-solid fa-pen-to-square" @click="edit_weight(weight.id)" />
             </span>

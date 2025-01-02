@@ -7,7 +7,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models import Avg, DecimalField
 
-from .weight import Weight
+from user.models.weight import Weight
 
 
 class User(AbstractUser):
@@ -24,7 +24,9 @@ class User(AbstractUser):
         ("google", "Google"),
     ]
 
-    height_m = DecimalField(max_digits=3, decimal_places=2, blank=True, null=True)
+    height_m = DecimalField(
+        max_digits=3, decimal_places=2, blank=True, null=True
+    )
     starting_weight_kg = DecimalField(
         max_digits=5, decimal_places=2, blank=True, null=True
     )
@@ -52,7 +54,9 @@ class User(AbstractUser):
             search_date = date.today()
 
         if (
-            weight := Weight.objects.filter(user=self, date=search_date).first()
+            weight := Weight.objects.filter(
+                user=self, date=search_date
+            ).first()
         ) or search_date != date.today():
             return weight
         else:
@@ -61,11 +65,15 @@ class User(AbstractUser):
     def bmi_boundaries(self) -> dict:
         """calculate bmi boundaries for current user"""
         return {
-            "obese": round(self._height_squared() * self.BMI_RANGES["OBESE"], 1),
+            "obese": round(
+                self._height_squared() * self.BMI_RANGES["OBESE"], 1
+            ),
             "overweight": round(
                 self._height_squared() * self.BMI_RANGES["OVERWEIGHT"], 1
             ),
-            "normal": round(self._height_squared() * self.BMI_RANGES["NORMAL"], 1),
+            "normal": round(
+                self._height_squared() * self.BMI_RANGES["NORMAL"], 1
+            ),
         }
 
     def _height_squared(self) -> decimal.Decimal:
@@ -74,13 +82,19 @@ class User(AbstractUser):
 
     def max_weight(self) -> Weight:
         """get average weight for user"""
-        return Weight.objects.filter(user=self).order_by("-weight_kg", "-date").first()
+        return (
+            Weight.objects.filter(user=self)
+            .order_by("-weight_kg", "-date")
+            .first()
+        )
 
     def min_weight(self) -> decimal.Decimal:
         """get average weight for user"""
         try:
             return decimal.Decimal(
-                Weight.objects.filter(user=self).order_by("weight_kg")[0].weight_kg
+                Weight.objects.filter(user=self)
+                .order_by("weight_kg")[0]
+                .weight_kg
             )
         except IndexError:
             return decimal.Decimal(0.00)

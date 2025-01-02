@@ -2,12 +2,12 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 
 from ..models.user import User
-from ..serializers.weight_summary_serializer import WeightSummarySerializer
+from ..serializers.user_serializer import UserSerializer
 
 
-class WeightSummaryViewSet(viewsets.ViewSet):
+class UserViewSet(viewsets.ViewSet):
     def retrieve(self, request):
         queryset = User.objects.filter(pk=1).get()
-        serializer = WeightSummarySerializer(queryset)
+        serializer = UserSerializer(queryset)
 
         return Response(serializer.data)

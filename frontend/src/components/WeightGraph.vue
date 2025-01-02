@@ -87,8 +87,10 @@ const chartData = computed(() => {
         label: 'Current Weigh',
         borderColor: 'rgba(0, 0, 0, 1)',
         backgroundColor: 'rgba(0, 0, 0, 1)',
-        pointStyle: 'line',
-        borderWidth: '1',
+        pointStyle: false,
+        borderWidth: '2',
+        borderJoinStyle: 'round',
+        tension: '1',
         data: data.value
       },
       {

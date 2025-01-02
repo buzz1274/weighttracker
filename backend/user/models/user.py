@@ -4,6 +4,7 @@ from datetime import date, timedelta
 from typing import Optional
 
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import Avg, DecimalField
 
@@ -41,6 +42,15 @@ class User(AbstractUser):
     authentication_method = models.CharField(
         max_length=6,
         choices=AUTHENTICATION_METHOD,
+    )
+    target_weight_loss_percentage_per_week = DecimalField(
+        max_digits=3,
+        decimal_places=2,
+        null=True,
+        validators=[
+            MinValueValidator(limit_value=0),
+            MaxValueValidator(limit_value=3),
+        ],
     )
 
     def __str__(self):

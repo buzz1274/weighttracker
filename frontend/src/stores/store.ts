@@ -16,6 +16,17 @@ export const useStore = defineStore('store', () => {
     stats: []
   })
 
+  function retrieveUser() {
+    fetch('https://' + window.location.hostname + '/api/user/', { method: 'GET' })
+      .then((response) => response.json())
+      .then((data) => {
+        user.value = data
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
   function retrieveWeights() {
     fetch('https://' + window.location.hostname + '/api/user/weights/', { method: 'GET' })
       .then((response) => response.json())
@@ -41,6 +52,7 @@ export const useStore = defineStore('store', () => {
 
   onMounted(() => {
     retrieveWeights()
+    retrieveUser()
   })
 
   return { weights, weights_weights, weights_labels, loaded, user }

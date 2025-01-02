@@ -40,7 +40,7 @@ const changeClass = (change, value) => {
       ? ''
       : change <= value
         ? 'table-success text-success'
-        : 'table-danger text-danger') + ' text-end fw-bold'
+        : 'table-danger text-danger') + ' text-end'
   )
 }
 </script>

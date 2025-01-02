@@ -21,6 +21,10 @@ class UserSerializer(serializers.ModelSerializer):
             "authentication_method",
             "groups",
             "user_permissions",
+            "last_login",
+            "username",
+            "first_name",
+            "last_name",
         ]
 
     name = serializers.SerializerMethodField("name_field")

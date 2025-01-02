@@ -5,10 +5,9 @@ import moment from 'moment'
 import { storeToRefs } from 'pinia'
 
 const store = useStore()
-const { weights } = storeToRefs(store)
+const { weights, user } = storeToRefs(store)
 const page = ref(1)
 const paging_limit = 20
-const successful_percentage_weight_loss = -0.85
 
 const weights_history = computed(() => {
   return weights.value.slice((page.value - 1) * paging_limit, page.value * paging_limit)
@@ -34,14 +33,13 @@ const paginate = (next_page) => {
   page.value = next_page
 }
 
-const changeClass = (change, value) => {
-  return (
-    (change == '-'
-      ? ''
-      : change <= value
-        ? 'table-success text-success'
-        : 'table-danger text-danger') + ' text-end'
-  )
+const changeClass = (change) => {
+  if (change > 0) return 'table-danger text-danger text-end'
+
+  if (change < 0 && change < user.value.target_weight_loss_percentage_per_week)
+    return 'table-warning text-warning text-end'
+
+  return 'table-success text-success text-end'
 }
 </script>
 
@@ -71,13 +69,10 @@ const changeClass = (change, value) => {
           <td class="text-end" style="width: 8%">
             {{ weight.weight_kg }}
           </td>
-          <td
-            :class="changeClass(weight.week_weight_change_kg, successful_percentage_weight_loss)"
-            style="width: 8%"
-          >
+          <td :class="changeClass(weight.week_weight_change_kg)" style="width: 8%">
             {{ weight.week_weight_change_percentage }}
           </td>
-          <td :class="changeClass(weight.week_weight_change_kg, 0)" style="width: 8%">
+          <td :class="changeClass(weight.week_weight_change_kg)" style="width: 8%">
             {{ weight.week_weight_change_kg }}
           </td>
           <td class="text-center" style="width: 15%">

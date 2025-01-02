@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models.weight import Weight
+from user.models.weight import Weight
 
 
 class WeightSerializer(serializers.ModelSerializer):

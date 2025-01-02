@@ -30,8 +30,8 @@ class Weight(models.Model):
         decimal_places=2,
         null=True,
         validators=[
-            MinValueValidator(limit_value=-6),
-            MaxValueValidator(limit_value=6),
+            MinValueValidator(limit_value=decimal.Decimal(-6)),
+            MaxValueValidator(limit_value=decimal.Decimal(6)),
         ],
         editable=False,
     )
@@ -40,8 +40,8 @@ class Weight(models.Model):
         decimal_places=2,
         null=True,
         validators=[
-            MinValueValidator(limit_value=-3),
-            MaxValueValidator(limit_value=3),
+            MinValueValidator(limit_value=decimal.Decimal(-3)),
+            MaxValueValidator(limit_value=decimal.Decimal(3)),
         ],
         editable=False,
     )
@@ -57,21 +57,27 @@ class Weight(models.Model):
         weight = self.user.weight_at_date(self.date - timedelta(days=7))
 
         if weight:
-            week_weight_change_kg = decimal.Decimal(self.weight_kg - weight.weight_kg)
+            week_weight_change_kg = decimal.Decimal(
+                self.weight_kg - weight.weight_kg
+            )
             week_weight_change_percentage = (
                 week_weight_change_kg / weight.weight_kg
             ) * 100
 
             if week_weight_change_kg != self.week_weight_change_kg:
                 self.week_weight_change_kg = week_weight_change_kg
-                self.week_weight_change_percentage = week_weight_change_percentage
+                self.week_weight_change_percentage = (
+                    week_weight_change_percentage
+                )
 
     def _update_weeks_weight_change_for_newer_weight(self) -> None:
         """update the weeks weight change for weight 7 days in advance"""
         weight = self.user.weight_at_date(self.date + timedelta(days=7))
 
         if weight:
-            week_weight_change_kg = decimal.Decimal(weight.weight_kg - self.weight_kg)
+            week_weight_change_kg = decimal.Decimal(
+                weight.weight_kg - self.weight_kg
+            )
 
             if week_weight_change_kg != weight.week_weight_change_kg:
                 weight.week_weight_change_kg = week_weight_change_kg

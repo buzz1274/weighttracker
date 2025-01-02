@@ -48,8 +48,8 @@ class User(AbstractUser):
         decimal_places=2,
         null=True,
         validators=[
-            MinValueValidator(limit_value=0),
-            MaxValueValidator(limit_value=3),
+            MinValueValidator(limit_value=decimal.Decimal(0)),
+            MaxValueValidator(limit_value=decimal.Decimal(3)),
         ],
     )
 

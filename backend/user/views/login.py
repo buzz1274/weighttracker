@@ -4,10 +4,11 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .authentication.authentication import Authentication
-from .authentication.exceptions import AuthenticationException
-from .models.user import User
-from .serializers import LoginSerializer, UserSerializer
+from user.authentication.authentication import Authentication
+from user.authentication.exceptions import AuthenticationException
+from user.models.user import User
+from user.serializers.serializers import LoginSerializer
+from user.serializers.user_serializer import UserSerializer
 
 
 class Login(APIView):

@@ -30,7 +30,6 @@ SECRET_KEY = (
 DEBUG = False
 ALLOWED_HOSTS = [
     "weighttracker-backend",
-    "dev.weighttracker.zz50.co.uk",
 ]
 
 CSRF_TRUSTED_ORIGINS = [

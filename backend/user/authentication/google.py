@@ -23,8 +23,6 @@ class Google(AuthenticatorInterface):
             self.GOOGLE_ACCESS_TOKEN_OBTAIN_URL, data=data
         )
 
-        print(response)
-
         if not response.ok:
             raise AuthenticationException(
                 "Failed to obtain access token from google"

@@ -3,18 +3,20 @@ import { ref, computed } from 'vue'
 import { useStore } from '@/stores/store'
 import moment from 'moment'
 import { storeToRefs } from 'pinia'
+import ModalComponent from '../components/ModalComponent.vue'
 
 const store = useStore()
 const { weights, user } = storeToRefs(store)
 const page = ref(1)
 const paging_limit = 20
+const isModalOpened = ref(false)
 
 const weights_history = computed(() => {
   return weights.value.slice((page.value - 1) * paging_limit, page.value * paging_limit)
 })
 
 const add_weight = () => {
-  console.log('ADD WEIGHT')
+  isModalOpened.value = !isModalOpened.value
 }
 
 const delete_weight = (id) => {
@@ -29,6 +31,10 @@ const total_pages = computed(() => {
   return Math.ceil(weights.value.length / paging_limit)
 })
 
+const close_modal = () => {
+  isModalOpened.value = false
+}
+
 const paginate = (next_page) => {
   page.value = next_page
 }
@@ -36,7 +42,7 @@ const paginate = (next_page) => {
 const changeClass = (change) => {
   if (change > 0) return 'table-danger text-danger text-end'
 
-  if (change < 0 && change > (user.value.target_weight_loss_percentage_per_week * -1))
+  if (change < 0 && change > user.value.target_weight_loss_percentage_per_week * -1)
     return 'table-warning text-warning text-end'
 
   return 'table-success text-success text-end'
@@ -44,6 +50,40 @@ const changeClass = (change) => {
 </script>
 
 <template>
+  <ModalComponent :isOpen="isModalOpened" @modal-close="close_modal" name="add_edit_weight">
+    <template #header> Add Weight </template>
+    <template #content>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Date</label>
+        <input
+          type="email"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Weight(kg)</label>
+        <input
+          type="email"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+        />
+      </div>
+    </template>
+    <template #footer>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        style="margin-right: 10px"
+        @click="add_weight()"
+      >
+        Cancel
+      </button>
+      <button type="button" class="btn btn-primary" @click="add_weight()">Save</button>
+    </template>
+  </ModalComponent>
   <div class="weight_history_container">
     <header>
       History
@@ -105,6 +145,10 @@ const changeClass = (change) => {
 </template>
 
 <style scoped>
+.form-label {
+  font-weight: normal;
+  font-size: smaller;
+}
 font-awesome-icon {
   margin: 0;
   padding: 0;

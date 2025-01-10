@@ -145,5 +145,7 @@ STATIC_ROOT = "/opt/weighttracker_backend_public/media/"
 
 AUTH_USER_MODEL = "user.User"
 
-GOOGLE_OAUTH2_CLIENT_ID = os.environ.get("GOOGLE_OAUTH2_CLIENT_ID")
-GOOGLE_OAUTH2_CLIENT_SECRET = os.environ.get("GOOGLE_OAUTH2_CLIENT_SECRET")
+GOOGLE_OAUTH2_CLIENT_ID = os.environ.get("GOOGLE_OAUTH2_CLIENT_ID").strip()
+GOOGLE_OAUTH2_CLIENT_SECRET = os.environ.get(
+    "GOOGLE_OAUTH2_CLIENT_SECRET"
+).strip()

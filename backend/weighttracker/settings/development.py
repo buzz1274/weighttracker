@@ -1,17 +1,19 @@
+from contextlib import suppress
+
 from .production import *  # noqa: F403, F401
 
-try:
-    import pydevd_pycharm
+with suppress(ConnectionRefusedError):
+    try:
+        import pydevd_pycharm
 
-    pydevd_pycharm.settrace(
-        "host.docker.internal",
-        port=10002,
-        stdoutToServer=True,
-        stderrToServer=True,
-    )
-except Exception:
-    print("unable to run debugger")
-    pass
+        pydevd_pycharm.settrace(
+            "host.docker.internal",
+            port=10002,
+            stdoutToServer=True,
+            stderrToServer=True,
+        )
+    except (ModuleNotFoundError, ConnectionRefusedError):
+        print("pydebugger failed to connect")
 
 DEBUG = True
 CSRF_TRUSTED_ORIGINS = [

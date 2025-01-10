@@ -15,7 +15,7 @@ class Google(AuthenticatorInterface):
             "code": code,
             "client_id": settings.GOOGLE_OAUTH2_CLIENT_ID,
             "client_secret": settings.GOOGLE_OAUTH2_CLIENT_SECRET,
-            "redirect_uri": "https://dev.weighttracker.zz50.co.uk",
+            "redirect_uri": "http://dev.weighttracker.zz50.co.uk:5123",
             "grant_type": "authorization_code",
         }
 

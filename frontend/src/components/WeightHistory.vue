@@ -36,7 +36,7 @@ const paginate = (next_page) => {
 const changeClass = (change) => {
   if (change > 0) return 'table-danger text-danger text-end'
 
-  if (change < 0 && change < user.value.target_weight_loss_percentage_per_week)
+  if (change < 0 && change > (user.value.target_weight_loss_percentage_per_week * -1))
     return 'table-warning text-warning text-end'
 
   return 'table-success text-success text-end'

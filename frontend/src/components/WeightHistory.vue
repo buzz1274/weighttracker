@@ -15,74 +15,76 @@ const weights_history = computed(() => {
   return weights.value.slice((page.value - 1) * paging_limit, page.value * paging_limit)
 })
 
-const add_weight = () => {
-  isModalOpened.value = !isModalOpened.value
+const add_weight = (e = null): void => {
+  if (!e) {
+    toggle_modal()
+  } else {
+    //const weight: string = e.target.elements.weight.value
+    //const date: string = e.target.elements.date.value
+
+    toggle_modal()
+  }
 }
 
-const delete_weight = (id) => {
+const delete_weight = (id: number): void => {
   console.log('DELETE WEIGHT ' + id)
 }
 
-const edit_weight = (id) => {
+const edit_weight = (id): void => {
   console.log('EDIT WEIGHT ' + id)
 }
 
-const total_pages = computed(() => {
+const total_pages = computed((): number => {
   return Math.ceil(weights.value.length / paging_limit)
 })
 
-const close_modal = () => {
-  isModalOpened.value = false
+const toggle_modal = (): void => {
+  isModalOpened.value = !isModalOpened.value
 }
 
-const paginate = (next_page) => {
+const paginate = (next_page): void => {
   page.value = next_page
 }
 
-const changeClass = (change) => {
-  if (change > 0) return 'table-danger text-danger text-end'
+const changeClass = (change): string => {
+  if (change == '-') return 'text-end'
+
+  if (change > 0) return 'table-danger text-end'
 
   if (change < 0 && change > user.value.target_weight_loss_percentage_per_week * -1)
-    return 'table-warning text-warning text-end'
+    return 'table-warning text-end'
 
-  return 'table-success text-success text-end'
+  return 'table-success text-end'
 }
 </script>
 
 <template>
-  <ModalComponent :isOpen="isModalOpened" @modal-close="close_modal" name="add_edit_weight">
+  <ModalComponent :isOpen="isModalOpened" @modal_close="toggle_modal" name="add_edit_weight">
     <template #header> Add Weight </template>
     <template #content>
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Date</label>
-        <input
-          type="email"
-          class="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
-        />
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Weight(kg)</label>
-        <input
-          type="email"
-          class="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
-        />
-      </div>
+      <form class="clearfix" @submit.prevent="add_weight">
+        <div class="mb-3">
+          <label for="date" class="form-label">Date</label>
+          <input type="date" class="form-control" id="date" />
+        </div>
+        <div class="mb-3">
+          <label for="weight" class="form-label">Weight(kg)</label>
+          <input type="number" step=".10" class="form-control" id="weight" />
+        </div>
+        <div class="float-end">
+          <button
+            type="submit"
+            class="btn btn-secondary"
+            style="margin-right: 10px"
+            @click="toggle_modal()"
+          >
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary" value="save">Save</button>
+        </div>
+      </form>
     </template>
-    <template #footer>
-      <button
-        type="button"
-        class="btn btn-secondary"
-        style="margin-right: 10px"
-        @click="add_weight()"
-      >
-        Cancel
-      </button>
-      <button type="button" class="btn btn-primary" @click="add_weight()">Save</button>
-    </template>
+    <template #footer>&nbsp;</template>
   </ModalComponent>
   <div class="weight_history_container">
     <header>

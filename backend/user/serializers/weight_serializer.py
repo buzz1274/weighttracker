@@ -22,6 +22,11 @@ class WeightSerializer(serializers.ModelSerializer):
             "week_weight_change_percentage",
         ]
 
+    def create(self, validated_data):
+        return Weight.objects.create(
+            user_id=self.context["user_id"], **validated_data
+        )
+
     def week_weight_change_kg_field(self, model):
         return (
             "-"

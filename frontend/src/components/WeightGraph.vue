@@ -2,6 +2,7 @@
 import { Line } from 'vue-chartjs'
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
+import { use_weight_store } from '@/stores/weights'
 import { useStore } from '@/stores/store'
 
 import {
@@ -17,7 +18,8 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Title, Legend)
 
-const { loaded, weights_weights, weights_labels, user } = storeToRefs(useStore())
+const { user } = storeToRefs(useStore())
+const { loaded, weights_weights, weights_labels } = storeToRefs(use_weight_store())
 const labels = computed(() => {
   return weights_labels.value.slice(0).reverse()
 })

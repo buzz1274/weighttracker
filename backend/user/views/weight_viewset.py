@@ -10,8 +10,8 @@ class WeightViewSet(viewsets.ModelViewSet):
     serializer_class = WeightSerializer
     pagination_class = None
 
-    def create(self, request, *args, **kwargs):
-        pass
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context["user_id"] = 1
 
-    def destroy(self, request, *args, **kwargs):
-        pass
+        return context

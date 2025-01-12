@@ -148,7 +148,7 @@ class User(AbstractUser):
 
             return date.today() + timedelta(days=days_to_target)
 
-        except (ZeroDivisionError, AttributeError):
+        except (ZeroDivisionError, AttributeError, decimal.InvalidOperation):
             return None
 
     def change_between_dates(

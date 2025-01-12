@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useStore } from '@/stores/store'
+import { use_weight_store } from '@/stores/weights'
 import moment from 'moment'
 import { storeToRefs } from 'pinia'
 import ModalComponent from '../components/ModalComponent.vue'
 
+const weight_store = use_weight_store()
+const { weights, errors } = storeToRefs(weight_store)
+const { add } = weight_store
+
 const store = useStore()
-const { weights, user } = storeToRefs(store)
+const { user } = storeToRefs(store)
+
 const page = ref(1)
 const paging_limit = 20
 const isModalOpened = ref(false)
@@ -19,10 +25,12 @@ const add_weight = (e = null): void => {
   if (!e) {
     toggle_modal()
   } else {
-    //const weight: string = e.target.elements.weight.value
-    //const date: string = e.target.elements.date.value
+    add(e.target.elements.date.value, e.target.elements.weight_kg.value)
 
-    toggle_modal()
+    if (!errors.value) {
+      toggle_modal()
+    }
+    //console.log(response)
   }
 }
 
@@ -68,8 +76,8 @@ const changeClass = (change): string => {
           <input type="date" class="form-control" id="date" />
         </div>
         <div class="mb-3">
-          <label for="weight" class="form-label">Weight(kg)</label>
-          <input type="number" step=".10" class="form-control" id="weight" />
+          <label for="weight_kg" class="form-label">Weight(kg)</label>
+          <input type="number" step=".10" class="form-control" id="weight_kg" />
         </div>
         <div class="float-end">
           <button

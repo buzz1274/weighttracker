@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
-import random
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -150,5 +149,3 @@ GOOGLE_OAUTH2_CLIENT_ID = os.environ.get("GOOGLE_OAUTH2_CLIENT_ID").strip()
 GOOGLE_OAUTH2_CLIENT_SECRET = os.environ.get(
     "GOOGLE_OAUTH2_CLIENT_SECRET"
 ).strip()
-
-USER_ID = random.choice([1, 2])

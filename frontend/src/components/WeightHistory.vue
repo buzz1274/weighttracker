@@ -8,6 +8,7 @@ import ModalComponent from '../components/ModalComponent.vue'
 
 const weight_store = use_weight_store()
 const { weights, errors } = storeToRefs(weight_store)
+
 const { add } = weight_store
 
 const store = useStore()
@@ -22,6 +23,8 @@ const weights_history = computed(() => {
 })
 
 const add_weight = (e = null): void => {
+  //let tt = new derp()
+
   if (!e) {
     toggle_modal()
   } else {

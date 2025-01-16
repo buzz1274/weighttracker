@@ -27,3 +27,5 @@ CORS_ORIGIN_WHITELIST = [
 ALLOWED_HOSTS += [  # noqa: F405
     "dev.weighttracker.zz50.co.uk",
 ]
+
+USER_ID = 1

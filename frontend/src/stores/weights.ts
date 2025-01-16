@@ -8,6 +8,15 @@ export const use_weight_store = defineStore('weight_store', () => {
   const weights_weights = ref([])
   const errors = ref([])
 
+  class derp {
+    constructor() {
+      console.log('DERP')
+    }
+    weights() {
+      console.log('GET WEIGHTS')
+    }
+  }
+
   function add(date: string, weight_kg: number): void {
     fetch('https://' + window.location.hostname + '/api/user/weights/', {
       method: 'POST',
@@ -65,5 +74,5 @@ export const use_weight_store = defineStore('weight_store', () => {
     get()
   })
 
-  return { weights, weights_weights, weights_labels, loaded, errors, get, add }
+  return { weights, weights_weights, weights_labels, loaded, errors, get, add, derp }
 })

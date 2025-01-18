@@ -17,23 +17,19 @@ const weights_history = computed(() => {
   if (wm.weights.value) {
     return wm.weights.value.slice((page.value - 1) * paging_limit, page.value * paging_limit)
   }
-
   return []
 })
 
-//console.log(weights_history)
-
 const add_weight = (e = null): void => {
   if (!e) {
-    //toggle_modal()
+    toggle_modal()
   } else {
-    /*
-    add(e.target.elements.date.value, e.target.elements.weight_kg.value)
+    console.log('ADD')
+    wm.add(e.target.elements.date.value, e.target.elements.weight_kg.value)
 
-    if (!errors.value) {
+    if (!wm.errors.value) {
       toggle_modal()
     }
-     */
     //console.log(response)
   }
 }

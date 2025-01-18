@@ -18,6 +18,22 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Title, Legend)
 
+/*
+extract_values_and_dates() {
+  this.weight_values.value = this.weights.value.reduce((weights, weight) => {
+    weights.push(weight['weight_kg'])
+    return weights
+  }, [])
+
+  this.weight_dates.value = this.weights.value.reduce((dates, weight) => {
+    dates.push(weight['date'])
+    return dates
+  }, [])
+
+  console.log(this.weight_dates)
+}
+ */
+
 const { user } = storeToRefs(useStore())
 const { loaded, weights_weights, weights_labels } = storeToRefs(use_weight_store())
 const labels = computed(() => {

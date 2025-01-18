@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { Model } from '@/models/Model'
 
-export class weightModel extends Model {
+export class WeightModel extends Model {
   weights = ref([])
   errors = ref([])
 
@@ -16,7 +16,7 @@ export class weightModel extends Model {
         this.weights.value = data
       })
       .catch((error) => {
-        console.log(error)
+        this.errors.value = error
       })
   }
 
@@ -28,39 +28,15 @@ export class weightModel extends Model {
         date: date
       })
     })
-      .then((response) => {
-        return response.json()
-      })
+      .then((response) => response.json())
       .then((data) => {
         if (data.status == 400) {
           this.errors.value = data.response
         }
-
-        this.errors.value = data.response
-
-        console.log('HERE')
-        console.log(data)
-        //add weight to weights store
+        this.get()
       })
       .catch((error) => {
-        console.log('HERP DERP')
-        //console.log(error['weight_kg']['weight_kg'])
         this.errors.value = error
-        console.log('ERROR CAUGHT')
       })
-  }
-
-  extract_values_and_dates() {
-    this.weight_values.value = this.weights.value.reduce((weights, weight) => {
-      weights.push(weight['weight_kg'])
-      return weights
-    }, [])
-
-    this.weight_dates.value = this.weights.value.reduce((dates, weight) => {
-      dates.push(weight['date'])
-      return dates
-    }, [])
-
-    console.log(this.weight_dates)
   }
 }

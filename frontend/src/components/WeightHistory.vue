@@ -1,17 +1,9 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useStore } from '@/stores/store'
-import { use_weight_store } from '@/stores/weights'
 import moment from 'moment'
 import { storeToRefs } from 'pinia'
 import ModalComponent from '../components/ModalComponent.vue'
-
-import { weightModel } from '@/models/weightModel'
-
-const weight_store = use_weight_store()
-const { weights, errors } = storeToRefs(weight_store)
-
-const { add } = weight_store
 
 const store = useStore()
 const { user, weight_model } = storeToRefs(store)
@@ -20,36 +12,28 @@ const page = ref(1)
 const paging_limit = 20
 const isModalOpened = ref(false)
 const wm = weight_model.value
-const loaded = wm.loaded
-
-console.log('LOADED')
-console.log(loaded)
 
 const weights_history = computed(() => {
-  console.log('IN WH')
-  console.log(wm.wee().value)
-  console.log('DJJDJ')
-  console.log('DEROP')
-  return wm.weights.slice((page.value - 1) * paging_limit, page.value * paging_limit)
+  if (wm.weights.value) {
+    return wm.weights.value.slice((page.value - 1) * paging_limit, page.value * paging_limit)
+  }
+
+  return []
 })
 
 //console.log(weights_history)
 
 const add_weight = (e = null): void => {
-  //let tt = new derp()
-
-  //const d = new weightModel()
-
-  //d.get()
-
   if (!e) {
-    toggle_modal()
+    //toggle_modal()
   } else {
+    /*
     add(e.target.elements.date.value, e.target.elements.weight_kg.value)
 
     if (!errors.value) {
       toggle_modal()
     }
+     */
     //console.log(response)
   }
 }
@@ -63,7 +47,10 @@ const edit_weight = (id): void => {
 }
 
 const total_pages = computed((): number => {
-  return Math.ceil(weights.value.length / paging_limit)
+  if (wm.weights.value) {
+    return Math.ceil(wm.weights.value.length / paging_limit)
+  }
+  return 0
 })
 
 const toggle_modal = (): void => {

@@ -2,34 +2,12 @@ import { ref } from 'vue'
 
 export class weightModel {
   weights = ref([])
-  loaded = null
-  //weight_values = ref([])
-  //weight_dates = ref([])
-
-  constructor() {
-    this.loaded = ref(false)
-  }
-
-  wee() {
-    return this.weights
-  }
-
-  lo() {
-    return this.loaded
-  }
 
   get(): void {
-    console.log('FETCH')
     fetch('https://' + window.location.hostname + '/api/user/weights/', { method: 'GET' })
       .then((response) => response.json())
       .then((data) => {
-        console.log('FULFILLED')
-        console.log(data)
         this.weights.value = data
-        this.loaded = ref(true)
-      })
-      .then(() => {
-        //this.extract_values_and_dates()
       })
       .catch((error) => {
         console.log(error)

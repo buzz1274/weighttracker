@@ -2,14 +2,20 @@
 import WeightStats from '../components/WeightStats.vue'
 import WeightGraph from '../components/WeightGraph.vue'
 import WeightHistory from '../components/WeightHistory.vue'
-import { onMounted } from 'vue'
+import { onBeforeMount, onMounted } from 'vue'
 import { use_weight_store } from '@/stores/weights'
+import { useStore } from '@/stores/store'
+import { storeToRefs } from 'pinia'
 
 const weight_store = use_weight_store()
 const { get } = weight_store
 
-onMounted(() => {
-  get()
+const store = useStore()
+const { user, weight_model } = storeToRefs(store)
+
+onBeforeMount(() => {
+  console.log('MOUNTED')
+  weight_model.value.get()
 })
 </script>
 

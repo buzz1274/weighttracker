@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, onMounted } from 'vue'
+import { weightModel } from '@/models/weightModel'
 
 export const useStore = defineStore('store', () => {
   const user = ref({
@@ -11,6 +12,8 @@ export const useStore = defineStore('store', () => {
     bmi_boundaries: [],
     stats: []
   })
+
+  const weight_model = ref(new weightModel())
 
   function retrieveUser() {
     fetch('https://' + window.location.hostname + '/api/user/', { method: 'GET' })
@@ -27,5 +30,5 @@ export const useStore = defineStore('store', () => {
     retrieveUser()
   })
 
-  return { user }
+  return { user, weight_model }
 })

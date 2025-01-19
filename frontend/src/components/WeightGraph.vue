@@ -2,9 +2,7 @@
 import { Line } from 'vue-chartjs'
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import { use_weight_store } from '@/stores/weights'
 import { useStore } from '@/stores/store'
-
 import {
   Chart as ChartJS,
   Title,
@@ -18,29 +16,32 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Title, Legend)
 
-/*
-extract_values_and_dates() {
-  this.weight_values.value = this.weights.value.reduce((weights, weight) => {
-    weights.push(weight['weight_kg'])
-    return weights
-  }, [])
+const store = useStore()
+const { user, weight_model } = storeToRefs(store)
+const wm = weight_model.value
 
-  this.weight_dates.value = this.weights.value.reduce((dates, weight) => {
-    dates.push(weight['date'])
-    return dates
-  }, [])
-
-  console.log(this.weight_dates)
-}
- */
-
-const { user } = storeToRefs(useStore())
-const { loaded, weights_weights, weights_labels } = storeToRefs(use_weight_store())
 const labels = computed(() => {
-  return weights_labels.value.slice(0).reverse()
+  if (wm.weights.value) {
+    return wm.weights.value
+      .reduce((weights, weight) => {
+        weights.push(weight['date'])
+        return weights
+      }, [])
+      .reverse()
+  }
+  return []
 })
+
 const data = computed(() => {
-  return weights_weights.value.slice(0).reverse()
+  if (wm.weights.value) {
+    return wm.weights.value
+      .reduce((weights, weight) => {
+        weights.push(weight['weight_kg'])
+        return weights
+      }, [])
+      .reverse()
+  }
+  return []
 })
 
 const chartData = computed(() => {
@@ -54,7 +55,7 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(220, 53, 69, 0.1)',
         fill: '1',
         order: 1,
-        data: new Array(weights_weights.value.length).fill(user.value.max_weight_kg)
+        data: new Array(data.value.length).fill(user.value.max_weight_kg)
       },
       {
         label: 'Obese',
@@ -63,7 +64,7 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(220, 53, 69, 0.1)',
         fill: '-1',
         order: 1,
-        data: new Array(weights_weights.value.length).fill(user.value.bmi_boundaries.obese)
+        data: new Array(data.value.length).fill(user.value.bmi_boundaries.obese)
       },
       {
         label: 'remove',
@@ -72,7 +73,7 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(243, 171, 133, 0.3)',
         fill: '-1',
         order: 1,
-        data: new Array(weights_weights.value.length).fill(user.value.bmi_boundaries.obese)
+        data: new Array(data.value.length).fill(user.value.bmi_boundaries.obese)
       },
       {
         label: 'Overweight',
@@ -81,7 +82,7 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(243, 171, 133, 0.3)',
         fill: '-2',
         order: 1,
-        data: new Array(weights_weights.value.length).fill(user.value.bmi_boundaries.overweight)
+        data: new Array(data.value.length).fill(user.value.bmi_boundaries.overweight)
       },
       {
         label: 'Normal',
@@ -90,7 +91,7 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(155, 238, 105, 0.3)',
         fill: false,
         order: 1,
-        data: new Array(weights_weights.value.length).fill(user.value.bmi_boundaries.normal)
+        data: new Array(data.value.length).fill(user.value.bmi_boundaries.normal)
       },
       {
         label: 'remove',
@@ -99,10 +100,10 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(155, 238, 105, 0.3)',
         fill: '-1',
         order: 1,
-        data: new Array(weights_weights.value.length).fill(user.value.bmi_boundaries.overweight)
+        data: new Array(data.value.length).fill(user.value.bmi_boundaries.overweight)
       },
       {
-        label: 'Current Weigh',
+        label: 'Current Weight',
         borderColor: 'rgba(0, 0, 0, 1)',
         backgroundColor: 'rgba(0, 0, 0, 1)',
         pointStyle: false,
@@ -117,7 +118,7 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(128, 126, 126, 1)',
         pointStyle: 'line',
         borderWidth: '1',
-        data: new Array(weights_weights.value.length).fill(user.value.average_weight_kg)
+        data: new Array(data.value.length).fill(user.value.average_weight_kg)
       },
       {
         label: 'Target Weight',
@@ -125,7 +126,7 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(10, 149, 6, 1)',
         pointStyle: 'line',
         borderWidth: '1',
-        data: new Array(weights_weights.value.length).fill(user.value.target_weight_kg)
+        data: new Array(data.value.length).fill(user.value.target_weight_kg)
       }
     ]
   }
@@ -161,7 +162,7 @@ const chartOptions = {
 </script>
 
 <template>
-  <div v-if="loaded" class="graph_container">
+  <div v-if="data" class="graph_container">
     <header>Graph</header>
 
     <div class="graph">

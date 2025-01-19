@@ -20,17 +20,22 @@ const weights_history = computed(() => {
   return []
 })
 
+const errors = computed(() => {
+  return wm.errors.value
+})
+
 const add_weight = (e = null): void => {
   if (!e) {
     toggle_modal()
   } else {
-    console.log('ADD')
     wm.add(e.target.elements.date.value, e.target.elements.weight_kg.value)
 
-    if (!wm.errors.value) {
+    console.log(errors)
+    console.log(errors.value)
+
+    if (!errors.value) {
       toggle_modal()
     }
-    //console.log(response)
   }
 }
 

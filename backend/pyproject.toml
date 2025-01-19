@@ -8,7 +8,7 @@ package-mode = false
 [tool.poetry.dependencies]
 python = "^3.10"
 psycopg2-binary = "^2.9.3"
-django = ">=5.1.4"
+django = ">=5.1.5"
 gunicorn = "^22.0.0"
 djangorestframework = "^3.14.0"
 google-auth = "^2.29.0"

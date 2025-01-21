@@ -20,20 +20,16 @@ const weights_history = computed(() => {
   return []
 })
 
-const errors = computed(() => {
-  return wm.errors.value
-})
-
 const add_weight = (e = null): void => {
   if (!e) {
     toggle_modal()
   } else {
     wm.add(e.target.elements.date.value, e.target.elements.weight_kg.value)
 
-    console.log(errors)
-    console.log(errors.value)
+    console.log(wm.errors)
+    //console.log(wm.errors.value)
 
-    if (!errors.value) {
+    if (!wm.errors) {
       toggle_modal()
     }
   }
@@ -68,9 +64,9 @@ const changeClass = (change): string => {
   if (change > 0) return 'table-danger text-end'
 
   if (change < 0 && change > user.value.target_weight_loss_percentage_per_week * -1)
-    return 'table-warning text-end'
+    return 'table-success text-end'
 
-  return 'table-success text-end'
+  return 'table-success-heavy text-end'
 }
 </script>
 
@@ -182,6 +178,9 @@ table {
   font-size: 0.75em;
   line-height: 15px;
   margin-bottom: 10px;
+}
+.table-success-heavy {
+  background-color: #66ff00;
 }
 .add_weight {
   margin-right: 20px;

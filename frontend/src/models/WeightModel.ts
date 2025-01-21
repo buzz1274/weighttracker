@@ -3,7 +3,6 @@ import { Model } from '@/models/Model'
 
 export class WeightModel extends Model {
   weights = ref([])
-  api_errors = ref([])
 
   constructor() {
     super()
@@ -16,7 +15,7 @@ export class WeightModel extends Model {
         this.weights.value = data
       })
       .catch((error) => {
-        this.api_errors.value = error
+        //this.errors = error
       })
   }
 
@@ -33,11 +32,11 @@ export class WeightModel extends Model {
         if (data.status == 200) {
           this.get()
         } else {
-          this.form_errors.value = data.response
+          //this.errors = data.response
         }
       })
       .catch((error) => {
-        this.api_errors.value = error
+        //this.api_errors.value = error
       })
   }
 }

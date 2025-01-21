@@ -1,7 +1,7 @@
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 
 export class Model {
-  HOST = 'https://' + window.location.hostname + '/'
+  HOST: string = 'https://' + window.location.hostname + '/'
 
   errors = computed(() => {
     return this.errors.value

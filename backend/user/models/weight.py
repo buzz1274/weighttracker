@@ -60,9 +60,9 @@ class Weight(models.Model):
             week_weight_change_kg = decimal.Decimal(
                 self.weight_kg - weight.weight_kg
             )
-            week_weight_change_percentage = (
-                week_weight_change_kg / weight.weight_kg
-            ) * 100
+            week_weight_change_percentage = round(
+                (week_weight_change_kg / weight.weight_kg) * 100, 2
+            )
 
             if week_weight_change_kg != self.week_weight_change_kg:
                 self.week_weight_change_kg = week_weight_change_kg

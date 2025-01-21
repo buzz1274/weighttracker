@@ -23,6 +23,7 @@ class WeightSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
+        print(validated_data)
         return Weight.objects.create(
             user_id=self.context["user_id"], **validated_data
         )

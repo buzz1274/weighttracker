@@ -27,12 +27,13 @@ export class WeightModel extends Model {
         date: date
       })
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status == 200) {
+      .then((response) => {
+        const data: Promise<type[]> = response.json()
+
+        if (response.status == 200 || response.status == 201) {
           this.get()
         } else {
-          //this.errors = data.response
+          //assign response into api//
         }
       })
       .catch((error) => {

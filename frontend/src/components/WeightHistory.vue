@@ -180,7 +180,7 @@ table {
   margin-bottom: 10px;
 }
 .table-success-heavy {
-  background-color: #66ff00;
+  background-color: #17b169;
 }
 .add_weight {
   margin-right: 20px;

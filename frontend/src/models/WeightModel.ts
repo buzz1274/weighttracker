@@ -26,6 +26,9 @@ export class WeightModel extends Model {
 
     fetch(this.api_url('api/user/weights/'), {
       method: 'POST',
+      headers: {
+        'X-CSRFToken': this.get_cookie('csrftoken')
+      },
       body: JSON.stringify({
         weight_kg: weight_kg,
         date: date

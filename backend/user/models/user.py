@@ -6,7 +6,7 @@ from typing import Optional
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from django.db.models import Avg, DecimalField
+from django.db.models import Avg, DateField, DecimalField
 
 from user.models.weight import Weight
 
@@ -52,11 +52,14 @@ class User(AbstractUser):
             MaxValueValidator(limit_value=decimal.Decimal(3)),
         ],
     )
+    weight_loss_start_date = models.DateField(null=True)
 
     def __str__(self):
         return self.username
 
-    def weight_at_date(self, search_date: Optional[date] = None) -> Weight:
+    def weight_at_date(
+        self, search_date: Optional[date | DateField] = None
+    ) -> Weight:
         """
         determine weight change since supplied date
         """
@@ -135,14 +138,14 @@ class User(AbstractUser):
     def target_hit_date(self) -> date | None:
         """determine approx date to hit weight target"""
         try:
-            max_weight = self.max_weight()
+            weight_at_start = self.weight_at_date(self.weight_loss_start_date)
             current_weight = self.weight_at_date()
 
             days_to_target = math.ceil(
                 (current_weight.weight_kg - self.target_weight_kg)
                 / (
-                    (max_weight.weight_kg - current_weight.weight_kg)
-                    / (current_weight.date - max_weight.date).days
+                    (weight_at_start.weight_kg - current_weight.weight_kg)
+                    / (current_weight.date - weight_at_start.date).days
                 )
             )
 

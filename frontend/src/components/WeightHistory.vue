@@ -59,6 +59,8 @@ const paginate = (next_page): void => {
 }
 
 const changeClass = (change): string => {
+  //console.log(user.value.target_weight_loss_percentage_per_week);
+
   if (change == '-') return 'text-end'
 
   if (change > 0) return 'table-danger text-end'

@@ -17,12 +17,13 @@ import {
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Title, Legend)
 
 const store = useStore()
-const { user, weight_model } = storeToRefs(store)
-const wm = weight_model.value
+const { user_model, weight_model } = storeToRefs(store)
+const user = user_model.value
+const weights = weight_model.value.weights.value
 
 const labels = computed(() => {
-  if (wm.weights.value) {
-    return wm.weights.value
+  if (weights) {
+    return weights
       .reduce((weights, weight) => {
         weights.push(weight['date'])
         return weights
@@ -33,8 +34,8 @@ const labels = computed(() => {
 })
 
 const data = computed(() => {
-  if (wm.weights.value) {
-    return wm.weights.value
+  if (weights) {
+    return weights
       .reduce((weights, weight) => {
         weights.push(weight['weight_kg'])
         return weights
@@ -55,7 +56,7 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(220, 53, 69, 0.1)',
         fill: '1',
         order: 1,
-        data: new Array(data.value.length).fill(user.value.max_weight_kg)
+        data: new Array(data.value.length).fill(user.max_weight_kg)
       },
       {
         label: 'Obese',
@@ -64,7 +65,7 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(220, 53, 69, 0.1)',
         fill: '-1',
         order: 1,
-        data: new Array(data.value.length).fill(user.value.bmi_boundaries.obese)
+        data: new Array(data.value.length).fill(user.bmi_boundaries.obese)
       },
       {
         label: 'remove',
@@ -73,7 +74,7 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(243, 171, 133, 0.3)',
         fill: '-1',
         order: 1,
-        data: new Array(data.value.length).fill(user.value.bmi_boundaries.obese)
+        data: new Array(data.value.length).fill(user.bmi_boundaries.obese)
       },
       {
         label: 'Overweight',
@@ -82,7 +83,7 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(243, 171, 133, 0.3)',
         fill: '-2',
         order: 1,
-        data: new Array(data.value.length).fill(user.value.bmi_boundaries.overweight)
+        data: new Array(data.value.length).fill(user.bmi_boundaries.overweight)
       },
       {
         label: 'Normal',
@@ -91,7 +92,7 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(155, 238, 105, 0.3)',
         fill: false,
         order: 1,
-        data: new Array(data.value.length).fill(user.value.bmi_boundaries.normal)
+        data: new Array(data.value.length).fill(user.bmi_boundaries.normal)
       },
       {
         label: 'remove',
@@ -100,7 +101,7 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(155, 238, 105, 0.3)',
         fill: '-1',
         order: 1,
-        data: new Array(data.value.length).fill(user.value.bmi_boundaries.overweight)
+        data: new Array(data.value.length).fill(user.bmi_boundaries.overweight)
       },
       {
         label: 'Current Weight',
@@ -118,7 +119,7 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(128, 126, 126, 1)',
         pointStyle: 'line',
         borderWidth: '1',
-        data: new Array(data.value.length).fill(user.value.average_weight_kg)
+        data: new Array(data.value.length).fill(user.average_weight_kg)
       },
       {
         label: 'Target Weight',
@@ -126,7 +127,7 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(10, 149, 6, 1)',
         pointStyle: 'line',
         borderWidth: '1',
-        data: new Array(data.value.length).fill(user.value.target_weight_kg)
+        data: new Array(data.value.length).fill(user.target_weight_kg)
       }
     ]
   }

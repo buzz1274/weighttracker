@@ -6,12 +6,13 @@ import { storeToRefs } from 'pinia'
 import ModalComponent from '../components/ModalComponent.vue'
 
 const store = useStore()
-const { user, weight_model } = storeToRefs(store)
+const { user_model, weight_model } = storeToRefs(store)
 
 const page = ref(1)
 const paging_limit = 20
 const isModalOpened = ref(false)
 const wm = weight_model.value
+const user = user_model.value
 
 const weights_history = computed(() => {
   if (wm.weights.value) {
@@ -26,7 +27,7 @@ const add_weight = (e = null): void => {
   } else {
     wm.add(e.target.elements.date.value, e.target.elements.weight_kg.value)
 
-    console.log(wm.errors)
+    //console.log(wm.errors)
     //console.log(wm.errors.value)
 
     if (!wm.errors) {
@@ -59,13 +60,11 @@ const paginate = (next_page): void => {
 }
 
 const changeClass = (change): string => {
-  //console.log(user.value.target_weight_loss_percentage_per_week);
-
   if (change == '-') return 'text-end'
 
   if (change > 0) return 'table-danger text-end'
 
-  if (change < 0 && change > user.value.target_weight_loss_percentage_per_week * -1)
+  if (change < 0 && change > user.target_weight_loss_percentage_per_week)
     return 'table-success text-end'
 
   return 'table-success-heavy text-end'

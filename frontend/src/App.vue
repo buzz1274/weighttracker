@@ -4,7 +4,8 @@ import { useStore } from '@/stores/store'
 import { storeToRefs } from 'pinia'
 
 const store = useStore()
-const { user } = storeToRefs(store)
+const { user_model } = storeToRefs(store)
+const user = user_model.value
 </script>
 
 <template>

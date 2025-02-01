@@ -4,14 +4,15 @@ import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import moment from 'moment'
 
-const { user } = storeToRefs(useStore())
+const { user_model } = storeToRefs(useStore())
+const user = user_model.value
 
 const weightToTarget = computed(() => {
-  return (user.value.current_weight_kg - user.value.target_weight_kg).toFixed(2)
+  return (user.current_weight_kg - user.target_weight_kg).toFixed(2)
 })
 
 const totalWeightLost = computed(() => {
-  return (user.value.current_weight_kg - user.value.max_weight_kg).toFixed(2)
+  return (user.current_weight_kg - user.max_weight_kg).toFixed(2)
 })
 
 const changeClass = (change) => {

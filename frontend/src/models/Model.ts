@@ -35,5 +35,3 @@ export class Model {
     return this.HOST + endpoint
   }
 }
-
-//export { Model, ResponseDataObject }

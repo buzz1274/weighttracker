@@ -1,12 +1,15 @@
 import { ref } from 'vue'
 import { Model } from '@/models/Model'
+import type { UserModel } from '@/models/UserModel'
 
 export class WeightModel extends Model {
+  user_model: UserModel
   weights = ref([])
   status = null
 
-  constructor() {
+  constructor(user_model: UserModel) {
     super()
+    this.user_model = user_model
   }
 
   get(): void {
@@ -44,6 +47,7 @@ export class WeightModel extends Model {
       .then((data) => {
         if (response_status == 200 || response_status == 201) {
           this.get()
+          this.user_model.get()
         } else {
           console.log(response_status)
           console.log(data)

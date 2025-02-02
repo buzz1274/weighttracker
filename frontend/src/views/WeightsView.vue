@@ -10,8 +10,8 @@ const store = useStore()
 const { weight_model, user_model } = storeToRefs(store)
 
 onBeforeMount(() => {
-  weight_model.value.get()
   user_model.value.get()
+  weight_model.value.get()
 })
 </script>
 

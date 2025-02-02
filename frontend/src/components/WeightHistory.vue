@@ -64,10 +64,10 @@ const changeClass = (change): string => {
 
   if (change > 0) return 'table-danger text-end'
 
-  if (change < 0 && change > user.target_weight_loss_percentage_per_week)
+  if (change < 0 && change > user.target_weight_loss_percentage_per_week * -1)
     return 'table-success text-end'
 
-  return 'table-success-heavy text-end'
+  return 'table-success-minor text-end'
 }
 </script>
 
@@ -124,10 +124,10 @@ const changeClass = (change): string => {
           <td class="text-end" style="width: 8%">
             {{ weight.weight_kg }}
           </td>
-          <td :class="changeClass(weight.week_weight_change_kg)" style="width: 8%">
+          <td :class="changeClass(weight.week_weight_change_percentage)" style="width: 8%">
             {{ weight.week_weight_change_percentage }}
           </td>
-          <td :class="changeClass(weight.week_weight_change_kg)" style="width: 8%">
+          <td :class="changeClass(weight.week_weight_change_percentage)" style="width: 8%">
             {{ weight.week_weight_change_kg }}
           </td>
           <td class="text-center" style="width: 15%">
@@ -180,7 +180,7 @@ table {
   line-height: 15px;
   margin-bottom: 10px;
 }
-.table-success-heavy {
+.table-success-minor {
   background-color: #17b169;
 }
 .add_weight {

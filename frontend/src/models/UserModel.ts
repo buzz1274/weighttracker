@@ -18,6 +18,7 @@ export class UserModel extends Model {
   change_last_week_kg: number
   change_last_year_kg: number
   current_bmi: number
+  target_weight_loss_percentage_per_week: number
 
   constructor() {
     super()

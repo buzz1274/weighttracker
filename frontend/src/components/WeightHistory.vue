@@ -21,17 +21,14 @@ const weights_history = computed(() => {
   return []
 })
 
-const add_weight = (e = null): void => {
+const addWeight = (e = null): void => {
   if (!e) {
-    toggle_modal()
+    toggleModal()
   } else {
     wm.add(e.target.elements.date.value, e.target.elements.weight_kg.value)
 
-    //console.log(wm.errors)
-    //console.log(wm.errors.value)
-
     if (!wm.errors) {
-      toggle_modal()
+      toggleModal()
     }
   }
 }
@@ -44,14 +41,14 @@ const edit_weight = (id): void => {
   console.log('EDIT WEIGHT ' + id)
 }
 
-const total_pages = computed((): number => {
+const totalPages = computed((): number => {
   if (wm.weights.value) {
     return Math.ceil(wm.weights.value.length / paging_limit)
   }
   return 0
 })
 
-const toggle_modal = (): void => {
+const toggleModal = (): void => {
   isModalOpened.value = !isModalOpened.value
 }
 
@@ -72,12 +69,12 @@ const changeClass = (change): string => {
 </script>
 
 <template>
-  <AddEditWeightModal :isOpen="isModalOpened" @addWeight="add_weight" @modalClose="toggle_modal" />
+  <AddEditWeightModal :isOpen="isModalOpened" @addWeight="addWeight" @modalClose="toggleModal" />
   <div class="weight_history_container">
     <header>
       History
       <span class="float-end add_weight">
-        <font-awesome-icon icon="fa-solid fa-plus" @click="add_weight()" />
+        <font-awesome-icon icon="fa-solid fa-plus" @click="addWeight()" />
       </span>
     </header>
     <table class="table table-sm table-hover">
@@ -121,7 +118,7 @@ const changeClass = (change): string => {
       </tbody>
     </table>
     <div v-if="weights_history" class="history_navigation">
-      <p v-if="page < total_pages" class="float-end navigation_link" @click="paginate(page + 1)">
+      <p v-if="page < totalPages" class="float-end navigation_link" @click="paginate(page + 1)">
         Next&raquo;&raquo;
       </p>
       <p v-else class="float-end navigation_link_disabled">Next&raquo;&raquo;</p>

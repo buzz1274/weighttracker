@@ -56,6 +56,7 @@ export class WeightModel extends Model {
         }
       })
       .catch((error) => {
+        console.log('ERROR')
         console.log(error)
         //this.api_errors.value = error
       })

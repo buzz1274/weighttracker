@@ -9,7 +9,7 @@ const emit = defineEmits(['addWeight', 'modalClose'])
   <ModalComponent name="add_edit_weight" @modalClose="emit('modalClose')">
     <template #header> Add Weight </template>
     <template #content>
-      <form class="clearfix" @submit.prevent="emit('addWeight')">
+      <form class="clearfix" @submit.prevent="emit('addWeight', $event)">
         <div class="mb-3">
           <label for="date" class="form-label">Date</label>
           <input type="date" class="form-control" id="date" />

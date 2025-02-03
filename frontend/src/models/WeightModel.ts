@@ -50,15 +50,11 @@ export class WeightModel extends Model {
           this.get()
           this.user_model.get()
         } else {
-          console.log(response_status)
-          console.log(data)
-          //log error
+          this.set_errors(data)
         }
       })
       .catch((error) => {
-        console.log('ERROR')
-        console.log(error)
-        //this.api_errors.value = error
+        this.errors = error
       })
   }
 }

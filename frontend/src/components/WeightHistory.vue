@@ -49,6 +49,10 @@ const totalPages = computed((): number => {
 })
 
 const toggleModal = (): void => {
+  if (isModalOpened.value) {
+    wm.reset_errors()
+  }
+
   isModalOpened.value = !isModalOpened.value
 }
 
@@ -69,7 +73,12 @@ const changeClass = (change): string => {
 </script>
 
 <template>
-  <AddEditWeightModal :isOpen="isModalOpened" @addWeight="addWeight" @modalClose="toggleModal" />
+  <AddEditWeightModal
+    :isOpen="isModalOpened"
+    :errors="wm.errors"
+    @addWeight="addWeight"
+    @modalClose="toggleModal"
+  />
   <div class="weight_history_container">
     <header>
       History

@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import ModalComponent from '@/components/base/ModalComponent.vue'
-import { defineEmits } from 'vue'
+import { defineEmits, defineProps } from 'vue'
 
 const emit = defineEmits(['addWeight', 'modalClose'])
+const props = defineProps({
+  errors: Object,
+  title: String
+})
 </script>
 
 <template>
@@ -13,10 +17,30 @@ const emit = defineEmits(['addWeight', 'modalClose'])
         <div class="mb-3">
           <label for="date" class="form-label">Date</label>
           <input type="date" class="form-control" id="date" />
+          <div v-if="props.errors.date">
+            <p
+              class="alert alert-danger"
+              style="margin-top: 10px"
+              v-for="(error, key) in props.errors.date"
+              :key="key"
+            >
+              {{ error }}
+            </p>
+          </div>
         </div>
         <div class="mb-3">
           <label for="weight_kg" class="form-label">Weight(kg)</label>
           <input type="number" step=".10" class="form-control" id="weight_kg" />
+          <div v-if="props.errors.weight_kg">
+            <p
+              class="alert alert-danger"
+              style="margin-top: 10px"
+              v-for="(error, key) in props.errors.weight_kg"
+              :key="key"
+            >
+              {{ error }}
+            </p>
+          </div>
         </div>
         <div class="float-end">
           <button

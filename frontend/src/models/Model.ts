@@ -1,23 +1,15 @@
-import { computed } from 'vue'
+import { ref } from 'vue'
 import Cookies from 'js-cookie'
 
-interface ResponseDataObject {
-  [key: string | number]: string | number | object
+type errorsArray = {
+  error: string[]
 }
 
 export class Model {
   HOST: string = 'https://' + window.location.hostname + '/'
-  response: Promise<ResponseDataObject>
-
-  errors = computed(() => {
-    return this.errors.value
-  })
+  errors: errorsArray = ref([])
 
   constructor() {}
-
-  handle_error(error: object) {
-    console.log(error)
-  }
 
   hydrate(data: object) {
     for (const property in data) {
@@ -27,7 +19,15 @@ export class Model {
     }
   }
 
-  get_cookie(name) {
+  set_errors(errors: errorsArray) {
+    this.errors = errors
+  }
+
+  reset_errors() {
+    this.set_errors([])
+  }
+
+  get_cookie(name: string): string {
     return Cookies.get(name)
   }
 

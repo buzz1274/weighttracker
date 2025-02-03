@@ -9,6 +9,7 @@ export class WeightModel extends Model {
 
   constructor(user_model: UserModel) {
     super()
+
     this.user_model = user_model
   }
 

@@ -3,7 +3,7 @@ import { ref, computed } from 'vue'
 import { useStore } from '@/stores/store'
 import moment from 'moment'
 import { storeToRefs } from 'pinia'
-import ModalComponent from '../components/ModalComponent.vue'
+import AddEditWeightModal from '@/components/AddEditWeightModal.vue'
 
 const store = useStore()
 const { user_model, weight_model } = storeToRefs(store)
@@ -72,33 +72,7 @@ const changeClass = (change): string => {
 </script>
 
 <template>
-  <ModalComponent :isOpen="isModalOpened" @modal_close="toggle_modal" name="add_edit_weight">
-    <template #header> Add Weight </template>
-    <template #content>
-      <form class="clearfix" @submit.prevent="add_weight">
-        <div class="mb-3">
-          <label for="date" class="form-label">Date</label>
-          <input type="date" class="form-control" id="date" />
-        </div>
-        <div class="mb-3">
-          <label for="weight_kg" class="form-label">Weight(kg)</label>
-          <input type="number" step=".10" class="form-control" id="weight_kg" />
-        </div>
-        <div class="float-end">
-          <button
-            type="submit"
-            class="btn btn-secondary"
-            style="margin-right: 10px"
-            @click="toggle_modal()"
-          >
-            Cancel
-          </button>
-          <button type="submit" class="btn btn-primary" value="save">Save</button>
-        </div>
-      </form>
-    </template>
-    <template #footer>&nbsp;</template>
-  </ModalComponent>
+  <AddEditWeightModal :isOpen="isModalOpened" @addWeight="add_weight" @modalClose="toggle_modal" />
   <div class="weight_history_container">
     <header>
       History

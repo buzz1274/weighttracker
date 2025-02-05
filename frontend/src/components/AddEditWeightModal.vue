@@ -5,7 +5,9 @@ import { defineEmits, defineProps } from 'vue'
 const emit = defineEmits(['addWeight', 'modalClose'])
 const props = defineProps({
   errors: Object,
-  title: String
+  title: String,
+  action: String,
+  weightId: Number
 })
 </script>
 

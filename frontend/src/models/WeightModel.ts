@@ -25,6 +25,10 @@ export class WeightModel extends Model {
       })
   }
 
+  delete(weight_id: number): void {
+    console.log('DELETE  ' + weight_id)
+  }
+
   add(date: string, weight_kg: number): void {
     let response_status = null
 

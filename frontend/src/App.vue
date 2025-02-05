@@ -2,29 +2,49 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { useStore } from '@/stores/store'
 import { storeToRefs } from 'pinia'
+import ErrorModalComponent from '@/components/base/ErrorModalComponent.vue'
+import { ref } from 'vue'
 
 const store = useStore()
 const { user_model } = storeToRefs(store)
 const user = user_model.value
+const isErrorModalOpen = ref(true)
+
+const modalClose = () => {
+  isErrorModalOpen.value = false
+}
+
+console.log(user)
 </script>
 
 <template>
+  <ErrorModalComponent :isOpen="isErrorModalOpen" @modalClose="modalClose" />
   <header>
     <RouterLink to="/">
       <h1>WeightTracker</h1>
     </RouterLink>
-    <nav v-if="user.logged_in">
+    <nav v-if="user.name">
       <div>
         <table style="float: right">
           <tr>
             <td>
               Welcome back, {{ user.name }}
               &nbsp;|&nbsp;
-              <font-awesome-icon style="padding-top: 2px" icon="fa-solid fa-pen-to-square" />
+              <font-awesome-icon
+                class="icon"
+                style="padding-top: 2px"
+                title="edit user"
+                icon="fa-solid fa-pen-to-square"
+              />
               &nbsp;|&nbsp;
             </td>
             <td>
-              <font-awesome-icon style="padding-top: 2px" icon="fa-solid fa-sign-out" />
+              <font-awesome-icon
+                class="icon"
+                style="padding-top: 2px"
+                title="sign out"
+                icon="fa-solid fa-sign-out"
+              />
             </td>
           </tr>
         </table>
@@ -54,11 +74,13 @@ header {
 nav {
   float: right;
   text-align: right;
-  align: right;
   margin-left: auto;
   order: 2;
   font-size: 0.85rem;
   padding-top: 0.5em;
+}
+.icon {
+  cursor: pointer;
 }
 a {
   color: #fff;

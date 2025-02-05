@@ -4,41 +4,51 @@ import { useStore } from '@/stores/store'
 import moment from 'moment'
 import { storeToRefs } from 'pinia'
 import AddEditWeightModal from '@/components/AddEditWeightModal.vue'
+import DeleteWeightModal from '@/components/DeleteWeightModal.vue'
 
 const store = useStore()
 const { user_model, weight_model } = storeToRefs(store)
 
 const page = ref(1)
 const paging_limit = 20
-const isModalOpened = ref(false)
+const isAddEditModalOpened = ref(false)
+const isDeleteModalOpened = ref(false)
+const weightId = ref(0)
 const wm = weight_model.value
 const user = user_model.value
 
-const weights_history = computed(() => {
-  if (wm.weights.value) {
-    return wm.weights.value.slice((page.value - 1) * paging_limit, page.value * paging_limit)
-  }
-  return []
-})
+const addEditDeleteWeight = (action?: string, id?: number, e?: SubmitEvent): void => {
+  weightId.value = id
 
-const addWeight = (e = null): void => {
-  if (!e) {
-    toggleModal()
+  console.log(id)
+  console.log(e)
+  console.log(action)
+
+  if (action && e) {
+    if (action == 'add' || action == 'edit') {
+      wm.add(e.target.elements.date.value, e.target.elements.weight_kg.value)
+    } else if (action == 'delete') {
+      wm.delete(id)
+    }
+
+    if (!wm.errors.value) {
+      isDeleteModalOpened.value = false
+      isAddEditModalOpened.value = false
+    }
   } else {
-    wm.add(e.target.elements.date.value, e.target.elements.weight_kg.value)
+    if (!e && wm.errors.value) {
+      wm.reset_errors()
+    }
 
-    if (!wm.errors) {
-      toggleModal()
+    if (!action) {
+      isDeleteModalOpened.value = false
+      isAddEditModalOpened.value = false
+    } else if (action == 'add' || action == 'edit') {
+      isAddEditModalOpened.value = true
+    } else if (action == 'delete') {
+      isDeleteModalOpened.value = true
     }
   }
-}
-
-const delete_weight = (id: number): void => {
-  console.log('DELETE WEIGHT ' + id)
-}
-
-const edit_weight = (id): void => {
-  console.log('EDIT WEIGHT ' + id)
 }
 
 const totalPages = computed((): number => {
@@ -48,13 +58,12 @@ const totalPages = computed((): number => {
   return 0
 })
 
-const toggleModal = (): void => {
-  if (isModalOpened.value) {
-    wm.reset_errors()
+const weights_history = computed(() => {
+  if (wm.weights.value) {
+    return wm.weights.value.slice((page.value - 1) * paging_limit, page.value * paging_limit)
   }
-
-  isModalOpened.value = !isModalOpened.value
-}
+  return []
+})
 
 const paginate = (next_page): void => {
   page.value = next_page
@@ -65,7 +74,7 @@ const changeClass = (change): string => {
 
   if (change > 0) return 'table-danger text-end'
 
-  if (change < 0 && change > user.target_weight_loss_percentage_per_week * -1)
+  if (change <= 0 && change > user.target_weight_loss_percentage_per_week * -1)
     return 'table-success text-end'
 
   return 'table-success-minor text-end'
@@ -73,17 +82,25 @@ const changeClass = (change): string => {
 </script>
 
 <template>
-  <AddEditWeightModal
-    :isOpen="isModalOpened"
+  <DeleteWeightModal
+    :isOpen="isDeleteModalOpened"
     :errors="wm.errors"
-    @addWeight="addWeight"
-    @modalClose="toggleModal"
+    :weightId="weightId"
+    @deleteWeight="addEditDeleteWeight"
+    @modalClose="addEditDeleteWeight"
+  />
+  <AddEditWeightModal
+    :isOpen="isAddEditModalOpened"
+    :errors="wm.errors"
+    :weightId="weightId"
+    @addWeight="addEditDeleteWeight"
+    @modalClose="addEditDeleteWeight"
   />
   <div class="weight_history_container">
     <header>
       History
       <span class="float-end add_weight">
-        <font-awesome-icon icon="fa-solid fa-plus" @click="addWeight()" />
+        <font-awesome-icon icon="fa-solid fa-plus" @click="addEditDeleteWeight('add')" />
       </span>
     </header>
     <table class="table table-sm table-hover">
@@ -112,10 +129,16 @@ const changeClass = (change): string => {
           </td>
           <td class="text-center" style="width: 15%">
             <span class="action">
-              <font-awesome-icon icon="fa-solid fa-pen-to-square" @click="edit_weight(weight.id)" />
+              <font-awesome-icon
+                icon="fa-solid fa-pen-to-square"
+                @click="addEditDeleteWeight('edit', weight.id)"
+              />
             </span>
             <span class="action">
-              <font-awesome-icon icon="fa-solid fa-trash" @click="delete_weight(weight.id)" />
+              <font-awesome-icon
+                icon="fa-solid fa-trash"
+                @click="addEditDeleteWeight('delete', weight.id)"
+              />
             </span>
           </td>
         </tr>

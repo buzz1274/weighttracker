@@ -8,13 +8,13 @@ import { ref } from 'vue'
 const store = useStore()
 const { user_model } = storeToRefs(store)
 const user = user_model.value
-const isErrorModalOpen = ref(true)
+const isErrorModalOpen = ref(false)
+
+console.log(user.get_errors('critical'))
 
 const modalClose = () => {
   isErrorModalOpen.value = false
 }
-
-console.log(user)
 </script>
 
 <template>

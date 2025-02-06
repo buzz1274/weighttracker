@@ -2,12 +2,13 @@
 import ModalComponent from '@/components/base/ModalComponent.vue'
 import { defineEmits, defineProps } from 'vue'
 
-const emit = defineEmits(['addWeight', 'modalClose'])
+const emit = defineEmits(['addEditDeleteWeight', 'modalClose'])
 const props = defineProps({
   errors: Object,
   title: String,
   action: String,
-  weightId: Number
+  weightId: Number,
+  modalAction: String
 })
 </script>
 
@@ -15,7 +16,10 @@ const props = defineProps({
   <ModalComponent name="add_edit_weight" @modalClose="emit('modalClose')">
     <template #header> Add Weight </template>
     <template #content>
-      <form class="clearfix" @submit.prevent="emit('addWeight', $event)">
+      <form
+        class="clearfix"
+        @submit.prevent="emit('addEditDeleteWeight', props.modalAction, props.weightId, $event)"
+      >
         <div class="mb-3">
           <label for="date" class="form-label">Date</label>
           <input type="date" class="form-control" id="date" />

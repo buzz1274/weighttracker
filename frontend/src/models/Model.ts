@@ -7,11 +7,12 @@ type errorsArray = {
 
 export class Model {
   HOST: string = 'https://' + window.location.hostname + '/'
-  errors: errorsArray = ref([])
+  errors = ref([])
+  criticalErrors: errorsArray = ref([])
 
   constructor() {}
 
-  hydrate(data: object) {
+  hydrate(data: object): void {
     for (const property in data) {
       if (Object.prototype.hasOwnProperty.call(this, property)) {
         this[property] = data[property]
@@ -19,11 +20,19 @@ export class Model {
     }
   }
 
-  set_errors(errors: errorsArray) {
-    this.errors = errors
+  get_errors(type?: string) {
+    if (type === 'critical') {
+      return this.criticalErrors
+    } else {
+      return this.errors
+    }
   }
 
-  reset_errors() {
+  set_errors(errors): void {
+    this.errors.value = errors
+  }
+
+  reset_errors(): void {
     this.set_errors([])
   }
 

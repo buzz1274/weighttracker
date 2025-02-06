@@ -13,16 +13,19 @@ const page = ref(1)
 const paging_limit = 20
 const isAddEditModalOpened = ref(false)
 const isDeleteModalOpened = ref(false)
-const weightId = ref(0)
+const weightId = ref(NaN)
 const wm = weight_model.value
 const user = user_model.value
+const modalAction = ref('')
 
 const addEditDeleteWeight = (action?: string, id?: number, e?: SubmitEvent): void => {
   weightId.value = id
+  modalAction.value = action
 
   console.log(id)
   console.log(e)
   console.log(action)
+  console.log(modalAction.value)
 
   if (action && e) {
     if (action == 'add' || action == 'edit') {
@@ -31,11 +34,17 @@ const addEditDeleteWeight = (action?: string, id?: number, e?: SubmitEvent): voi
       wm.delete(id)
     }
 
+    console.log('ON SUBMIT')
+    console.log(wm.errors.value)
+
     if (!wm.errors.value) {
       isDeleteModalOpened.value = false
       isAddEditModalOpened.value = false
     }
   } else {
+    console.log('ERRORS')
+    console.log(wm.errors.value)
+
     if (!e && wm.errors.value) {
       wm.reset_errors()
     }
@@ -91,16 +100,21 @@ const changeClass = (change): string => {
   />
   <AddEditWeightModal
     :isOpen="isAddEditModalOpened"
-    :errors="wm.errors"
+    :errors="wm.errors.value"
     :weightId="weightId"
-    @addWeight="addEditDeleteWeight"
+    :modalAction="modalAction"
+    @addEditDeleteWeight="addEditDeleteWeight"
     @modalClose="addEditDeleteWeight"
   />
   <div class="weight_history_container">
     <header>
       History
       <span class="float-end add_weight">
-        <font-awesome-icon icon="fa-solid fa-plus" @click="addEditDeleteWeight('add')" />
+        <font-awesome-icon
+          icon="fa-solid fa-plus"
+          title="add weight"
+          @click="addEditDeleteWeight('add')"
+        />
       </span>
     </header>
     <table class="table table-sm table-hover">
@@ -131,12 +145,14 @@ const changeClass = (change): string => {
             <span class="action">
               <font-awesome-icon
                 icon="fa-solid fa-pen-to-square"
+                title="edit weight"
                 @click="addEditDeleteWeight('edit', weight.id)"
               />
             </span>
             <span class="action">
               <font-awesome-icon
                 icon="fa-solid fa-trash"
+                title="delete weight"
                 @click="addEditDeleteWeight('delete', weight.id)"
               />
             </span>

@@ -5,7 +5,6 @@ import type { UserModel } from '@/models/UserModel'
 export class WeightModel extends Model {
   user_model: UserModel
   weights = ref([])
-  status = null
 
   constructor(user_model: UserModel) {
     super()
@@ -58,7 +57,7 @@ export class WeightModel extends Model {
         }
       })
       .catch((error) => {
-        this.errors = error
+        this.errors.value = error
       })
   }
 }

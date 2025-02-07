@@ -10,15 +10,11 @@ const { user_model } = storeToRefs(store)
 const user = user_model.value
 const isErrorModalOpen = ref(false)
 
-console.log(user.get_errors('critical'))
-
-const modalClose = () => {
-  isErrorModalOpen.value = false
-}
+user.setCriticalModal(isErrorModalOpen)
 </script>
 
 <template>
-  <ErrorModalComponent :isOpen="isErrorModalOpen" @modalClose="modalClose" />
+  <ErrorModalComponent :isOpen="isErrorModalOpen" />
   <header>
     <RouterLink to="/">
       <h1>WeightTracker</h1>

@@ -4,7 +4,7 @@ import type { UserModel } from '@/models/UserModel'
 
 export class WeightModel extends Model {
   user_model: UserModel
-  weights = ref([])
+  weights: ref<Array<object>> = ref([])
 
   constructor(user_model: UserModel) {
     super()
@@ -19,8 +19,7 @@ export class WeightModel extends Model {
         this.weights.value = data
       })
       .catch((error) => {
-        console.log(error)
-        //this.errors = error
+        this.set_errors(error, 'critical')
       })
   }
 
@@ -28,8 +27,8 @@ export class WeightModel extends Model {
     console.log('DELETE  ' + weight_id)
   }
 
-  add(date: string, weight_kg: number): void {
-    let response_status = null
+  add(date: string, weight_kg: number, isAddEditModalOpened: ref<boolean>): void {
+    let response_status: number
 
     fetch(this.api_url('api/user/weights/'), {
       method: 'POST',
@@ -52,12 +51,15 @@ export class WeightModel extends Model {
         if (response_status == 200 || response_status == 201) {
           this.get()
           this.user_model.get()
+          isAddEditModalOpened.value = false
         } else {
           this.set_errors(data)
+          isAddEditModalOpened.value = true
         }
       })
       .catch((error) => {
-        this.errors.value = error
+        this.set_errors(error, 'critical')
+        isAddEditModalOpened.value = false
       })
   }
 }

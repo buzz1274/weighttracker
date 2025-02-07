@@ -5,50 +5,34 @@ import moment from 'moment'
 import { storeToRefs } from 'pinia'
 import AddEditWeightModal from '@/components/AddEditWeightModal.vue'
 import DeleteWeightModal from '@/components/DeleteWeightModal.vue'
+import type { WeightModel } from '@/models/WeightModel'
+import type { UserModel } from '@/models/UserModel'
 
 const store = useStore()
 const { user_model, weight_model } = storeToRefs(store)
 
-const page = ref(1)
-const paging_limit = 20
+const page: ref<number> = ref(1)
+const paging_limit: number = 20
 const isAddEditModalOpened = ref(false)
 const isDeleteModalOpened = ref(false)
-const weightId = ref(NaN)
-const wm = weight_model.value
-const user = user_model.value
-const modalAction = ref('')
+const weightId: ref<number> = ref(NaN)
+const modalAction: ref<string> = ref('')
+const wm: WeightModel = weight_model.value
+const user: UserModel = user_model.value
 
 const addEditDeleteWeight = (action?: string, id?: number, e?: SubmitEvent): void => {
   weightId.value = id
   modalAction.value = action
 
-  console.log(id)
-  console.log(e)
-  console.log(action)
-  console.log(modalAction.value)
-
   if (action && e) {
+    wm.reset_errors()
+
     if (action == 'add' || action == 'edit') {
-      wm.add(e.target.elements.date.value, e.target.elements.weight_kg.value)
+      wm.add(e.target.elements.date.value, e.target.elements.weight_kg.value, isAddEditModalOpened)
     } else if (action == 'delete') {
-      wm.delete(id)
-    }
-
-    console.log('ON SUBMIT')
-    console.log(wm.errors.value)
-
-    if (!wm.errors.value) {
-      isDeleteModalOpened.value = false
-      isAddEditModalOpened.value = false
+      wm.delete(weightId.value)
     }
   } else {
-    console.log('ERRORS')
-    console.log(wm.errors.value)
-
-    if (!e && wm.errors.value) {
-      wm.reset_errors()
-    }
-
     if (!action) {
       isDeleteModalOpened.value = false
       isAddEditModalOpened.value = false
@@ -93,14 +77,14 @@ const changeClass = (change): string => {
 <template>
   <DeleteWeightModal
     :isOpen="isDeleteModalOpened"
-    :errors="wm.errors"
+    :errors="wm.getErrors().value"
     :weightId="weightId"
     @deleteWeight="addEditDeleteWeight"
     @modalClose="addEditDeleteWeight"
   />
   <AddEditWeightModal
     :isOpen="isAddEditModalOpened"
-    :errors="wm.errors.value"
+    :errors="wm.getErrors().value"
     :weightId="weightId"
     :modalAction="modalAction"
     @addEditDeleteWeight="addEditDeleteWeight"

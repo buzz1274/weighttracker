@@ -6,9 +6,10 @@ type errorsArray = {
 }
 
 export class Model {
-  HOST: string = 'https://' + window.location.hostname + '/'
+  host: string = 'https://' + window.location.hostname + '/'
   errors = ref([])
-  criticalErrors: errorsArray = ref([])
+  criticalErrors = ref([])
+  criticalModal: ref<boolean>
 
   constructor() {}
 
@@ -20,16 +21,26 @@ export class Model {
     }
   }
 
-  get_errors(type?: string) {
+  setCriticalModal(criticalModal: ref<boolean>): void {
+    this.criticalModal = criticalModal
+  }
+
+  getErrors(type?: string): ref<errorsArray> {
     if (type === 'critical') {
-      return this.criticalErrors
+      return this.criticalErrors.value
     } else {
       return this.errors
     }
   }
 
-  set_errors(errors): void {
-    this.errors.value = errors
+  set_errors(errors, type?: string): void {
+    console.log(errors)
+    if (type === 'critical') {
+      this.criticalModal.value = Boolean(errors)
+      this.criticalErrors.value = errors
+    } else {
+      this.errors.value = errors
+    }
   }
 
   reset_errors(): void {
@@ -41,6 +52,6 @@ export class Model {
   }
 
   api_url(endpoint: string): string {
-    return this.HOST + endpoint
+    return this.host + endpoint
   }
 }

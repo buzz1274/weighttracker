@@ -3,17 +3,17 @@ import { Model } from '@/models/Model'
 import type { UserModel } from '@/models/UserModel'
 
 export class WeightModel extends Model {
-  user_model: UserModel
+  user_model: ref<UserModel>
   weights: ref<Array<object>> = ref([])
 
-  constructor(user_model: UserModel) {
+  constructor(user_model: ref<UserModel>) {
     super()
 
     this.user_model = user_model
   }
 
   get(): void {
-    fetch(this.api_url('api/user/weights/'), { method: 'GET' })
+    fetch(this.apiUrl('api/user/weights/'), { method: 'GET' })
       .then((response) => response.json())
       .then((data) => {
         this.weights.value = data
@@ -30,10 +30,10 @@ export class WeightModel extends Model {
   add(date: string, weight_kg: number, isAddEditModalOpened: ref<boolean>): void {
     let response_status: number
 
-    fetch(this.api_url('api/user/weights/'), {
+    fetch(this.apiUrl('api/user/weights/'), {
       method: 'POST',
       headers: {
-        'X-CSRFToken': this.get_cookie('csrftoken'),
+        'X-CSRFToken': this.getCookie('csrftoken'),
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },

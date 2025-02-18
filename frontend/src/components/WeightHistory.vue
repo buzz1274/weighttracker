@@ -21,12 +21,12 @@ const wm: WeightModel = weight_model.value
 const user: UserModel = user_model.value
 
 const addEditDeleteWeight = (action?: string, id?: number, e?: SubmitEvent): void => {
+  wm.resetErrors()
+
   weightId.value = id
   modalAction.value = action
 
   if (action && e) {
-    wm.reset_errors()
-
     if (action == 'add' || action == 'edit') {
       wm.add(e.target.elements.date.value, e.target.elements.weight_kg.value, isAddEditModalOpened)
     } else if (action == 'delete') {
@@ -84,7 +84,7 @@ const changeClass = (change): string => {
   />
   <AddEditWeightModal
     :isOpen="isAddEditModalOpened"
-    :errors="wm.getErrors().value"
+    :errors="wm.getErrors()"
     :weightId="weightId"
     :modalAction="modalAction"
     @addEditDeleteWeight="addEditDeleteWeight"

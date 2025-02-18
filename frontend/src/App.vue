@@ -3,18 +3,14 @@ import { RouterLink, RouterView } from 'vue-router'
 import { useStore } from '@/stores/store'
 import { storeToRefs } from 'pinia'
 import ErrorModalComponent from '@/components/base/ErrorModalComponent.vue'
-import { ref } from 'vue'
 
 const store = useStore()
-const { user_model } = storeToRefs(store)
+const { user_model, criticalErrors } = storeToRefs(store)
 const user = user_model.value
-const isErrorModalOpen = ref(false)
-
-user.setCriticalModal(isErrorModalOpen)
 </script>
 
 <template>
-  <ErrorModalComponent :isOpen="isErrorModalOpen" />
+  <ErrorModalComponent :isOpen="criticalErrors.length > 0" />
   <header>
     <RouterLink to="/">
       <h1>WeightTracker</h1>

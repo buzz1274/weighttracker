@@ -8,8 +8,7 @@ type errorsArray = {
 export class Model {
   host: string = 'https://' + window.location.hostname + '/'
   errors = ref([])
-  criticalErrors = ref([])
-  criticalModal: ref<boolean>
+  criticalErrors = ref('')
 
   constructor() {}
 
@@ -21,37 +20,31 @@ export class Model {
     }
   }
 
-  setCriticalModal(criticalModal: ref<boolean>): void {
-    this.criticalModal = criticalModal
-  }
-
   getErrors(type?: string): ref<errorsArray> {
     if (type === 'critical') {
-      return this.criticalErrors.value
+      return this.criticalErrors
     } else {
       return this.errors
     }
   }
 
   set_errors(errors, type?: string): void {
-    console.log(errors)
     if (type === 'critical') {
-      this.criticalModal.value = Boolean(errors)
-      this.criticalErrors.value = errors
+      this.criticalErrors = errors
     } else {
-      this.errors.value = errors
+      this.errors = errors
     }
   }
 
-  reset_errors(): void {
+  resetErrors(): void {
     this.set_errors([])
   }
 
-  get_cookie(name: string): string {
+  getCookie(name: string): string {
     return Cookies.get(name)
   }
 
-  api_url(endpoint: string): string {
+  apiUrl(endpoint: string): string {
     return this.host + endpoint
   }
 }

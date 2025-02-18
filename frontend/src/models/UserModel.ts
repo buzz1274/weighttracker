@@ -25,7 +25,7 @@ export class UserModel extends Model {
   }
 
   get(): void {
-    fetch(this.api_url('/api/user/'), { method: 'GET' })
+    fetch(this.apiUrl('/api/user/'), { method: 'GET' })
       .then((response) => response.json())
       .then((data) => this.hydrate(data))
       .catch((error) => this.handle_error(error))

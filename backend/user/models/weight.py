@@ -26,7 +26,7 @@ class Weight(models.Model):
         validators=[MinValueValidator(limit_value=30)],
     )
     week_weight_change_kg = DecimalField(
-        max_digits=3,
+        max_digits=5,
         decimal_places=2,
         null=True,
         validators=[
@@ -36,7 +36,7 @@ class Weight(models.Model):
         editable=False,
     )
     week_weight_change_percentage = DecimalField(
-        max_digits=3,
+        max_digits=5,
         decimal_places=2,
         null=True,
         validators=[

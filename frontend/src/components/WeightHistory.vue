@@ -9,7 +9,7 @@ import type { WeightModel } from '@/models/WeightModel'
 import type { UserModel } from '@/models/UserModel'
 
 const store = useStore()
-const { user_model, weight_model } = storeToRefs(store)
+const { userModel, weightModel } = storeToRefs(store)
 
 const page: ref<number> = ref(1)
 const paging_limit: number = 20
@@ -17,8 +17,8 @@ const isAddEditModalOpened = ref(false)
 const isDeleteModalOpened = ref(false)
 const weightId: ref<number> = ref(NaN)
 const modalAction: ref<string> = ref('')
-const wm: WeightModel = weight_model.value
-const user: UserModel = user_model.value
+const wm: WeightModel = weightModel.value
+const user: UserModel = userModel.value
 
 const addEditDeleteWeight = (action?: string, id?: number, e?: SubmitEvent): void => {
   wm.resetErrors()

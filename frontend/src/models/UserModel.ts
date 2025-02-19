@@ -28,6 +28,6 @@ export class UserModel extends Model {
     fetch(this.apiUrl('/api/user/'), { method: 'GET' })
       .then((response) => response.json())
       .then((data) => this.hydrate(data))
-      .catch((error) => this.handle_error(error))
+      .catch((error) => this.setErrors(error, 'critical'))
   }
 }

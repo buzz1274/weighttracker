@@ -5,12 +5,12 @@ import { storeToRefs } from 'pinia'
 import ErrorModalComponent from '@/components/base/ErrorModalComponent.vue'
 
 const store = useStore()
-const { user_model, criticalErrors } = storeToRefs(store)
-const user = user_model.value
+const { userModel, criticalErrors, hasCriticalErrors } = storeToRefs(store)
+const user = userModel.value
 </script>
 
 <template>
-  <ErrorModalComponent :isOpen="criticalErrors.length > 0" />
+  <ErrorModalComponent :isOpen="hasCriticalErrors" :errors="criticalErrors" />
   <header>
     <RouterLink to="/">
       <h1>WeightTracker</h1>

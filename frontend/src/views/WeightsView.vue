@@ -7,11 +7,11 @@ import { useStore } from '@/stores/store'
 import { storeToRefs } from 'pinia'
 
 const store = useStore()
-const { weight_model, user_model } = storeToRefs(store)
+const { userModel, weightModel } = storeToRefs(store)
 
 onBeforeMount(() => {
-  user_model.value.get()
-  weight_model.value.get()
+  userModel.value.get()
+  weightModel.value.get()
 })
 </script>
 

@@ -16,11 +16,11 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Title, Legend)
 
-const { weight_model, user_model } = storeToRefs(useStore())
+const { weightModel, userModel } = storeToRefs(useStore())
 const user = computed(() => {
-  return user_model.value
+  return userModel.value
 })
-const weights = weight_model.value.weights
+const weights = weightModel.value.weights
 
 const labels = computed(() => {
   if (weights.value) {

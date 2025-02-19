@@ -4,18 +4,22 @@ import { WeightModel } from '@/models/WeightModel'
 import { UserModel } from '@/models/UserModel'
 
 export const useStore = defineStore('store', () => {
-  const user_model = ref(new UserModel())
-  const weight_model = ref(new WeightModel(user_model.value))
-  const criticalErrors = ref('')
+  const userModel = ref(new UserModel())
+  const weightModel = ref(new WeightModel(userModel.value))
+  const criticalErrors: ref<Array<string>> = ref('')
+  const hasCriticalErrors: ref<boolean> = ref(false)
 
-  watch([weight_model.value, user_model.value], () => {
-    if (weight_model.value.criticalErrors) {
-      criticalErrors.value = weight_model.value.criticalErrors
+  watch([weightModel.value, userModel.value], () => {
+    if (weightModel.value.criticalErrors) {
+      criticalErrors.value = weightModel.value.criticalErrors
+      hasCriticalErrors.value = true
     }
-    //console.log("IN WATCH")
-    //console.log(criticalErrors.value)
-    //console.log(criticalErrors.value.length)
+
+    if (userModel.value.criticalErrors) {
+      criticalErrors.value = userModel.value.getErrors('critical')
+      hasCriticalErrors.value = true
+    }
   })
 
-  return { weight_model, user_model, criticalErrors }
+  return { userModel, weightModel, criticalErrors, hasCriticalErrors }
 })

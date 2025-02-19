@@ -13,8 +13,6 @@ import vue3GoogleLogin from 'vue3-google-login'
 
 const app = createApp(App)
 
-app.config.globalProperties.server_url = window.location.protocol + '//' + window.location.hostname
-
 library.add(faPenToSquare, faTrash, faPlus, faSignOut)
 
 app.use(createPinia())

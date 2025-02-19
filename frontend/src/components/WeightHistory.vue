@@ -45,15 +45,15 @@ const addEditDeleteWeight = (action?: string, id?: number, e?: SubmitEvent): voi
 }
 
 const totalPages = computed((): number => {
-  if (wm.weights.value) {
-    return Math.ceil(wm.weights.value.length / paging_limit)
+  if (wm.weights) {
+    return Math.ceil(wm.weights.length / paging_limit)
   }
   return 0
 })
 
 const weights_history = computed(() => {
-  if (wm.weights.value) {
-    return wm.weights.value.slice((page.value - 1) * paging_limit, page.value * paging_limit)
+  if (wm.weights) {
+    return wm.weights.slice((page.value - 1) * paging_limit, page.value * paging_limit)
   }
   return []
 })

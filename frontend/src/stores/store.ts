@@ -6,7 +6,7 @@ import { UserModel } from '@/models/UserModel'
 export const useStore = defineStore('store', () => {
   const userModel = ref(new UserModel())
   const weightModel = ref(new WeightModel(userModel.value))
-  const criticalErrors: ref<Array<string>> = ref('')
+  const criticalErrors: ref<string | null> = ref(null)
   const hasCriticalErrors: ref<boolean> = ref(false)
 
   watch([weightModel.value, userModel.value], () => {

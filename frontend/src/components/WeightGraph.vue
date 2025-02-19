@@ -13,18 +13,20 @@ import {
   CategoryScale,
   LinearScale
 } from 'chart.js'
+import type { WeightModel } from '@/models/WeightModel'
+import type { UserModel } from '@/models/UserModel'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Title, Legend)
 
 const { weightModel, userModel } = storeToRefs(useStore())
-const user = computed(() => {
+const wm: WeightModel = weightModel.value
+const user = computed<UserModel>(() => {
   return userModel.value
 })
-const weights = weightModel.value.weights
 
 const labels = computed(() => {
-  if (weights.value) {
-    return weights.value
+  if (wm.weights) {
+    return wm.weights
       .reduce((weights, weight) => {
         weights.push(weight['date'])
         return weights
@@ -35,8 +37,8 @@ const labels = computed(() => {
 })
 
 const data = computed(() => {
-  if (weights.value) {
-    return weights.value
+  if (wm.weights) {
+    return wm.weights
       .reduce((weights, weight) => {
         weights.push(weight['weight_kg'])
         return weights

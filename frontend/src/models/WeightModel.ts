@@ -4,7 +4,7 @@ import type { UserModel } from '@/models/UserModel'
 
 export class WeightModel extends Model {
   user_model: ref<UserModel>
-  weights: ref<Array<object>> = ref([])
+  weights: Array<object>
 
   constructor(user_model: ref<UserModel>) {
     super()
@@ -15,12 +15,8 @@ export class WeightModel extends Model {
   get(): void {
     fetch(this.apiUrl('api/user/weights/'), { method: 'GET' })
       .then((response) => response.json())
-      .then((data) => {
-        this.weights.value = data
-      })
-      .catch((error) => {
-        this.set_errors(error, 'critical')
-      })
+      .then((data) => this.hydrate({ weights: data }))
+      .catch((error) => this.setErrors(error, 'critical'))
   }
 
   delete(weight_id: number): void {
@@ -53,12 +49,12 @@ export class WeightModel extends Model {
           this.user_model.get()
           isAddEditModalOpened.value = false
         } else {
-          this.set_errors(data)
+          this.setErrors(data)
           isAddEditModalOpened.value = true
         }
       })
       .catch((error) => {
-        this.set_errors(error, 'critical')
+        this.setErrors(error, 'critical')
         isAddEditModalOpened.value = false
       })
   }

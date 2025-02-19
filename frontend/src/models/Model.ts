@@ -33,7 +33,7 @@ export class Model {
   }
 
   resetErrors(): void {
-    this.setErrors(null)
+    this.setErrors([])
   }
 
   getCookie(name: string): string {

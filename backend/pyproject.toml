@@ -18,6 +18,7 @@ requests = "^2.32.2"
 python-dateutil = "^2.9.0.post0"
 pyjwt = "^2.8.0"
 cryptography = "^43.0.1"
+boto3 = "^1.36.24"
 
 [tool.poetry.dev-dependencies]
 model-bakery = "^1.17.0"

@@ -143,6 +143,9 @@ STATIC_ROOT = "/opt/weighttracker_backend_public/media/"
 
 AUTH_USER_MODEL = "user.User"
 
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID").strip()
+# AWS_SECRET_KEY = os.environ.get('AWS_SECRET_KEY').strip()
+
 GOOGLE_OAUTH2_CLIENT_ID = os.environ.get("GOOGLE_OAUTH2_CLIENT_ID").strip()
 GOOGLE_OAUTH2_CLIENT_SECRET = os.environ.get(
     "GOOGLE_OAUTH2_CLIENT_SECRET"

@@ -93,24 +93,23 @@ class User(AbstractUser):
         """square users height"""
         return decimal.Decimal(self.height_m * self.height_m)
 
-    def max_weight(self) -> Weight:
+    def max_weight(self, from_weight_loss_start: bool = False) -> Weight:
         """get average weight for user"""
-        return (
-            Weight.objects.filter(user=self)
-            .order_by("-weight_kg", "-date")
-            .first()
-        )
+        query = Weight.objects.filter(user=self)
 
-    def min_weight(self) -> decimal.Decimal:
+        if from_weight_loss_start and self.weight_loss_start_date:
+            query = query.filter(date__gte=self.weight_loss_start_date)
+
+        return query.order_by("-weight_kg", "-date").first()
+
+    def min_weight(self, from_weight_loss_start: bool = False) -> Weight:
         """get average weight for user"""
-        try:
-            return decimal.Decimal(
-                Weight.objects.filter(user=self)
-                .order_by("weight_kg")[0]
-                .weight_kg
-            )
-        except IndexError:
-            return decimal.Decimal(0.00)
+        query = Weight.objects.filter(user=self)
+
+        if from_weight_loss_start and self.weight_loss_start_date:
+            query = query.filter(date__gte=self.weight_loss_start_date)
+
+        return query.order_by("weight_kg").first()
 
     def average_weight(self) -> decimal.Decimal:
         """get average weight for user"""

@@ -8,6 +8,8 @@ export class UserModel extends Model {
   registered: boolean
   min_weight_kg: number
   max_weight_kg: number
+  date_joined: string
+  weight_loss_start_date: string
   bmi_boundaries: object = []
   average_weight_kg: number
   starting_weight_kg: number

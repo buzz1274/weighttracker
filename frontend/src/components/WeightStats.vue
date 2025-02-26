@@ -22,7 +22,10 @@ const changeClass = (change) => {
 
 <template>
   <div class="stats_container">
-    <header>Stats</header>
+    <header>
+      Stats&nbsp;
+      <p>(from {{ user.weight_loss_start_date }})</p>
+    </header>
     <table class="table table-sm table-hover">
       <tbody>
         <tr>
@@ -34,14 +37,6 @@ const changeClass = (change) => {
           <td class="stats text-end">{{ user.current_weight_kg }}</td>
         </tr>
         <tr>
-          <td>Target weight(kg)</td>
-          <td class="stats text-end">{{ user.target_weight_kg }}</td>
-        </tr>
-        <tr>
-          <td>Weight to target(kg)</td>
-          <td class="stats text-end">{{ weightToTarget }}</td>
-        </tr>
-        <tr>
           <td>Highest weight(kg)</td>
           <td class="stats text-end">{{ user.max_weight_kg }}</td>
         </tr>
@@ -50,8 +45,16 @@ const changeClass = (change) => {
           <td class="stats text-end">{{ user.min_weight_kg }}</td>
         </tr>
         <tr>
-          <td>Average weight(kg)</td>
+          <td>Average weight(kg)&nbsp;(from {{ user.date_joined }})</td>
           <td class="stats text-end">{{ user.average_weight_kg }}</td>
+        </tr>
+        <tr>
+          <td>Target weight(kg)</td>
+          <td class="stats text-end">{{ user.target_weight_kg }}</td>
+        </tr>
+        <tr>
+          <td>Weight to target(kg)</td>
+          <td class="stats text-end">{{ weightToTarget }}</td>
         </tr>
         <tr>
           <td>Change last week(kg)</td>
@@ -108,5 +111,11 @@ td:first-child {
 }
 td.stats {
   padding-right: 0.8em;
+}
+p {
+  display: inline;
+  color: #ffffff;
+  font-size: 0.8em;
+  font-weight: bold;
 }
 </style>

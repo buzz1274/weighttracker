@@ -15,7 +15,6 @@ class UserSerializer(serializers.ModelSerializer):
             "id",
             "is_staff",
             "is_active",
-            "date_joined",
             "sex",
             "is_superuser",
             "authentication_method",
@@ -33,6 +32,7 @@ class UserSerializer(serializers.ModelSerializer):
     current_weight_kg = serializers.SerializerMethodField(
         "current_weight_kg_field"
     )
+    date_joined = serializers.SerializerMethodField("date_joined_field")
     target_hit_date = serializers.SerializerMethodField(
         "target_hit_date_field"
     )
@@ -59,9 +59,18 @@ class UserSerializer(serializers.ModelSerializer):
 
     def max_weight_kg_field(self, model):
         try:
-            return f"{model.max_weight().weight_kg:.2f}"
+            return f"{model.max_weight(True).weight_kg:.2f}"
         except AttributeError:
             return "-"
+
+    def min_weight_kg_field(self, model):
+        try:
+            return f"{model.min_weight(True).weight_kg:.2f}"
+        except AttributeError:
+            return "-"
+
+    def date_joined_field(self, model):
+        return model.date_joined.date()
 
     def current_weight_kg_field(self, model):
         if current_weight := model.weight_at_date():
@@ -104,6 +113,3 @@ class UserSerializer(serializers.ModelSerializer):
 
     def average_weight_kg_field(self, model):
         return f"{model.average_weight():.2f}"
-
-    def min_weight_kg_field(self, model):
-        return f"{model.min_weight():.2f}"

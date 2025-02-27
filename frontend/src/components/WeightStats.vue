@@ -90,6 +90,10 @@ const changeClass = (change) => {
           <td>BMI</td>
           <td class="stats text-end">{{ user.current_bmi }}</td>
         </tr>
+        <tr>
+          <td>Weekly Target Loss(%)</td>
+          <td class="stats text-end">{{ user.target_weight_loss_percentage_per_week }}</td>
+        </tr>
       </tbody>
     </table>
   </div>

@@ -24,7 +24,7 @@ const changeClass = (change) => {
   <div class="stats_container">
     <header>
       Stats&nbsp;
-      <p>(from {{ user.weight_loss_start_date }})</p>
+      <p>(from {{ moment(user.weight_loss_start_date).format('MMMM Do, YYYY') }})</p>
     </header>
     <table class="table table-sm table-hover">
       <tbody>
@@ -45,8 +45,13 @@ const changeClass = (change) => {
           <td class="stats text-end">{{ user.min_weight_kg }}</td>
         </tr>
         <tr>
-          <td>Average weight(kg)&nbsp;(from {{ user.date_joined }})</td>
-          <td class="stats text-end">{{ user.average_weight_kg }}</td>
+          <td>
+            Average weight(kg)<br />
+            (from {{ moment(user.date_joined).format('MMMM Do, YYYY') }})
+          </td>
+          <td class="stats text-end" style="vertical-align: middle">
+            {{ user.average_weight_kg }}
+          </td>
         </tr>
         <tr>
           <td>Target weight(kg)</td>

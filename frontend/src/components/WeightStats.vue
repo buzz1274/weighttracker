@@ -15,6 +15,10 @@ const totalWeightLost = computed(() => {
   return (user.current_weight_kg - user.max_weight_kg).toFixed(2)
 })
 
+const showNextTargetDate = computed(() => {
+  return user.next_five_kg_date != '-' && user.next_five_kg != '-'
+})
+
 const changeClass = (change) => {
   return change == '-' ? '' : change < 0 ? 'text-success' : 'text-danger'
 }
@@ -63,7 +67,7 @@ const changeClass = (change) => {
             {{ user.target_hit_date ? moment(user.target_hit_date).format('MMMM Do, YYYY') : '-' }}
           </td>
         </tr>
-        <tr>
+        <tr v-if="showNextTargetDate">
           <td>{{ user.next_five_kg }}kg Hit Date(approx)</td>
           <td class="stats text-end">
             {{ moment(user.next_five_kg_date).format('MMMM Do, YYYY') }}

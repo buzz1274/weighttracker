@@ -66,7 +66,7 @@ const changeClass = (change) => {
         <tr>
           <td>{{ user.next_five_kg }}kg Hit Date(approx)</td>
           <td class="stats text-end">
-            {{ moment(user.next_five_kg_date_field).format('MMMM Do, YYYY') }}
+            {{ moment(user.next_five_kg_date).format('MMMM Do, YYYY') }}
           </td>
         </tr>
         <tr>

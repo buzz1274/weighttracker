@@ -21,7 +21,7 @@ export class UserModel extends Model {
   change_last_year_kg: number
   current_bmi: number
   target_weight_loss_percentage_per_week: number
-  next_five_kg_date_field: string
+  next_five_kg_date: string
   next_five_kg: number
 
   constructor() {

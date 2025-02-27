@@ -134,14 +134,19 @@ class User(AbstractUser):
         except (ZeroDivisionError, AttributeError):
             return None
 
-    def target_hit_date(self) -> date | None:
+    def target_hit_date(
+        self, target_weight_kg: Optional[int] = None
+    ) -> date | None:
         """determine approx date to hit weight target"""
         try:
+            if not target_weight_kg:
+                target_weight_kg = self.target_weight_kg
+
             weight_at_start = self.weight_at_date(self.weight_loss_start_date)
             current_weight = self.weight_at_date()
 
             days_to_target = math.ceil(
-                (current_weight.weight_kg - self.target_weight_kg)
+                (current_weight.weight_kg - target_weight_kg)
                 / (
                     (weight_at_start.weight_kg - current_weight.weight_kg)
                     / (current_weight.date - weight_at_start.date).days

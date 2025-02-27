@@ -182,7 +182,7 @@ const chartOptions = {
   order: 2;
 }
 .graph {
-  margin-top: 75px;
+  margin-top: 110px;
   height: 100%;
 }
 </style>

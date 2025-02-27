@@ -45,7 +45,7 @@ const changeClass = (change) => {
           <td class="stats text-end">{{ user.min_weight_kg }}</td>
         </tr>
         <tr>
-          <td>
+          <td style="line-height: 22px">
             Average weight(kg)<br />
             (from {{ moment(user.date_joined).format('MMMM Do, YYYY') }})
           </td>
@@ -56,6 +56,18 @@ const changeClass = (change) => {
         <tr>
           <td>Target weight(kg)</td>
           <td class="stats text-end">{{ user.target_weight_kg }}</td>
+        </tr>
+        <tr>
+          <td>Target Hit Date(approx)</td>
+          <td class="stats text-end">
+            {{ user.target_hit_date ? moment(user.target_hit_date).format('MMMM Do, YYYY') : '-' }}
+          </td>
+        </tr>
+        <tr>
+          <td>{{ user.next_five_kg }}kg Hit Date(approx)</td>
+          <td class="stats text-end">
+            {{ moment(user.next_five_kg_date_field).format('MMMM Do, YYYY') }}
+          </td>
         </tr>
         <tr>
           <td>Weight to target(kg)</td>
@@ -83,12 +95,6 @@ const changeClass = (change) => {
           <td>Total Weight Lost(kg)</td>
           <td :class="changeClass(totalWeightLost)" class="stats text-end">
             {{ totalWeightLost }}
-          </td>
-        </tr>
-        <tr>
-          <td>Target Hit Date(approx)</td>
-          <td class="stats text-end">
-            {{ user.target_hit_date ? moment(user.target_hit_date).format('MMMM Do, YYYY') : '-' }}
           </td>
         </tr>
         <tr>

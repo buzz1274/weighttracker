@@ -95,25 +95,28 @@ class UserSerializer(serializers.ModelSerializer):
         return model.target_hit_date()
 
     def next_intermediate_target_kg_field(self, model):
-        if current_weight := model.weight_at_date():
-            next_intermediate_target_kg = (
-                model.intermediate_loss_target_kg
-                * round(
-                    current_weight.weight_kg
-                    / model.intermediate_loss_target_kg
-                )
-            )
-
-            if next_intermediate_target_kg == current_weight.weight_kg:
-                next_intermediate_target_kg -= (
+        try:
+            if current_weight := model.weight_at_date():
+                next_intermediate_target_kg = (
                     model.intermediate_loss_target_kg
+                    * round(
+                        current_weight.weight_kg
+                        / model.intermediate_loss_target_kg
+                    )
                 )
 
-            if (
-                next_intermediate_target_kg - model.target_weight_kg
-                > model.intermediate_loss_target_kg
-            ):
-                return next_intermediate_target_kg
+                if next_intermediate_target_kg == current_weight.weight_kg:
+                    next_intermediate_target_kg -= (
+                        model.intermediate_loss_target_kg
+                    )
+
+                if (
+                    next_intermediate_target_kg - model.target_weight_kg
+                    > model.intermediate_loss_target_kg
+                ):
+                    return next_intermediate_target_kg
+        except TypeError:
+            pass
 
         return "-"
 

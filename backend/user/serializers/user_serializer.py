@@ -16,6 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
             "is_staff",
             "is_active",
             "sex",
+            "intermediate_loss_target_kg",
             "is_superuser",
             "authentication_method",
             "groups",
@@ -49,9 +50,11 @@ class UserSerializer(serializers.ModelSerializer):
     average_weight_kg = serializers.SerializerMethodField(
         "average_weight_kg_field"
     )
-    next_five_kg = serializers.SerializerMethodField("next_five_kg_field")
-    next_five_kg_date = serializers.SerializerMethodField(
-        "next_five_kg_date_field"
+    next_intermediate_target_kg = serializers.SerializerMethodField(
+        "next_intermediate_target_kg_field"
+    )
+    next_intermediate_target_date = serializers.SerializerMethodField(
+        "next_intermediate_target_date_field"
     )
     min_weight_kg = serializers.SerializerMethodField("min_weight_kg_field")
 
@@ -91,23 +94,36 @@ class UserSerializer(serializers.ModelSerializer):
     def target_hit_date_field(self, model):
         return model.target_hit_date()
 
-    def next_five_kg_field(self, model):
+    def next_intermediate_target_kg_field(self, model):
         if current_weight := model.weight_at_date():
-            next_five_kg = 5 * round(current_weight.weight_kg / 5)
+            next_intermediate_target_kg = (
+                model.intermediate_loss_target_kg
+                * round(
+                    current_weight.weight_kg
+                    / model.intermediate_loss_target_kg
+                )
+            )
 
-            if next_five_kg == current_weight.weight_kg:
-                next_five_kg -= 5
+            if next_intermediate_target_kg == current_weight.weight_kg:
+                next_intermediate_target_kg -= (
+                    model.intermediate_loss_target_kg
+                )
 
-            if next_five_kg - model.target_weight_kg > 5:
-                return next_five_kg
+            if (
+                next_intermediate_target_kg - model.target_weight_kg
+                > model.intermediate_loss_target_kg
+            ):
+                return next_intermediate_target_kg
 
         return "-"
 
-    def next_five_kg_date_field(self, model):
+    def next_intermediate_target_date_field(self, model):
         if (
-            next_five_kg := self.next_five_kg_field(model)
-        ) and next_five_kg != "-":
-            return model.target_hit_date(next_five_kg)
+            next_intermediate_target_kg := self.next_intermediate_target_kg_field(
+                model
+            )
+        ) and next_intermediate_target_kg != "-":
+            return model.target_hit_date(next_intermediate_target_kg)
 
         return "-"
 

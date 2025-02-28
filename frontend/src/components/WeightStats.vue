@@ -16,7 +16,7 @@ const totalWeightLost = computed(() => {
 })
 
 const showNextTargetDate = computed(() => {
-  return user.next_five_kg_date != '-' && user.next_five_kg != '-'
+  return user.next_intermediate_target_date != '-' && user.next_intermediate_target_kg != '-'
 })
 
 const changeClass = (change) => {
@@ -69,11 +69,11 @@ const changeClass = (change) => {
         </tr>
         <tr v-if="showNextTargetDate">
           <td style="line-height: 20px">
-            Intermediate({{ user.next_five_kg }}kg) Target<br />
+            Intermediate({{ user.next_intermediate_target_kg }}kg) Target<br />
             Hit Date(approx)
           </td>
           <td class="stats text-end" style="vertical-align: middle">
-            {{ moment(user.next_five_kg_date).format('MMMM Do, YYYY') }}
+            {{ moment(user.next_intermediate_target_date).format('MMMM Do, YYYY') }}
           </td>
         </tr>
         <tr>

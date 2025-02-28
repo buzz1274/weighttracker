@@ -34,6 +34,9 @@ class User(AbstractUser):
     target_weight_kg = DecimalField(
         max_digits=5, decimal_places=2, blank=True, null=True
     )
+    intermediate_loss_target_kg = DecimalField(
+        max_digits=3, decimal_places=2, blank=True, null=True
+    )
     sex = models.CharField(
         max_length=2,
         choices=SEX_CHOICES,

@@ -49,7 +49,7 @@ const changeClass = (change) => {
           <td class="stats text-end">{{ user.min_weight_kg }}</td>
         </tr>
         <tr>
-          <td style="line-height: 22px">
+          <td style="line-height: 20px">
             Average weight(kg)<br />
             (from {{ moment(user.date_joined).format('MMMM Do, YYYY') }})
           </td>
@@ -68,8 +68,11 @@ const changeClass = (change) => {
           </td>
         </tr>
         <tr v-if="showNextTargetDate">
-          <td>{{ user.next_five_kg }}kg Hit Date(approx)</td>
-          <td class="stats text-end">
+          <td style="line-height: 20px">
+            Intermediate({{ user.next_five_kg }}kg) Target<br />
+            Hit Date(approx)
+          </td>
+          <td class="stats text-end" style="vertical-align: middle">
             {{ moment(user.next_five_kg_date).format('MMMM Do, YYYY') }}
           </td>
         </tr>

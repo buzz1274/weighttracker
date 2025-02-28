@@ -178,11 +178,11 @@ const chartOptions = {
 <style scoped>
 .graph_container {
   width: 868px;
-  height: 700px;
+  height: 800px;
   order: 2;
 }
 .graph {
-  margin-top: 110px;
+  margin-top: 70px;
   height: 100%;
 }
 </style>

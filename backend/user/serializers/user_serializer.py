@@ -98,12 +98,9 @@ class UserSerializer(serializers.ModelSerializer):
         try:
             if current_weight := model.weight_at_date():
                 next_intermediate_target_kg = (
-                    model.intermediate_loss_target_kg
-                    * round(
-                        current_weight.weight_kg
-                        / model.intermediate_loss_target_kg
-                    )
-                )
+                    current_weight.weight_kg
+                    // model.intermediate_loss_target_kg
+                ) * model.intermediate_loss_target_kg
 
                 if next_intermediate_target_kg == current_weight.weight_kg:
                     next_intermediate_target_kg -= (

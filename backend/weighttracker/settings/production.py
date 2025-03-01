@@ -143,6 +143,9 @@ STATIC_ROOT = "/opt/weighttracker_backend_public/media/"
 
 AUTH_USER_MODEL = "user.User"
 
+DAYS_BACKUPS_TO_KEEP = 7
+S3_BACKUP_PATH = "backups/weighttracker/"
+
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID").strip()
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY").strip()
 AWS_BUCKET_NAME = os.environ.get("WEIGHT_TRACKER_S3_BUCKET").strip()

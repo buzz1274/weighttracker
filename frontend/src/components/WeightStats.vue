@@ -62,15 +62,15 @@ const changeClass = (change) => {
           <td class="stats text-end">{{ user.target_weight_kg }}</td>
         </tr>
         <tr>
-          <td>Target Hit Date(approx)</td>
+          <td>Target hit date(approx)</td>
           <td class="stats text-end">
             {{ user.target_hit_date ? moment(user.target_hit_date).format('MMMM Do, YYYY') : '-' }}
           </td>
         </tr>
         <tr v-if="showNextTargetDate">
           <td style="line-height: 20px">
-            Intermediate({{ user.next_intermediate_target_kg }}kg) Target<br />
-            Hit Date(approx)
+            Intermediate({{ user.next_intermediate_target_kg }}kg) target<br />
+            hit date(approx)
           </td>
           <td class="stats text-end" style="vertical-align: middle">
             {{ moment(user.next_intermediate_target_date).format('MMMM Do, YYYY') }}
@@ -99,7 +99,7 @@ const changeClass = (change) => {
           </td>
         </tr>
         <tr>
-          <td>Total Weight Lost(kg)</td>
+          <td>Total weight lost(kg)</td>
           <td :class="changeClass(totalWeightLost)" class="stats text-end">
             {{ totalWeightLost }}
           </td>
@@ -109,7 +109,7 @@ const changeClass = (change) => {
           <td class="stats text-end">{{ user.current_bmi }}</td>
         </tr>
         <tr>
-          <td>Weekly Target Loss(%)</td>
+          <td>Weekly target loss(%)</td>
           <td class="stats text-end">{{ user.target_weight_loss_percentage_per_week }}</td>
         </tr>
       </tbody>

@@ -55,9 +55,39 @@ class Command(BaseCommand):
             s3_client.upload_file(
                 full_backup_path,
                 settings.AWS_BUCKET_NAME,
-                f"backups/weighttracker/{file_name}",
+                f"{settings.S3_BACKUP_PATH}{file_name}",
             )
+            self._clean_old_dumps()
         except ClientError:
             raise CommandError("Failed to upload DB dump to S3")
+        except CommandError as e:
+            raise CommandError(str(e))
         finally:
             os.remove(full_backup_path)
+
+    def _clean_old_dumps(self) -> None:
+        """clean older dumps from s3"""
+        try:
+            files = {}
+
+            for file in self.s3_client.list_objects(
+                Bucket=settings.AWS_BUCKET_NAME
+            )["Contents"]:
+                if (
+                    f"{settings.S3_BACKUP_PATH}" in file["Key"]
+                    and ".sql" in file["Key"]
+                ):
+                    files[file["LastModified"].strftime("%s")] = file
+
+            for i, file in enumerate(
+                dict(sorted(files.items(), reverse=True))
+            ):
+                if i > settings.DAYS_BACKUPS_TO_KEEP:
+                    self.s3_client.delete_object(
+                        Bucket=settings.AWS_BUCKET_NAME,
+                        Key=files[file]["Key"],
+                    )
+        except KeyError:
+            raise CommandError("Failed to retrieve old backups")
+        except (TypeError, ClientError):
+            raise CommandError("Failed deleting old backup")

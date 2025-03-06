@@ -70,18 +70,16 @@ class Command(BaseCommand):
         try:
             files = {}
 
-            for file in self.s3_client.list_objects(
-                Bucket=settings.AWS_BUCKET_NAME
-            )["Contents"]:
+            for file in self.s3_client.list_objects(Bucket=settings.AWS_BUCKET_NAME)[
+                "Contents"
+            ]:
                 if (
                     f"{settings.S3_BACKUP_PATH}" in file["Key"]
                     and ".sql" in file["Key"]
                 ):
                     files[file["LastModified"].strftime("%s")] = file
 
-            for i, file in enumerate(
-                dict(sorted(files.items(), reverse=True))
-            ):
+            for i, file in enumerate(dict(sorted(files.items(), reverse=True))):
                 if i > settings.DAYS_BACKUPS_TO_KEEP:
                     self.s3_client.delete_object(
                         Bucket=settings.AWS_BUCKET_NAME,

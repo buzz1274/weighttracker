@@ -1,5 +1,5 @@
 exclude: ".git|k8s|helmfile|.conf|Dockerfile|migrations|docker-compose-PRODUCTION.yaml"
-default_stages: [commit, push]
+default_stages: [pre-commit, pre-push]
 fail_fast: false
 
 repos:
@@ -27,8 +27,6 @@ repos:
     rev: 6.1.0
     hooks:
       - id: flake8
-        additional_dependencies:
-          - flake8-isort
   - repo: https://github.com/pre-commit/mirrors-eslint
     rev: "v8.54.0"
     hooks:

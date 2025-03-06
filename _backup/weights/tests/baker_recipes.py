@@ -3,8 +3,8 @@ from itertools import cycle
 
 from model_bakery.recipe import Recipe, foreign_key, seq
 
-from ..models.weight import Weight
 from ..models.weight_user import WeightUser
+from .models.weight import Weight
 
 user = Recipe(WeightUser, height_m=1.82, starting_weight_kg=100)
 

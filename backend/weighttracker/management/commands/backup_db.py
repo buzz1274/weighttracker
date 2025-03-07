@@ -24,6 +24,9 @@ class Command(BaseCommand):
             raise CommandError("Failed to connect to S3")
 
     def handle(self, *args, **options):
+        if settings.DEBUG is True:
+            raise CommandError("DO NOT run backup_db on non production ENV.")
+
         file_name = f"db_backup_{datetime.today().strftime('%Y-%m-%d')}.sql"
         full_backup_path = f"/tmp/{file_name}"
 
@@ -70,16 +73,18 @@ class Command(BaseCommand):
         try:
             files = {}
 
-            for file in self.s3_client.list_objects(Bucket=settings.AWS_BUCKET_NAME)[
-                "Contents"
-            ]:
+            for file in self.s3_client.list_objects(
+                Bucket=settings.AWS_BUCKET_NAME
+            )["Contents"]:
                 if (
                     f"{settings.S3_BACKUP_PATH}" in file["Key"]
                     and ".sql" in file["Key"]
                 ):
                     files[file["LastModified"].strftime("%s")] = file
 
-            for i, file in enumerate(dict(sorted(files.items(), reverse=True))):
+            for i, file in enumerate(
+                dict(sorted(files.items(), reverse=True))
+            ):
                 if i > settings.DAYS_BACKUPS_TO_KEEP:
                     self.s3_client.delete_object(
                         Bucket=settings.AWS_BUCKET_NAME,

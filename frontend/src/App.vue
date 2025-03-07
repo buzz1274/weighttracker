@@ -18,27 +18,29 @@ const user = userModel.value
     <nav v-if="user.name">
       <div>
         <table style="float: right">
-          <tr>
-            <td>
-              Welcome back, {{ user.name }}
-              &nbsp;|&nbsp;
-              <font-awesome-icon
-                class="icon"
-                style="padding-top: 2px"
-                title="edit user"
-                icon="fa-solid fa-pen-to-square"
-              />
-              &nbsp;|&nbsp;
-            </td>
-            <td>
-              <font-awesome-icon
-                class="icon"
-                style="padding-top: 2px"
-                title="sign out"
-                icon="fa-solid fa-sign-out"
-              />
-            </td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>
+                Welcome back, {{ user.name }}
+                &nbsp;|&nbsp;
+                <font-awesome-icon
+                  class="icon"
+                  style="padding-top: 2px"
+                  title="edit user"
+                  icon="fa-solid fa-pen-to-square"
+                />
+                &nbsp;|&nbsp;
+              </td>
+              <td>
+                <font-awesome-icon
+                  class="icon"
+                  style="padding-top: 2px"
+                  title="sign out"
+                  icon="fa-solid fa-sign-out"
+                />
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </nav>

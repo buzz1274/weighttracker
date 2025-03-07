@@ -18,7 +18,7 @@ library.add(faPenToSquare, faTrash, faPlus, faSignOut)
 app.use(createPinia())
 app.use(bootstrap)
 app.use(vue3GoogleLogin, {
-  clientId: '805742976196-kl4thfduqpgso0v52rp31djh95kgmenu.apps.googleusercontent.com'
+  clientId: import.meta.env.VITE_GOOGLE_OAUTH2_CLIENT_ID
 })
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(router)

@@ -1,3 +1,5 @@
+echo VITE_GOOGLE_OAUTH2_CLIENT_ID="$GOOGLE_OAUTH2_CLIENT_ID" > .env
+
 if [ "$ENVIRONMENT" == "development" ] ; then
   npm run dev
 else

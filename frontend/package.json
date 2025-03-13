@@ -38,8 +38,8 @@
     "@types/node": "^18.17.17",
     "@typescript-eslint/eslint-plugin": "^6.12.0",
     "@typescript-eslint/parser": "^6.12.0",
-    "@vitejs/plugin-vue": "^4.3.4",
-    "@vitejs/plugin-vue-jsx": "^3.0.2",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vitejs/plugin-vue-jsx": "^4.1.1",
     "@vue/eslint-config-prettier": "^8.0.0",
     "@vue/eslint-config-typescript": "^12.0.0",
     "@vue/test-utils": "^2.4.1",
@@ -50,8 +50,8 @@
     "npm-run-all2": "^6.0.6",
     "prettier": "^3.0.3",
     "typescript": "~5.2.0",
-    "vite": "^4.5.4",
-    "vitest": "^0.34.4",
+    "vite": "^6.2.1",
+    "vitest": "^3.0.8",
     "vue-tsc": "^2.2.0"
   }
 }

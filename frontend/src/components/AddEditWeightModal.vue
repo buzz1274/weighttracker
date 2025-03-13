@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import ModalComponent from '@/components/base/ModalComponent.vue'
-import { defineEmits, defineProps } from 'vue'
 
 const emit = defineEmits(['addEditDeleteWeight', 'modalClose'])
 const props = defineProps({

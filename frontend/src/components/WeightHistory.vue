@@ -30,7 +30,7 @@ const addEditDeleteWeight = (action?: string, id?: number, e?: SubmitEvent): voi
     if (action == 'add' || action == 'edit') {
       wm.add(e.target.elements.date.value, e.target.elements.weight_kg.value, isAddEditModalOpened)
     } else if (action == 'delete') {
-      wm.delete(weightId.value)
+      wm.delete(weightId.value, isDeleteModalOpened)
     }
   } else {
     if (!action) {
@@ -77,7 +77,7 @@ const changeClass = (change): string => {
 <template>
   <DeleteWeightModal
     :isOpen="isDeleteModalOpened"
-    :errors="wm.getErrors().value"
+    :errors="wm.getErrors()"
     :weightId="weightId"
     @deleteWeight="addEditDeleteWeight"
     @modalClose="addEditDeleteWeight"

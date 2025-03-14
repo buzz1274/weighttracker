@@ -19,8 +19,19 @@ export class WeightModel extends Model {
       .catch((error) => this.setErrors(error, 'critical'))
   }
 
-  delete(weight_id: number): void {
-    console.log('DELETE  ' + weight_id)
+  delete(weightId: number, isDeleteModalOpened: ref<boolean>): void {
+    fetch(this.apiUrl('api/user/weights/' + weightId), { method: 'DELETE' })
+      .then((response) => {
+        if (response.status == 204) {
+          this.get()
+          this.user_model.get()
+          isDeleteModalOpened.value = false
+        } else {
+          this.setErrors({ error: 'Invalid weight' })
+          isDeleteModalOpened.value = true
+        }
+      })
+      .catch((error) => this.setErrors(error, 'critical'))
   }
 
   add(date: string, weight_kg: number, isAddEditModalOpened: ref<boolean>): void {

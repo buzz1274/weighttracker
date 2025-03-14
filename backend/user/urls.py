@@ -15,5 +15,6 @@ weight_set_view = WeightViewSet.as_view(
 urlpatterns = [
     path("login/", Login.as_view(), name="login"),
     path("weights/", weight_set_view, name="weights"),
+    path("weights/<int:pk>", weight_set_view, name="weights"),
     path("", UserViewSet.as_view({"get": "retrieve"}), name="user"),
 ]

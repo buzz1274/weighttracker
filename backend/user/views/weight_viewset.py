@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 
 from user.models.weight import Weight
@@ -15,3 +16,9 @@ class WeightViewSet(viewsets.ModelViewSet):
         context["user_id"] = 1
 
         return context
+
+    def destroy(self, request, *args, **kwargs):
+        context = self.get_serializer_context()
+        get_object_or_404(Weight, pk=kwargs["pk"], user_id=context["user_id"])
+
+        return super().destroy(request, args, kwargs)

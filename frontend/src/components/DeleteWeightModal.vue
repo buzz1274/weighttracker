@@ -16,7 +16,12 @@ const props = defineProps({
         class="clearfix"
         @submit.prevent="emit('deleteWeight', 'delete', props.weightId, $event)"
       >
-        <div class="mb-3">This will permanently delete {{ props.weightId }}</div>
+        <div class="mb-3">This will permanently delete the selected weight</div>
+        <div v-if="props.errors?.error">
+          <p class="alert alert-danger" style="margin-top: 10px">
+            {{ props.errors.error }}
+          </p>
+        </div>
         <div class="float-end">
           <button
             type="submit"
@@ -26,7 +31,7 @@ const props = defineProps({
           >
             Cancel
           </button>
-          <button type="submit" class="btn btn-primary" value="save">Delete</button>
+          <button type="submit" class="btn btn-primary" value="delete">Delete</button>
         </div>
       </form>
     </template>

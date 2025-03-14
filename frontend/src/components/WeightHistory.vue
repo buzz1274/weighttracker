@@ -151,13 +151,11 @@ const changeClass = (change): string => {
     </table>
     <div v-if="weights_history" class="history_navigation">
       <p v-if="page < totalPages" class="float-end navigation_link" @click="paginate(page + 1)">
-        Next&raquo;&raquo;
+        Previous&raquo;&raquo;
       </p>
-      <p v-else class="float-end navigation_link_disabled">Next&raquo;&raquo;</p>
-      <p v-if="page > 1" class="navigation_link" @click="paginate(page - 1)">
-        &laquo;&laquo;Previous
-      </p>
-      <p v-else class="navigation_link_disabled">&laquo;&laquo;Previous</p>
+      <p v-else class="float-end navigation_link_disabled">Previous&raquo;&raquo;</p>
+      <p v-if="page > 1" class="navigation_link" @click="paginate(page - 1)">&laquo;&laquo;Next</p>
+      <p v-else class="navigation_link_disabled">&laquo;&laquo;Next</p>
     </div>
   </div>
 </template>

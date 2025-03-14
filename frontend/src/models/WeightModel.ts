@@ -20,7 +20,12 @@ export class WeightModel extends Model {
   }
 
   delete(weightId: number, isDeleteModalOpened: ref<boolean>): void {
-    fetch(this.apiUrl('api/user/weights/' + weightId), { method: 'DELETE' })
+    fetch(this.apiUrl('api/user/weights/' + weightId), {
+      method: 'DELETE',
+      headers: {
+        'X-CSRFToken': this.getCookie('csrftoken')
+      }
+    })
       .then((response) => {
         if (response.status == 204) {
           this.get()

@@ -5,7 +5,6 @@ const emit = defineEmits(['addEditDeleteWeight', 'modalClose'])
 const props = defineProps({
   errors: Object,
   title: String,
-  action: String,
   weightId: Number,
   modalAction: String
 })
@@ -13,7 +12,7 @@ const props = defineProps({
 
 <template>
   <ModalComponent name="add_edit_weight" @modalClose="emit('modalClose')">
-    <template #header> Add Weight </template>
+    <template #header> {{ props.modalAction == 'add' ? 'Add' : 'Edit' }} Weight </template>
     <template #content>
       <form
         class="clearfix"

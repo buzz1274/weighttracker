@@ -15,22 +15,28 @@ const page: ref<number> = ref(1)
 const paging_limit: number = 20
 const isAddEditModalOpened = ref(false)
 const isDeleteModalOpened = ref(false)
-const weightId: ref<number> = ref(NaN)
+const selectedWeight: ref<object> = ref({})
 const modalAction: ref<string> = ref('')
 const wm: WeightModel = weightModel.value
 const user: UserModel = userModel.value
 
-const addEditDeleteWeight = (action?: string, id?: number, e?: SubmitEvent): void => {
+const addEditDeleteWeight = (action?: string, weight?: object, e?: SubmitEvent): void => {
   wm.resetErrors()
 
-  weightId.value = id
-  modalAction.value = action
+  selectedWeight.value = weight ?? {}
+  modalAction.value = action ?? ''
 
   if (action && e) {
     if (action == 'add' || action == 'edit') {
-      wm.add(e.target.elements.date.value, e.target.elements.weight_kg.value, isAddEditModalOpened)
+      wm.addEdit(
+        action,
+        selectedWeight.value ?? null,
+        e.target.elements.date.value,
+        e.target.elements.weight_kg.value,
+        isAddEditModalOpened
+      )
     } else if (action == 'delete') {
-      wm.delete(weightId.value, isDeleteModalOpened)
+      wm.delete(selectedWeight.value, isDeleteModalOpened)
     }
   } else {
     if (!action) {
@@ -78,15 +84,15 @@ const changeClass = (change): string => {
   <DeleteWeightModal
     :isOpen="isDeleteModalOpened"
     :errors="wm.getErrors()"
-    :weightId="weightId"
+    :weight="selectedWeight"
     @deleteWeight="addEditDeleteWeight"
     @modalClose="addEditDeleteWeight"
   />
   <AddEditWeightModal
     :isOpen="isAddEditModalOpened"
     :errors="wm.getErrors()"
-    :weightId="weightId"
-    :modalAction="modalAction"
+    :weight="selectedWeight"
+    :modalAction="modalAction.value"
     @addEditDeleteWeight="addEditDeleteWeight"
     @modalClose="addEditDeleteWeight"
   />
@@ -130,14 +136,14 @@ const changeClass = (change): string => {
               <font-awesome-icon
                 icon="fa-solid fa-pen-to-square"
                 title="edit weight"
-                @click="addEditDeleteWeight('edit', weight.id)"
+                @click="addEditDeleteWeight('edit', weight)"
               />
             </span>
             <span class="action">
               <font-awesome-icon
                 icon="fa-solid fa-trash"
                 title="delete weight"
-                @click="addEditDeleteWeight('delete', weight.id)"
+                @click="addEditDeleteWeight('delete', weight)"
               />
             </span>
           </td>

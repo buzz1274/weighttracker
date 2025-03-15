@@ -19,8 +19,8 @@ export class WeightModel extends Model {
       .catch((error) => this.setErrors(error, 'critical'))
   }
 
-  delete(weightId: number, isDeleteModalOpened: ref<boolean>): void {
-    fetch(this.apiUrl('api/user/weights/' + weightId), {
+  delete(weight: object, isDeleteModalOpened: ref<boolean>): void {
+    fetch(this.apiUrl('api/user/weights/' + weight.id), {
       method: 'DELETE',
       headers: {
         'X-CSRFToken': this.getCookie('csrftoken')
@@ -39,17 +39,24 @@ export class WeightModel extends Model {
       .catch((error) => this.setErrors(error, 'critical'))
   }
 
-  add(date: string, weight_kg: number, isAddEditModalOpened: ref<boolean>): void {
+  addEdit(
+    action: string,
+    weight_id: number | null,
+    date: string,
+    weight_kg: number,
+    isAddEditModalOpened: ref<boolean>
+  ): void {
     let response_status: number
 
     fetch(this.apiUrl('api/user/weights/'), {
-      method: 'POST',
+      method: action == 'add' ? 'POST' : 'PATCH',
       headers: {
         'X-CSRFToken': this.getCookie('csrftoken'),
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        weight_id: weight_id,
         weight_kg: weight_kg,
         date: date
       })

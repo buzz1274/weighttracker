@@ -4,7 +4,7 @@ import ModalComponent from '@/components/base/ModalComponent.vue'
 const emit = defineEmits(['deleteWeight'])
 const props = defineProps({
   errors: Object,
-  weightId: Number
+  weight: Object
 })
 </script>
 
@@ -12,10 +12,7 @@ const props = defineProps({
   <ModalComponent name="delete_weight" @modalClose="emit('deleteWeight')">
     <template #header> Delete Weight </template>
     <template #content>
-      <form
-        class="clearfix"
-        @submit.prevent="emit('deleteWeight', 'delete', props.weightId, $event)"
-      >
+      <form class="clearfix" @submit.prevent="emit('deleteWeight', 'delete', props.weight, $event)">
         <div class="mb-3">This will permanently delete the selected weight</div>
         <div v-if="props.errors?.error">
           <p class="alert alert-danger" style="margin-top: 10px">

@@ -41,7 +41,7 @@ export class WeightModel extends Model {
 
   addEdit(
     action: string,
-    weight_id: number | null,
+    weight: object | null,
     date: string,
     weight_kg: number,
     isAddEditModalOpened: ref<boolean>
@@ -56,7 +56,7 @@ export class WeightModel extends Model {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        weight_id: weight_id,
+        weight_id: weight?.id,
         weight_kg: weight_kg,
         date: date
       })

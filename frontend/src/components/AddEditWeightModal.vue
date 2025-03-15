@@ -5,7 +5,7 @@ const emit = defineEmits(['addEditDeleteWeight', 'modalClose'])
 const props = defineProps({
   errors: Object,
   title: String,
-  weightId: Number,
+  weight: Object,
   modalAction: String
 })
 </script>
@@ -16,7 +16,7 @@ const props = defineProps({
     <template #content>
       <form
         class="clearfix"
-        @submit.prevent="emit('addEditDeleteWeight', props.modalAction, props.weightId, $event)"
+        @submit.prevent="emit('addEditDeleteWeight', props.modalAction, props.weight, $event)"
       >
         <div class="mb-3">
           <label for="date" class="form-label">Date</label>

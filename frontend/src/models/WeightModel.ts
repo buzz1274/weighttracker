@@ -56,7 +56,7 @@ export class WeightModel extends Model {
   ): void {
     let response_status: number
 
-    fetch(this.apiUrl('api/user/weights/' + weight?.id), {
+    fetch(this.apiUrl('api/user/weights/' + (action == 'add' ? '' : weight?.id)), {
       method: action == 'add' ? 'POST' : 'PUT',
       headers: {
         'X-CSRFToken': this.getCookie('csrftoken'),

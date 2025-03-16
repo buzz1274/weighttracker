@@ -1,9 +1,14 @@
 import { ref } from 'vue'
 import Cookies from 'js-cookie'
 
+export type Error = {
+  key: string
+  error: string
+}
+
 export class Model {
   host: string = 'https://' + window.location.hostname + '/'
-  errors: ref<Array<string>> = ref([])
+  errors: ref<Array<Error>> = ref([])
   criticalErrors: ref<string | null> = ref(null)
 
   constructor() {}
@@ -16,7 +21,7 @@ export class Model {
     }
   }
 
-  getErrors(type?: string): ref<Array<string> | string | null> {
+  getErrors(type?: string): ref<Array<Error> | string | null> {
     if (type === 'critical') {
       return this.criticalErrors
     } else {
@@ -24,7 +29,7 @@ export class Model {
     }
   }
 
-  setErrors(errors: ref<string | null | Array<string>>, type?: string): void {
+  setErrors(errors: ref<string | null | Array<Error>>, type?: string): void {
     if (type === 'critical') {
       this.criticalErrors = errors
     } else {

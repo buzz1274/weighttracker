@@ -30,13 +30,13 @@ const addEditDeleteWeight = (action?: string, weight?: WeightType, e?: SubmitEve
     if (action == 'add' || action == 'edit') {
       wm.addEdit(
         action,
-        selectedWeight.value ?? null,
+        selectedWeight?.value ?? null,
         e.target.elements.date.value,
         e.target.elements.weight_kg.value,
         isAddEditModalOpened
       )
     } else if (action == 'delete') {
-      wm.delete(selectedWeight.value, isDeleteModalOpened)
+      wm.delete(selectedWeight?.value, isDeleteModalOpened)
     }
   } else {
     if (!action) {

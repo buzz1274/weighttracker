@@ -47,7 +47,7 @@ export class WeightModel extends Model {
       .catch((error) => this.setErrors(error, 'critical'))
   }
 
-  addEdit(
+  save(
     action: string,
     weight: WeightType | null,
     date: string,

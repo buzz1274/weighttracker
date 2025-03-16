@@ -28,7 +28,7 @@ const addEditDeleteWeight = (action?: string, weight?: WeightType, e?: SubmitEve
 
   if (action && e) {
     if (action == 'add' || action == 'edit') {
-      wm.addEdit(
+      wm.save(
         action,
         selectedWeight?.value ?? null,
         e.target.elements.date.value,

@@ -2,9 +2,17 @@ import { ref } from 'vue'
 import { Model } from '@/models/Model'
 import type { UserModel } from '@/models/UserModel'
 
+export interface WeightType {
+  id: number
+  date: string
+  weight_kg: number
+  week_weight_change_kg: number
+  week_weight_change_percentage: number
+}
+
 export class WeightModel extends Model {
   user_model: ref<UserModel>
-  weights: Array<object>
+  weights: Array<WeightType>
 
   constructor(user_model: ref<UserModel>) {
     super()
@@ -19,7 +27,7 @@ export class WeightModel extends Model {
       .catch((error) => this.setErrors(error, 'critical'))
   }
 
-  delete(weight: object, isDeleteModalOpened: ref<boolean>): void {
+  delete(weight: WeightType, isDeleteModalOpened: ref<boolean>): void {
     fetch(this.apiUrl('api/user/weights/' + weight.id), {
       method: 'DELETE',
       headers: {
@@ -41,7 +49,7 @@ export class WeightModel extends Model {
 
   addEdit(
     action: string,
-    weight: object | null,
+    weight: WeightType | null,
     date: string,
     weight_kg: number,
     isAddEditModalOpened: ref<boolean>
@@ -71,9 +79,11 @@ export class WeightModel extends Model {
           this.get()
           this.user_model.get()
           isAddEditModalOpened.value = false
-        } else {
+        } else if (response_status == 400) {
           this.setErrors(data)
           isAddEditModalOpened.value = true
+        } else {
+          throw new Error(data['detail'])
         }
       })
       .catch((error) => {

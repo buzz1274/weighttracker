@@ -5,7 +5,7 @@ import moment from 'moment'
 import { storeToRefs } from 'pinia'
 import AddEditWeightModal from '@/components/AddEditWeightModal.vue'
 import DeleteWeightModal from '@/components/DeleteWeightModal.vue'
-import type { WeightModel } from '@/models/WeightModel'
+import type { WeightModel, WeightType } from '@/models/WeightModel'
 import type { UserModel } from '@/models/UserModel'
 
 const store = useStore()
@@ -20,7 +20,7 @@ const modalAction: ref<string> = ref('')
 const wm: WeightModel = weightModel.value
 const user: UserModel = userModel.value
 
-const addEditDeleteWeight = (action?: string, weight?: object, e?: SubmitEvent): void => {
+const addEditDeleteWeight = (action?: string, weight?: WeightType, e?: SubmitEvent): void => {
   wm.resetErrors()
 
   selectedWeight.value = weight ?? {}
@@ -57,7 +57,7 @@ const totalPages = computed((): number => {
   return 0
 })
 
-const weights_history = computed(() => {
+const weights_history = computed<Array<WeightType>>(() => {
   if (wm.weights) {
     return wm.weights.slice((page.value - 1) * paging_limit, page.value * paging_limit)
   }

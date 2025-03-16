@@ -22,3 +22,12 @@ class WeightViewSet(viewsets.ModelViewSet):
         get_object_or_404(Weight, pk=kwargs["pk"], user_id=context["user_id"])
 
         return super().destroy(request, args, kwargs)
+
+    def update(self, request, *args, **kwargs):
+        context = self.get_serializer_context()
+
+        print
+
+        get_object_or_404(Weight, pk=kwargs["pk"], user_id=context["user_id"])
+
+        print("DERP")

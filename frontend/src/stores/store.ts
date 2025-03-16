@@ -21,5 +21,15 @@ export const useStore = defineStore('store', () => {
     }
   })
 
+  watch([hasCriticalErrors], () => {
+    if (!hasCriticalErrors.value) {
+      weightModel.value.setErrors(null, 'critical')
+      userModel.value.resetErrors(null, 'critical')
+
+      criticalErrors.value = null
+      hasCriticalErrors.value = false
+    }
+  })
+
   return { userModel, weightModel, criticalErrors, hasCriticalErrors }
 })

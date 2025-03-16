@@ -32,8 +32,8 @@ export class Model {
     }
   }
 
-  resetErrors(): void {
-    this.setErrors([])
+  resetErrors(type?: string): void {
+    this.setErrors([], type)
   }
 
   getCookie(name: string): string {

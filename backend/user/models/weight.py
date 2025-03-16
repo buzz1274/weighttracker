@@ -49,7 +49,7 @@ class Weight(models.Model):
     def save(self, *args, **kwargs) -> None:
         """save weight model"""
         self._update_weeks_weight_change()
-        super(Weight, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
         self._update_weeks_weight_change_for_newer_weight()
 
     def _update_weeks_weight_change(self) -> None:

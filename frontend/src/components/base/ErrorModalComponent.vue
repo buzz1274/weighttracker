@@ -26,7 +26,7 @@ onClickOutside(target, () => emit('modalClose'))
   <ModalComponent name="error_modal" @modalClose="modalClose" :isOpen="isOpen">
     <template #header>
       <div class="header">
-        An error occurred: {{ hasCriticalErrors }}
+        An error occurred:
         <button
           type="button"
           class="btn-close close-button"

@@ -9,7 +9,7 @@ weight_set_view = WeightViewSet.as_view(
         "get": "list",
         "post": "create",
         "delete": "destroy",
-        # "patch": "update",
+        "put": "partial_update",
     }
 )
 

@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { Model } from '@/models/Model'
 import type { UserModel } from '@/models/UserModel'
 
-export interface WeightType {
+export type WeightType = {
   id: number
   date: string
   weight_kg: number
@@ -56,8 +56,8 @@ export class WeightModel extends Model {
   ): void {
     let response_status: number
 
-    fetch(this.apiUrl('api/user/weights/'), {
-      method: action == 'add' ? 'POST' : 'PATCH',
+    fetch(this.apiUrl('api/user/weights/' + weight?.id), {
+      method: action == 'add' ? 'POST' : 'PUT',
       headers: {
         'X-CSRFToken': this.getCookie('csrftoken'),
         Accept: 'application/json',

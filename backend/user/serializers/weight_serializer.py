@@ -26,9 +26,9 @@ class WeightSerializer(serializers.ModelSerializer):
         ]
 
     def validate(self, data):
-        super().validate(data)
+        data = super().validate(data)
 
-        if Weight.objects.filter(
+        if not self.partial and Weight.objects.filter(
             user_id=self.context["user_id"], date=data["date"]
         ):
             raise ValidationError(

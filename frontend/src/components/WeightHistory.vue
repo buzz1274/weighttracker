@@ -92,7 +92,7 @@ const changeClass = (change): string => {
     :isOpen="isAddEditModalOpened"
     :errors="wm.getErrors()"
     :weight="selectedWeight"
-    :modalAction="modalAction"
+    :modalAction="modalAction.value"
     @addEditDeleteWeight="addEditDeleteWeight"
     @modalClose="addEditDeleteWeight"
   />

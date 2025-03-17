@@ -24,6 +24,11 @@ const user = computed<UserModel>(() => {
   return userModel.value
 })
 
+const frequencyChange = (e?: SubmitEvent) => {
+  wm.frequency = e.target.value
+  wm.get()
+}
+
 const labels = computed(() => {
   if (wm.weights) {
     return wm.weights
@@ -167,7 +172,16 @@ const chartOptions = {
 
 <template>
   <div v-if="data" class="graph_container">
-    <header>Graph</header>
+    <header>
+      Graph
+      <div id="frequency_select">
+        <select id="frequency" @change="frequencyChange($event)">
+          <option value="daily" :selected="wm.frequency == 'daily'">Daily</option>
+          <option value="weekly" :selected="wm.frequency == 'weekly'">Weekly</option>
+          <option value="monthly" :selected="wm.frequency == 'monthly'">Monthly</option>
+        </select>
+      </div>
+    </header>
 
     <div class="graph">
       <Line id="my-chart-id" :options="chartOptions" :data="chartData" />
@@ -180,6 +194,10 @@ const chartOptions = {
   width: 868px;
   height: 800px;
   order: 2;
+}
+#frequency_select {
+  float: right;
+  padding-right: 5px;
 }
 .graph {
   margin-top: 70px;

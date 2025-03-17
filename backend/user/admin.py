@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from user.models.user import User
 from user.models.weight import Weight
 
@@ -16,8 +17,6 @@ class WeightAdmin(admin.ModelAdmin):
         "user",
         "date",
         "weight_kg",
-        "week_weight_change_kg",
-        "week_weight_change_percentage",
     ]
     list_filter = ["user"]
 

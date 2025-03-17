@@ -13,6 +13,7 @@ export type WeightType = {
 export class WeightModel extends Model {
   user_model: ref<UserModel>
   weights: Array<WeightType>
+  frequency: string = 'daily'
 
   constructor(user_model: ref<UserModel>) {
     super()
@@ -21,9 +22,12 @@ export class WeightModel extends Model {
   }
 
   get(): void {
-    fetch(this.apiUrl('api/user/weights/'), { method: 'GET' })
+    fetch(this.apiUrl('api/user/weights/?frequency=' + this.frequency), { method: 'GET' })
       .then((response) => response.json())
-      .then((data) => this.hydrate({ weights: data }))
+      .then((data) => {
+        this.hydrate({ weights: data })
+        this.weights = this.weights.reverse()
+      })
       .catch((error) => this.setErrors(error, 'critical'))
   }
 

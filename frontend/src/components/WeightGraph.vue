@@ -176,9 +176,10 @@ const chartOptions = {
       Graph
       <div id="frequency_select">
         <select id="frequency" @change="frequencyChange($event)">
-          <option value="daily" :selected="wm.frequency == 'daily'">Daily</option>
-          <option value="weekly" :selected="wm.frequency == 'weekly'">Weekly</option>
-          <option value="monthly" :selected="wm.frequency == 'monthly'">Monthly</option>
+          <option value="Daily" :selected="wm.frequency == 'Daily'">Daily</option>
+          <option value="Weekly" :selected="wm.frequency == 'Weekly'">Weekly</option>
+          <option value="Monthly" :selected="wm.frequency == 'Monthly'">Monthly</option>
+          <option value="Yearly" :selected="wm.frequency == 'Yearly'">Yearly</option>
         </select>
       </div>
     </header>

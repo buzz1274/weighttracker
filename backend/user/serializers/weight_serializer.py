@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
+from rest_framework.response import Response
 
 from user.models.weight import Weight
 
@@ -7,14 +8,11 @@ from user.models.weight import Weight
 class WeightSerializer(serializers.ModelSerializer):
     DUPLICATE_WEIGHT_ERROR = "Weight already exists for this date."
 
-    date = serializers.SerializerMethodField("date_field")
-    weight_kg = serializers.SerializerMethodField("weight_kg_field")
-
     class Meta:
         model = Weight
         fields = ["id", "date", "weight_kg"]
 
-    def validate(self, data):
+    def validate(self, data) -> dict:
         data = super().validate(data)
 
         if not self.partial and Weight.objects.filter(
@@ -29,13 +27,7 @@ class WeightSerializer(serializers.ModelSerializer):
 
         return data
 
-    def create(self, validated_data):
+    def create(self, validated_data) -> Response:
         return Weight.objects.create(
             user_id=self.context["user_id"], **validated_data
         )
-
-    def date_field(self, model):
-        return model["month_date"]
-
-    def weight_kg_field(self, model):
-        return model["weight"]

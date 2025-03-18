@@ -6,14 +6,14 @@ export type WeightType = {
   id: number
   date: string
   weight_kg: number
-  week_weight_change_kg: number
-  week_weight_change_percentage: number
+  previous_weight_change_kg: number
+  previous_weight_change_percentage: number
 }
 
 export class WeightModel extends Model {
   user_model: ref<UserModel>
   weights: Array<WeightType>
-  frequency: string = 'daily'
+  frequency: string = 'Daily'
 
   constructor(user_model: ref<UserModel>) {
     super()
@@ -22,7 +22,13 @@ export class WeightModel extends Model {
   }
 
   get(): void {
-    fetch(this.apiUrl('api/user/weights/?frequency=' + this.frequency), { method: 'GET' })
+    let url: string = 'api/user/weights/'
+
+    if (this.frequency !== 'Daily') {
+      url += 'aggregate/?frequency=' + this.frequency.toLowerCase()
+    }
+
+    fetch(this.apiUrl(url), { method: 'GET' })
       .then((response) => response.json())
       .then((data) => {
         this.hydrate({ weights: data })

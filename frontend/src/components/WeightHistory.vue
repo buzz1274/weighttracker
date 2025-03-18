@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useStore } from '@/stores/store'
 import moment from 'moment'
 import { storeToRefs } from 'pinia'
@@ -19,6 +19,10 @@ const selectedWeight: ref<object> = ref({})
 const modalAction: ref<string> = ref('')
 const wm: WeightModel = weightModel.value
 const user: UserModel = userModel.value
+
+watch([wm], () => {
+  page.value = 1
+})
 
 const addEditDeleteWeight = (action?: string, weight?: WeightType, e?: SubmitEvent): void => {
   wm.resetErrors()
@@ -68,13 +72,33 @@ const paginate = (next_page): void => {
   page.value = next_page
 }
 
+const formatDate = (date: string, frequency: string): string => {
+  if (frequency === 'Daily' || frequency == 'Weekly') {
+    return moment(date).format('MMM Do, YYYY')
+  } else if (frequency == 'Monthly') {
+    return moment(date).format('MMM, YYYY')
+  } else if (frequency == 'Yearly') {
+    return moment(date).format('YYYY')
+  }
+}
+
 const changeClass = (change): string => {
   if (change == '-') return 'text-end'
 
   if (change > 0) return 'table-danger text-end'
 
-  if (change <= 0 && change > user.target_weight_loss_percentage_per_week * -1)
-    return 'table-success text-end'
+  let permittedChange = user.target_weight_loss_percentage_per_week * -1
+
+  if (wm.frequency == 'Daily') {
+    permittedChange = permittedChange / 7
+  } else if (wm.frequency == 'Monthly') {
+    permittedChange = (permittedChange * 52) / 12
+  }
+  if (wm.frequency == 'Yearly') {
+    permittedChange = permittedChange * 52
+  }
+
+  if (change <= 0 && change > permittedChange) return 'table-success text-end'
 
   return 'table-success-minor text-end'
 }
@@ -92,13 +116,13 @@ const changeClass = (change): string => {
     :isOpen="isAddEditModalOpened"
     :errors="wm.getErrors()"
     :weight="selectedWeight"
-    :modalAction="modalAction.value"
+    :modalAction="modalAction"
     @addEditDeleteWeight="addEditDeleteWeight"
     @modalClose="addEditDeleteWeight"
   />
   <div class="weight_history_container">
     <header>
-      History
+      {{ wm.frequency }} History
       <span class="float-end add_weight">
         <font-awesome-icon
           icon="fa-solid fa-plus"
@@ -110,7 +134,7 @@ const changeClass = (change): string => {
     <table class="table table-sm table-hover">
       <thead>
         <tr>
-          <th>Date</th>
+          <th>Date{{ wm.frequency === 'weekly' ? '(w/c)' : '' }}</th>
           <th>Weight(kg)</th>
           <th>Change(%)</th>
           <th>Change(kg)</th>
@@ -119,31 +143,33 @@ const changeClass = (change): string => {
       </thead>
       <tbody v-if="weights_history">
         <tr v-for="weight in weights_history" :key="weight.id">
-          <td style="width: 40%">
-            {{ moment(weight.date).format('MMM Do, YYYY') }}
+          <td style="width: 35%">
+            {{ formatDate(weight.date, wm.frequency) }}
           </td>
           <td class="text-end" style="width: 8%">
             {{ weight.weight_kg }}
           </td>
-          <td :class="changeClass(weight.week_weight_change_percentage)" style="width: 8%">
-            {{ weight.week_weight_change_percentage }}
+          <td :class="changeClass(weight.previous_weight_change_percentage)" style="width: 8%">
+            {{ weight.previous_weight_change_kg }}
           </td>
-          <td :class="changeClass(weight.week_weight_change_percentage)" style="width: 8%">
-            {{ weight.week_weight_change_kg }}
+          <td :class="changeClass(weight.previous_weight_change_percentage)" style="width: 8%">
+            {{ weight.previous_weight_change_percentage }}
           </td>
           <td class="text-center" style="width: 15%">
             <span class="action">
               <font-awesome-icon
                 icon="fa-solid fa-pen-to-square"
                 title="edit weight"
-                @click="addEditDeleteWeight('edit', weight)"
+                :class="!weight.id ? 'disabled_icon' : ''"
+                @click="weight.id && addEditDeleteWeight('edit', weight)"
               />
             </span>
             <span class="action">
               <font-awesome-icon
                 icon="fa-solid fa-trash"
                 title="delete weight"
-                @click="addEditDeleteWeight('delete', weight)"
+                :class="!weight.id ? 'disabled_icon' : ''"
+                @click="weight.id && addEditDeleteWeight('delete', weight)"
               />
             </span>
           </td>
@@ -177,6 +203,9 @@ font-awesome-icon {
 }
 .weight_history_container {
   order: 2;
+}
+.disabled_icon {
+  color: #b1b1b1;
 }
 .history_navigation {
   width: 70%;

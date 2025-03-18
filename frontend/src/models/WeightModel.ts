@@ -74,7 +74,7 @@ export class WeightModel extends Model {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        weight_id: weight?.id,
+        id: weight?.id,
         weight_kg: weight_kg,
         date: date
       })

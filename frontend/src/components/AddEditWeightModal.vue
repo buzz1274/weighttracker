@@ -20,7 +20,12 @@ const props = defineProps({
       >
         <div class="mb-3">
           <label for="date" class="form-label">Date</label>
-          <input type="date" class="form-control" id="date" :value="props.weight?.date" />
+          <input
+            type="date"
+            class="form-control"
+            id="date"
+            :value="!props.errors?.date ? props.weight?.date : ''"
+          />
           <div v-if="props.errors?.date">
             <p
               class="alert alert-danger"
@@ -39,7 +44,7 @@ const props = defineProps({
             step=".10"
             class="form-control"
             id="weight_kg"
-            :value="props.weight?.weight_kg"
+            :value="!props.errors?.weight_kg ? props.weight?.weight_kg : ''"
           />
           <div v-if="props.errors?.weight_kg">
             <p

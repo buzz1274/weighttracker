@@ -15,6 +15,7 @@ import {
 } from 'chart.js'
 import type { WeightModel } from '@/models/WeightModel'
 import type { UserModel } from '@/models/UserModel'
+import { formatDate } from '@/helper/dates'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Title, Legend)
 
@@ -33,7 +34,7 @@ const labels = computed(() => {
   if (wm.weights) {
     return wm.weights
       .reduce((weights, weight) => {
-        weights.push(weight['date'])
+        weights.push(formatDate(weight['date'], wm.frequency))
         return weights
       }, [])
       .reverse()

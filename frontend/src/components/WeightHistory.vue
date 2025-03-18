@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { useStore } from '@/stores/store'
-import moment from 'moment'
 import { storeToRefs } from 'pinia'
+import { formatDate } from '@/helper/dates'
 import AddEditWeightModal from '@/components/AddEditWeightModal.vue'
 import DeleteWeightModal from '@/components/DeleteWeightModal.vue'
 import type { WeightModel, WeightType } from '@/models/WeightModel'
@@ -72,16 +72,6 @@ const paginate = (next_page): void => {
   page.value = next_page
 }
 
-const formatDate = (date: string, frequency: string): string => {
-  if (frequency === 'Daily' || frequency == 'Weekly') {
-    return moment(date).format('MMM Do, YYYY')
-  } else if (frequency == 'Monthly') {
-    return moment(date).format('MMM, YYYY')
-  } else if (frequency == 'Yearly') {
-    return moment(date).format('YYYY')
-  }
-}
-
 const changeClass = (change): string => {
   if (change == '-') return 'text-end'
 
@@ -134,7 +124,7 @@ const changeClass = (change): string => {
     <table class="table table-sm table-hover">
       <thead>
         <tr>
-          <th>Date{{ wm.frequency === 'weekly' ? '(w/c)' : '' }}</th>
+          <th>Date{{ wm.frequency.toLowerCase() === 'weekly' ? '(w/c)' : '' }}</th>
           <th>Weight(kg)</th>
           <th>Change(%)</th>
           <th>Change(kg)</th>

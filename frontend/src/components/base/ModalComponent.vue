@@ -17,7 +17,15 @@ onClickOutside(target, () => emit('modalClose'))
     <div class="modal-wrapper">
       <div class="modal-container" ref="target">
         <div class="modal-header">
-          <slot name="header"> default header </slot>
+          <div class="header">
+            <strong><slot name="header"> default header </slot></strong>
+            <button
+              type="button"
+              class="btn-close close-button"
+              aria-label="Close"
+              @click="emit('modalClose')"
+            />
+          </div>
         </div>
         <div class="modal-body">
           <slot name="content"> default content </slot>
@@ -50,6 +58,16 @@ onClickOutside(target, () => emit('modalClose'))
 }
 .modal-body {
   padding-top: 20px;
+}
+.header {
+  width: 100%;
+}
+.close-button {
+  display: inline;
+  position: relative;
+  float: right;
+  top: -15px;
+  right: -25px;
 }
 .modal-container {
   width: 500px;

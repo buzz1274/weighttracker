@@ -3,6 +3,7 @@ import { RouterLink, RouterView } from 'vue-router'
 import { useStore } from '@/stores/store'
 import { storeToRefs } from 'pinia'
 import ErrorModalComponent from '@/components/base/ErrorModalComponent.vue'
+import EditUserModal from '@/components/EditUserModal.vue'
 
 const store = useStore()
 const { userModel } = storeToRefs(store)
@@ -11,6 +12,7 @@ const user = userModel.value
 
 <template>
   <ErrorModalComponent />
+  <EditUserModal :isOpen="false" />
   <header>
     <RouterLink to="/">
       <h1>WeightTracker</h1>

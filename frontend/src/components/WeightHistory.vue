@@ -133,19 +133,19 @@ const changeClass = (change): string => {
       </thead>
       <tbody v-if="weights_history">
         <tr v-for="weight in weights_history" :key="weight.id">
-          <td style="width: 40%">
+          <td style="width: 42%; font-size: 0.99em">
             {{ formatDate(weight.date, wm.frequency) }}
           </td>
           <td class="text-end" style="width: 8%">
             {{ weight.weight_kg }}
           </td>
-          <td :class="changeClass(weight.previous_weight_change_percentage)" style="width: 8%">
+          <td :class="changeClass(weight.previous_weight_change_percentage)" style="width: 7%">
             {{ weight.previous_weight_change_kg }}
           </td>
-          <td :class="changeClass(weight.previous_weight_change_percentage)" style="width: 8%">
+          <td :class="changeClass(weight.previous_weight_change_percentage)" style="width: 7%">
             {{ weight.previous_weight_change_percentage }}
           </td>
-          <td class="text-center" style="width: 15%">
+          <td class="text-center" style="width: 17%">
             <span class="action">
               <font-awesome-icon
                 icon="fa-solid fa-pen-to-square"

@@ -2,12 +2,14 @@
 import ModalComponent from '@/components/base/ModalComponent.vue'
 
 const emit = defineEmits(['addEditDeleteWeight', 'modalClose'])
+/*
 const props = defineProps({
   errors: Object,
   title: String,
   weight: Object,
   modalAction: String
 })
+*/
 </script>
 
 <template>

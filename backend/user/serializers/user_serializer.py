@@ -113,7 +113,7 @@ class UserSerializer(serializers.ModelSerializer):
                 ):
                     return next_intermediate_target_kg
         except TypeError:
-            pass
+            return "-"
 
         return "-"
 

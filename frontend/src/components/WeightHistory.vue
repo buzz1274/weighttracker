@@ -140,10 +140,10 @@ const changeClass = (change): string => {
             {{ weight.weight_kg }}
           </td>
           <td :class="changeClass(weight.previous_weight_change_percentage)" style="width: 7%">
-            {{ weight.previous_weight_change_kg }}
+            {{ weight.previous_weight_change_percentage }}
           </td>
           <td :class="changeClass(weight.previous_weight_change_percentage)" style="width: 7%">
-            {{ weight.previous_weight_change_percentage }}
+            {{ weight.previous_weight_change_kg }}
           </td>
           <td class="text-center" style="width: 17%">
             <span class="action">

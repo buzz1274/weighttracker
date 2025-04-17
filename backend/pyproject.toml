@@ -19,6 +19,8 @@ python-dateutil = "^2.9.0.post0"
 pyjwt = "^2.8.0"
 cryptography = "^44.0.1"
 boto3 = "^1.36.24"
+social-auth-app-django = "^5.4.3"
+rest-social-auth = "^8.4.0"
 
 [tool.poetry.dev-dependencies]
 model-bakery = "^1.17.0"

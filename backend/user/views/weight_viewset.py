@@ -4,8 +4,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 
 from user.models.weight import Weight
-
-from ..serializers.weight_serializer import WeightSerializer
+from user.serializers.weight_serializer import WeightSerializer
 
 
 class WeightViewSet(viewsets.ModelViewSet):
@@ -15,9 +14,7 @@ class WeightViewSet(viewsets.ModelViewSet):
     def get_queryset(self) -> QuerySet:
         context = self.get_serializer_context()
 
-        return Weight.objects.filter(user_id=context["user_id"]).order_by(
-            "date"
-        )
+        return Weight.objects.filter(user_id=context["user_id"]).order_by("date")
 
     def get_serializer_context(self) -> dict:
         context = super().get_serializer_context()

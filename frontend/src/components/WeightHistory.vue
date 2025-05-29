@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia'
 import { formatDate } from '@/helper/dates'
 import AddEditWeightModal from '@/components/AddEditWeightModal.vue'
 import DeleteWeightModal from '@/components/DeleteWeightModal.vue'
-import { WeightType } from '@/types/types'
+import { WeightType } from '@/types/types.d.ts'
 import type { WeightModel } from '@/models/WeightModel'
 import type { UserModel } from '@/models/UserModel'
 

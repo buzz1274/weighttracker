@@ -90,7 +90,7 @@ export class WeightModel extends Model {
           this.user_model.get()
 
           this.notification({
-            message: action === 'add' ? 'Weight Added' : 'Weight Edited',
+            message: action == 'add' ? 'Weight Added' : 'Weight Edited',
             type: 'success'
           })
 

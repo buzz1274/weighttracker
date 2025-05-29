@@ -17,7 +17,7 @@ const isOpen = computed((): boolean => {
 })
 
 const isSuccessNotification = computed(() => notification.value?.type === 'success')
-const backgroundColour = computed(() => (isSuccessNotification.value ? '#17b169' : 'red'))
+const backgroundColour = computed(() => (isSuccessNotification.value ? '#17b169' : '#f8d7da'))
 
 const emit = defineEmits(['modalClose'])
 const target = ref(null)

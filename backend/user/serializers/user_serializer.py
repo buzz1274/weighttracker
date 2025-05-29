@@ -56,6 +56,9 @@ class UserSerializer(serializers.ModelSerializer):
     next_intermediate_target_date = serializers.SerializerMethodField(
         "next_intermediate_target_date_field"
     )
+    percentage_weight_lost_of_target = serializers.SerializerMethodField(
+        "percentage_weight_lost_of_target_field"
+    )
     min_weight_kg = serializers.SerializerMethodField("min_weight_kg_field")
 
     def name_field(self, model):
@@ -150,6 +153,12 @@ class UserSerializer(serializers.ModelSerializer):
             return f"{week_change:2f}"
 
         return "-"
+
+    def percentage_weight_lost_of_target_field(self, model):
+        try:
+            return f"{(((model.max_weight(True).weight_kg - model.weight_at_date().weight_kg) / (model.max_weight(True).weight_kg - model.target_weight_kg)) * 100):.2f}"
+        except (AttributeError, TypeError):
+            return "-"
 
     def average_weight_kg_field(self, model):
         return f"{model.average_weight():.2f}"

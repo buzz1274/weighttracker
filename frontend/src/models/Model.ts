@@ -1,17 +1,16 @@
 import { ref } from 'vue'
 import Cookies from 'js-cookie'
-
-export type Error = {
-  key: string
-  error: string
-}
+import type { Error, Notification } from '@/types/types.d.ts'
 
 export class Model {
   host: string = 'https://' + window.location.hostname + '/'
-  errors: ref<Array<Error>> = ref([])
-  criticalErrors: ref<string | null> = ref(null)
+  _errors: ref<Array<Error> | null> = ref(null)
+  _notification: ref<Notification | null> = ref(null)
 
-  constructor() {}
+  constructor() {
+    this.notification = this.notification.bind(this)
+    this.errors = this.errors.bind(this)
+  }
 
   hydrate(data: object): void {
     for (const property in data) {
@@ -21,24 +20,18 @@ export class Model {
     }
   }
 
-  getErrors(type?: string): ref<Array<Error> | string | null> {
-    if (type === 'critical') {
-      return this.criticalErrors
-    } else {
-      return this.errors
+  notification(notification?: Notification): ref<Notification | null> {
+    if (notification) {
+      this._notification.value = notification
     }
+    return this._notification.value
   }
 
-  setErrors(errors: ref<string | null | Array<Error>>, type?: string): void {
-    if (type === 'critical') {
-      this.criticalErrors = errors
-    } else {
-      this.errors = errors
+  errors(errors?: Array<Error>): ref<Array<Error>> {
+    if (errors) {
+      this._errors.value = errors
     }
-  }
-
-  resetErrors(type?: string): void {
-    this.setErrors([], type)
+    return this._errors.value
   }
 
   getCookie(name: string): string {

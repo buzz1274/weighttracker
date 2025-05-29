@@ -2,7 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { useStore } from '@/stores/store'
 import { storeToRefs } from 'pinia'
-import ErrorModalComponent from '@/components/base/ErrorModalComponent.vue'
+import NotificationModalComponent from '@/components/base/NotificationModalComponent.vue'
 import EditUserModal from '@/components/EditUserModal.vue'
 
 const store = useStore()
@@ -11,7 +11,7 @@ const user = userModel.value
 </script>
 
 <template>
-  <ErrorModalComponent />
+  <NotificationModalComponent />
   <EditUserModal :isOpen="false" />
   <header>
     <RouterLink to="/">

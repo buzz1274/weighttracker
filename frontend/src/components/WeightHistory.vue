@@ -5,7 +5,8 @@ import { storeToRefs } from 'pinia'
 import { formatDate } from '@/helper/dates'
 import AddEditWeightModal from '@/components/AddEditWeightModal.vue'
 import DeleteWeightModal from '@/components/DeleteWeightModal.vue'
-import type { WeightModel, WeightType } from '@/models/WeightModel'
+import { WeightType } from '@/types/types'
+import type { WeightModel } from '@/models/WeightModel'
 import type { UserModel } from '@/models/UserModel'
 
 const store = useStore()
@@ -25,7 +26,7 @@ watch([wm], () => {
 })
 
 const addEditDeleteWeight = (action?: string, weight?: WeightType, e?: SubmitEvent): void => {
-  wm.resetErrors()
+  wm.errors([])
 
   selectedWeight.value = weight ?? {}
   modalAction.value = action ?? ''
@@ -97,14 +98,14 @@ const changeClass = (change): string => {
 <template>
   <DeleteWeightModal
     :isOpen="isDeleteModalOpened"
-    :errors="wm.getErrors()"
+    :errors="wm.errors()"
     :weight="selectedWeight"
     @deleteWeight="addEditDeleteWeight"
     @modalClose="addEditDeleteWeight"
   />
   <AddEditWeightModal
     :isOpen="isAddEditModalOpened"
-    :errors="wm.getErrors()"
+    :errors="wm.errors()"
     :weight="selectedWeight"
     :modalAction="modalAction"
     @addEditDeleteWeight="addEditDeleteWeight"

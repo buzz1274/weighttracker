@@ -1,14 +1,7 @@
 import { ref } from 'vue'
 import { Model } from '@/models/Model'
 import type { UserModel } from '@/models/UserModel'
-
-export type WeightType = {
-  id: number
-  date: string
-  weight_kg: number
-  previous_weight_change_kg: number
-  previous_weight_change_percentage: number
-}
+import type { WeightType } from '@/types/types.d.ts'
 
 export class WeightModel extends Model {
   user_model: ref<UserModel>
@@ -34,7 +27,7 @@ export class WeightModel extends Model {
         this.hydrate({ weights: data })
         this.weights = this.weights.reverse()
       })
-      .catch((error) => this.setErrors(error, 'critical'))
+      .catch((error) => this.notification(error))
   }
 
   delete(weight: WeightType, isDeleteModalOpened: ref<boolean>): void {
@@ -48,13 +41,20 @@ export class WeightModel extends Model {
         if (response.status == 204) {
           this.get()
           this.user_model.get()
+
+          this.notification({
+            message: 'Weight Deleted',
+            type: 'success'
+          })
+
           isDeleteModalOpened.value = false
         } else {
-          this.setErrors({ error: 'Invalid weight' })
+          this.errors([{ error: 'Invalid weight' }])
+
           isDeleteModalOpened.value = true
         }
       })
-      .catch((error) => this.setErrors(error, 'critical'))
+      .catch((error) => this.notification(error))
   }
 
   save(
@@ -88,16 +88,25 @@ export class WeightModel extends Model {
         if (response_status == 200 || response_status == 201) {
           this.get()
           this.user_model.get()
+
+          this.notification({
+            message: action === 'add' ? 'Weight Added' : 'Weight Edited',
+            type: 'success'
+          })
+
           isAddEditModalOpened.value = false
         } else if (response_status == 400) {
-          this.setErrors(data)
+          this.errors(data)
           isAddEditModalOpened.value = true
         } else {
           throw new Error(data['detail'])
         }
       })
       .catch((error) => {
-        this.setErrors(error, 'critical')
+        this.notification({
+          message: error,
+          type: 'error'
+        })
         isAddEditModalOpened.value = false
       })
   }

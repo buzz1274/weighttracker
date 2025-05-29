@@ -1,8 +1,9 @@
 {
   "files": [],
+  //"include": ["src/**/*"],
   "compilerOptions": {
     "paths": {
-      "bootstrap/dist/js/bootstrap" : ["./node_modules/@types/bootstrap"]
+      "bootstrap/dist/js/bootstrap" : ["./node_modules/@types/bootstrap"],
     }
   },
   "references": [

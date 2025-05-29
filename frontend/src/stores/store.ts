@@ -2,34 +2,18 @@ import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
 import { WeightModel } from '@/models/WeightModel'
 import { UserModel } from '@/models/UserModel'
+import type { Notification } from '@/types/types.d.ts'
 
 export const useStore = defineStore('store', () => {
   const userModel = ref(new UserModel())
   const weightModel = ref(new WeightModel(userModel.value))
-  const criticalErrors: ref<string | null> = ref(null)
-  const hasCriticalErrors: ref<boolean> = ref(false)
+  const hasNotification: ref<boolean> = ref(false)
+  const notification: ref<Notification | null> = ref(null)
 
-  watch([weightModel.value, userModel.value], () => {
-    if (weightModel.value.criticalErrors) {
-      criticalErrors.value = weightModel.value.criticalErrors
-      hasCriticalErrors.value = true
-    }
-
-    if (userModel.value.criticalErrors) {
-      criticalErrors.value = userModel.value.getErrors('critical')
-      hasCriticalErrors.value = true
-    }
+  watch([weightModel.value.notification, userModel.value.notification], (n) => {
+    hasNotification.value = true
+    notification.value = n[0]
   })
 
-  watch([hasCriticalErrors], () => {
-    if (!hasCriticalErrors.value) {
-      weightModel.value.setErrors(null, 'critical')
-      userModel.value.resetErrors(null, 'critical')
-
-      criticalErrors.value = null
-      hasCriticalErrors.value = false
-    }
-  })
-
-  return { userModel, weightModel, criticalErrors, hasCriticalErrors }
+  return { userModel, weightModel, hasNotification, notification }
 })

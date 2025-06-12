@@ -60,6 +60,9 @@ class UserSerializer(serializers.ModelSerializer):
         "percentage_weight_lost_of_target_field"
     )
     min_weight_kg = serializers.SerializerMethodField("min_weight_kg_field")
+    estimated_weight_at_date = serializers.SerializerMethodField(
+        "estimated_weight_at_date_field"
+    )
 
     def name_field(self, model):
         return str(model)
@@ -76,6 +79,12 @@ class UserSerializer(serializers.ModelSerializer):
     def min_weight_kg_field(self, model):
         try:
             return f"{model.min_weight(True).weight_kg:.2f}"
+        except AttributeError:
+            return "-"
+
+    def estimated_weight_at_date_field(self, model):
+        try:
+            return f"{model.estimated_weight_at_date():.2f}"
         except AttributeError:
             return "-"
 

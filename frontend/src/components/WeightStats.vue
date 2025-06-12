@@ -2,10 +2,11 @@
 import { useStore } from '@/stores/store'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
+import type { UserModel } from '@/models/userModel'
 import moment from 'moment'
 
 const { userModel } = storeToRefs(useStore())
-const user = userModel.value
+const user: UserModel = userModel.value
 
 const weightToTarget = computed(() => {
   return (user.current_weight_kg - user.target_weight_kg).toFixed(2)
@@ -74,6 +75,14 @@ const changeClass = (change) => {
           </td>
           <td class="stats text-end" style="vertical-align: middle">
             {{ moment(user.next_intermediate_target_date).format('MMMM Do, YYYY') }}
+          </td>
+        </tr>
+        <tr v-if="user.estimated_weight_at_date">
+          <td style="line-height: 20px">
+            Weight(kg) at {{ moment(user.weight_loss_at_date).format('MMMM Do, YYYY') }}
+          </td>
+          <td class="stats text-end" style="vertical-align: middle">
+            {{ user.estimated_weight_at_date }}
           </td>
         </tr>
         <tr>

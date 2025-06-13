@@ -85,7 +85,7 @@ class UserSerializer(serializers.ModelSerializer):
     def estimated_weight_at_date_field(self, model):
         try:
             return f"{model.estimated_weight_at_date():.2f}"
-        except AttributeError:
+        except (AttributeError, TypeError):
             return "-"
 
     def date_joined_field(self, model):

@@ -1,19 +1,21 @@
 <script setup lang="ts">
 import ModalComponent from '@/components/base/ModalComponent.vue'
+//import { onClickOutside } from '@vueuse/core'
+//import { computed, ref } from 'vue'
+import { ref } from 'vue'
 
-const emit = defineEmits(['addEditDeleteWeight', 'modalClose'])
-/*
 const props = defineProps({
-  errors: Object,
-  title: String,
-  weight: Object,
-  modalAction: String
+  isOpen: Boolean
 })
-*/
+const isOpen = ref(props.isOpen)
+
+const modalClose = (): void => {
+  isOpen.value = false
+}
 </script>
 
 <template>
-  <ModalComponent name="edit_user" @modalClose="emit('modalClose')">
+  <ModalComponent name="edit_user" :isOpen="isOpen" @modalClose="modalClose">
     <template #header> Edit User </template>
     <template #content></template>
     <template #footer>&nbsp;</template>

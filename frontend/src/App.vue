@@ -4,15 +4,20 @@ import { useStore } from '@/stores/store'
 import { storeToRefs } from 'pinia'
 import NotificationModalComponent from '@/components/base/NotificationModalComponent.vue'
 import EditUserModal from '@/components/EditUserModal.vue'
+import { ref } from 'vue'
 
 const store = useStore()
 const { userModel } = storeToRefs(store)
 const user = userModel.value
+const isEditUserModalOpen = ref(false)
+const openEditUserModal = () => {
+  isEditUserModalOpen.value = true
+}
 </script>
 
 <template>
   <NotificationModalComponent />
-  <EditUserModal :isOpen="false" />
+  <EditUserModal :isOpen="isEditUserModalOpen" :user="user" />
   <header>
     <RouterLink to="/">
       <h1>WeightTracker</h1>
@@ -30,6 +35,7 @@ const user = userModel.value
                   style="padding-top: 2px"
                   title="edit user"
                   icon="fa-solid fa-pen-to-square"
+                  @click="openEditUserModal"
                 />
                 &nbsp;|&nbsp;
               </td>

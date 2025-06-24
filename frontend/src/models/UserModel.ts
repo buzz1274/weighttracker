@@ -24,6 +24,8 @@ export class UserModel extends Model {
   next_intermediate_target_date: string
   next_intermediate_target_kg: number
   percentage_weight_lost_of_target: number
+  estimated_weight_at_date: number
+  weight_loss_at_date: string
 
   constructor() {
     super()

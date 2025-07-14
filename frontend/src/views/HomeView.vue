@@ -13,7 +13,7 @@ onMounted(() => {
 
 const initSignIn = () => {
   google.accounts.id.initialize({
-    client_id: import.meta.env.VITE_GOOGLE_OAUTH2_CLIENT_ID,
+    client_id: '805742976196-kl4thfduqpgso0v52rp31djh95kgmenu.apps.googleusercontent.com',
     callback: loginCallback
   })
 

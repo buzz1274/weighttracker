@@ -1,58 +1,35 @@
 <script setup lang="ts">
-import type { CallbackTypes } from 'vue3-google-login'
-import router from '../router/'
-import { ref, onBeforeMount } from 'vue'
+/*global google */
 
-const NOT_REGISTERED_URL = '/register'
-const REGISTERED_URL = '/weights'
+import { ref, onMounted } from 'vue'
 
 const error = ref('')
 
-onBeforeMount(() => {
-  if (localStorage.getItem('access_token')) {
-    if (localStorage.getItem('registered') && !localStorage.getItem('registered')) {
-      router.push(REGISTERED_URL)
-    } else {
-      router.push(NOT_REGISTERED_URL)
-    }
+onMounted(() => {
+  if (typeof google !== 'undefined') {
+    initSignIn()
   }
 })
 
-const callback: CallbackTypes.CodeResponseCallback = (response) => {
-  fetch('https://' + window.location.hostname + '/api/user/login/', {
-    method: 'POST',
-    body: JSON.stringify({
-      authentication_method: 'GOOGLE',
-      code: response.code
-    }),
-    headers: { 'Content-Type': 'application/json' }
+const initSignIn = () => {
+  google.accounts.id.initialize({
+    client_id: import.meta.env.VITE_GOOGLE_OAUTH2_CLIENT_ID,
+    callback: loginCallback
   })
-    .then((response) => {
-      if (response.ok) {
-        return response.json()
-      }
-      return Promise.reject(response)
-    })
-    .then((data) => {
-      localStorage.setItem('access_token', data['access_token'])
-      localStorage.setItem('refresh_token', data['access_token'])
-      localStorage.setItem('registered', data['registered'])
 
-      if ('registered' in data && !data['registered']) {
-        router.push(NOT_REGISTERED_URL)
-      } else {
-        router.push(REGISTERED_URL)
-      }
-    })
-    .catch((response) => {
-      response.json().then((json: string) => {
-        if ('error' in json && json['error']) {
-          error.value = json['error']
-        } else {
-          error.value = 'An error has occurred'
-        }
-      })
-    })
+  google.accounts.id.renderButton(document.getElementById('gSignInButton'), {
+    type: 'standard',
+    text: 'sign_in_with',
+    theme: 'outline',
+    size: 'large',
+    width: '80'
+  })
+  google.accounts.id.prompt()
+}
+
+const loginCallback = async (response) => {
+  console.log(response)
+  console.log('HERE')
 }
 </script>
 
@@ -82,14 +59,13 @@ const callback: CallbackTypes.CodeResponseCallback = (response) => {
       <div class="d-flex justify-content-center text-danger">{{ error }}</div>
     </div>
     <div class="home_buttons">
-      <GoogleLogin :callback="callback">
-        <div id="gSignInWrapper">
-          <div id="customBtn" class="customGPlusSignIn">
-            <span class="icon"></span>
-            <span class="buttonText">Login with Google</span>
-          </div>
-        </div>
-      </GoogleLogin>
+      <component
+        v-bind:is="script"
+        src="https://accounts.google.com/gsi/client"
+        @load="initSignIn"
+        async
+      />
+      <div id="gSignInButton" />
     </div>
   </main>
 </template>

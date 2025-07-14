@@ -23,4 +23,5 @@ router = routers.DefaultRouter()
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/user/", include("user.urls")),
+    path("api/login/", include("rest_social_auth.urls_token")),
 ]

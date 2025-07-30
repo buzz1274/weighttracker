@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Tuple
 
 from rest_framework import status
@@ -36,7 +37,13 @@ class Login(APIView):
             )
 
             user: Tuple[User, bool] = User.objects.get_or_create(
-                email=user_data["email"]
+                email=user_data["email"],
+                authentication_backend=authentication_backend,
+                defaults={
+                    "first_name": user_data["given_name"],
+                    "last_name": user_data["family_name"],
+                    "weight_loss_start_date": datetime.now(),
+                },
             )
 
             return Response(

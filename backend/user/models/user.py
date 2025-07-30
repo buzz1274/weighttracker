@@ -21,7 +21,7 @@ class User(AbstractUser):
         ("M", "Male"),
         ("F", "Female"),
     ]
-    AUTHENTICATION_METHOD = [
+    AUTHENTICATION_BACKEND = [
         ("google", "Google"),
     ]
 
@@ -42,9 +42,9 @@ class User(AbstractUser):
         choices=SEX_CHOICES,
         blank=True,
     )
-    authentication_method = models.CharField(
+    authentication_backend = models.CharField(
         max_length=6,
-        choices=AUTHENTICATION_METHOD,
+        choices=AUTHENTICATION_BACKEND,
     )
     target_weight_loss_percentage_per_week = DecimalField(
         max_digits=3,

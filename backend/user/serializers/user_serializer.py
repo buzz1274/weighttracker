@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
             "sex",
             "intermediate_loss_target_kg",
             "is_superuser",
-            "authentication_method",
+            "authentication_backend",
             "groups",
             "user_permissions",
             "last_login",

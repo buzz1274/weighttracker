@@ -23,7 +23,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://dev.weighttracker.zz50.co.uk:5123",
-    "https://dev.weighttracker.zz50.co.uk/",
+    "https://dev.weighttracker.zz50.co.uk",
 ]
 
 CORS_ORIGIN_WHITELIST = [

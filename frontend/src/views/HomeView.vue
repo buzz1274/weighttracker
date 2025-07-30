@@ -14,6 +14,7 @@ onMounted(() => {
 const initSignIn = () => {
   google.accounts.id.initialize({
     client_id: '805742976196-kl4thfduqpgso0v52rp31djh95kgmenu.apps.googleusercontent.com',
+    auto_select: true,
     callback: loginCallback
   })
 
@@ -27,9 +28,20 @@ const initSignIn = () => {
   google.accounts.id.prompt()
 }
 
-const loginCallback = async (response) => {
-  console.log(response)
-  console.log('HERE')
+const loginCallback = async (credentials) => {
+  fetch('https://' + window.location.hostname + '/api/user/login/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      credentials: credentials.credential,
+      authentication_backend: 'GOOGLE'
+    })
+  }).then(() => {
+    //console.log(response.body.);
+    //redirect to weights if authenticated
+  })
 }
 </script>
 
@@ -69,32 +81,3 @@ const loginCallback = async (response) => {
     </div>
   </main>
 </template>
-
-<style scoped>
-#customBtn {
-  display: inline-block;
-  background: white;
-  color: #444;
-  width: 190px;
-  border-radius: 5px;
-  border: thin solid #888;
-  box-shadow: 1px 1px 1px grey;
-  white-space: nowrap;
-}
-#customBtn:hover {
-  cursor: pointer;
-}
-span.icon {
-  display: inline-block;
-  vertical-align: middle;
-  height: 42px;
-}
-span.buttonText {
-  display: inline-block;
-  vertical-align: middle;
-  padding-left: 33px;
-  padding-right: 42px;
-  font-size: 14px;
-  font-weight: bold;
-}
-</style>

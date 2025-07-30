@@ -1,43 +1,18 @@
-import requests
 from django.conf import settings
+from google.auth.transport import requests
+from google.oauth2 import id_token
 
-from .authenticator_interface import AuthenticatorInterface
-from .exceptions import AuthenticationException
+from user.authentication.authenticator_interface import AuthenticatorInterface
+from user.authentication.exceptions import AuthenticationException
 
 
 class Google(AuthenticatorInterface):
-    GOOGLE_ID_TOKEN_INFO_URL = "https://www.googleapis.com/oauth2/v3/tokeninfo"
-    GOOGLE_ACCESS_TOKEN_OBTAIN_URL = "https://oauth2.googleapis.com/token"
-    GOOGLE_USER_INFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo"
+    GOOGLE_CLIENT_ID = settings.GOOGLE_OAUTH2_CLIENT_ID
 
-    def get_access_token(self, code: str) -> dict:
-        data = {
-            "code": code,
-            "client_id": settings.GOOGLE_OAUTH2_CLIENT_ID,
-            "client_secret": settings.GOOGLE_OAUTH2_CLIENT_SECRET,
-            "redirect_uri": "http://dev.weighttracker.zz50.co.uk:5123",
-            "grant_type": "authorization_code",
-        }
-
-        response = requests.post(
-            self.GOOGLE_ACCESS_TOKEN_OBTAIN_URL, data=data
-        )
-
-        if not response.ok:
-            raise AuthenticationException(
-                "Failed to obtain access token from google"
+    def decode_credentials(self, credentials: str) -> dict:
+        try:
+            return id_token.verify_oauth2_token(
+                credentials, requests.Request(), self.GOOGLE_CLIENT_ID
             )
-
-        return response.json()
-
-    def get_user_info(self, access_token: str) -> dict:
-        response = requests.get(
-            self.GOOGLE_USER_INFO_URL, params={"access_token": access_token}
-        )
-
-        if not response.ok:
-            raise AuthenticationException(
-                "Failed to obtain user info from google"
-            )
-
-        return response.json()
+        except Exception as e:
+            raise AuthenticationException(f"Failed to decode credentials:{e}")

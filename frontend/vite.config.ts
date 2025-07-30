@@ -9,7 +9,7 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 5123,
-    allowedHosts: ['dev.weighttracker.zz50.co.uk'],
+    allowedHosts: ['dev.weighttracker.zz50.co.uk', "weighttracker-frontend"],
     watch: {
       usePolling: true,
     },

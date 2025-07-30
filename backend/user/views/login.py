@@ -1,10 +1,12 @@
-from django.db.models.base import ObjectDoesNotExist
+from typing import Tuple
+
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from user.authentication.authentication import Authentication
+from user.authentication.authenticator_interface import AuthenticatorInterface
 from user.authentication.exceptions import AuthenticationException
 from user.models.user import User
 from user.serializers.serializers import LoginSerializer
@@ -16,47 +18,33 @@ class Login(APIView):
     serializer_class = LoginSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = LoginSerializer(data=request.data)
+        serializer: LoginSerializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         validated_data = serializer.validated_data
 
         try:
-            authentication_method = validated_data.get("authentication_method")
-            authenticator = Authentication(
-                authentication_method=authentication_method
+            authentication_backend: str = validated_data.get(
+                "authentication_backend"
+            )
+            authenticator: AuthenticatorInterface = Authentication(
+                authentication_backend=authentication_backend
             ).authenticator
 
-            token = authenticator.get_access_token(validated_data.get("code"))
-            user_data = authenticator.get_user_info(token["access_token"])
-        except AuthenticationException as e:
+            user_data: dict = authenticator.decode_credentials(
+                validated_data.get("credentials")
+            )
+
+            user: Tuple[User, bool] = User.objects.get_or_create(
+                email=user_data["email"]
+            )
+
+            return Response(
+                UserSerializer(instance=user[0], partial=True).data,
+                status=status.HTTP_200_OK,
+            )
+
+        except (IndexError, AuthenticationException) as e:
             return Response(
                 {"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
-
-        try:
-            user = User.objects.get(email=user_data["email"])
-        except ObjectDoesNotExist:
-            user = User(
-                email=user_data["email"],
-                username=user_data["email"],
-                password="",
-                authentication_method=authentication_method,
-            )
-
-            user.save()
-
-        user = UserSerializer(data=user, partial=True)
-        user.is_valid(raise_exception=True)
-
-        user_data = user.data
-
-        if token:
-            user_data.update(
-                {
-                    "refresh_token": token["refresh_token"],
-                    "access_token": token["access_token"],
-                }
-            )
-
-        return Response(user_data, status=status.HTTP_200_OK)

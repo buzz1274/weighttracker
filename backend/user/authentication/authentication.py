@@ -1,25 +1,25 @@
-from .authenticator_interface import AuthenticatorInterface
-from .google import Google
+from user.authentication.authenticator_interface import AuthenticatorInterface
+from user.authentication.google import Google
 
 
 class Authentication:
-    PERMITTED_AUTHENTICATION_SERVICES = {
+    PERMITTED_AUTHENTICATION_BACKENDS = {
         "GOOGLE": Google,
     }
 
-    authentication_method: str = None
+    authentication_backend: str = None
     authenticator: AuthenticatorInterface = None
 
-    def __init__(self, *, authentication_method: str = "GOOGLE") -> None:
+    def __init__(self, *, authentication_backend: str = "GOOGLE") -> None:
         if (
-            authentication_method
-            not in self.PERMITTED_AUTHENTICATION_SERVICES.keys()
+            authentication_backend
+            not in self.PERMITTED_AUTHENTICATION_BACKENDS.keys()
         ):
             raise RuntimeError(
-                f"Invalid authentication method {authentication_method}"
+                f"Invalid authentication backend {authentication_backend}"
             )
 
-        self.authentication_method = authentication_method
-        self.authenticator = self.PERMITTED_AUTHENTICATION_SERVICES[
-            self.authentication_method
+        self.authentication_backend = authentication_backend
+        self.authenticator = self.PERMITTED_AUTHENTICATION_BACKENDS[
+            self.authentication_backend
         ]()

@@ -41,13 +41,22 @@ export class UserModel extends Model {
       .catch((error) => this.errors(error))
   }
 
-  logout(): void {
-    this.is_authenticated = false
-    localStorage.setItem('authenticated', '')
+  logout(): Promise<boolean> {
+    return fetch(this.apiUrl('/api/user/logout/'), {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': this.getCookie('csrftoken'),
+        'Content-Type': 'application/json'
+      }
+    }).then(() => {
+      this.handle_logout()
+
+      return true
+    })
   }
 
   login(credentials: string, backend: string): Promise<boolean> {
-    return fetch('https://' + window.location.hostname + '/api/user/login/', {
+    return fetch(this.apiUrl('/api/user/login/'), {
       method: 'POST',
       headers: {
         'X-CSRFToken': this.getCookie('csrftoken'),
@@ -59,18 +68,28 @@ export class UserModel extends Model {
       })
     }).then((response) => {
       if (response.status === 202) {
-        this.get()
-
-        this.is_authenticated = true
-        localStorage.setItem('authenticated', String(true))
+        this.handle_login()
 
         return true
       } else {
-        this.is_authenticated = false
-        localStorage.setItem('authenticated', '')
+        this.handle_logout()
 
         return false
       }
     })
+  }
+
+  private handle_login(): void {
+    this.get()
+
+    this.is_authenticated = true
+    localStorage.setItem('authenticated', String(true))
+  }
+
+  private handle_logout(): void {
+    this.reset()
+
+    this.is_authenticated = false
+    localStorage.setItem('authenticated', '')
   }
 }

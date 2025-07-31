@@ -1,9 +1,9 @@
 from datetime import datetime
 from typing import Tuple
 
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from rest_framework import status
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -12,6 +12,20 @@ from user.authentication.authenticator_interface import AuthenticatorInterface
 from user.authentication.exceptions import AuthenticationException
 from user.models.user import User
 from user.serializers.serializers import LoginSerializer
+
+
+class Logout(APIView):
+    permission_classes = [
+        IsAuthenticated,
+    ]
+
+    def post(self, request, *args, **kwargs):
+        logout(request)
+
+        return Response(
+            None,
+            status=status.HTTP_202_ACCEPTED,
+        )
 
 
 class Login(APIView):

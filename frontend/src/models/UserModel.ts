@@ -2,10 +2,6 @@ import { Model } from '@/models/Model'
 
 export class UserModel extends Model {
   name: string
-  logged_in: boolean
-  access_token: string
-  refresh_token: string
-  registered: boolean
   min_weight_kg: number
   max_weight_kg: number
   date_joined: string
@@ -26,9 +22,15 @@ export class UserModel extends Model {
   percentage_weight_lost_of_target: number
   estimated_weight_at_date: number
   weight_loss_at_date: string
+  is_authenticated: boolean
 
   constructor() {
     super()
+
+    if (localStorage.getItem('authenticated') === 'true') {
+      this.get()
+      this.is_authenticated = true
+    }
   }
 
   get(): void {
@@ -36,6 +38,11 @@ export class UserModel extends Model {
       .then((response) => response.json())
       .then((data) => this.hydrate(data))
       .catch((error) => this.errors(error))
+  }
+
+  logout(): void {
+    this.is_authenticated = false
+    localStorage.setItem('authenticated', '')
   }
 
   login(credentials: string, backend: string): Promise<boolean> {
@@ -50,8 +57,19 @@ export class UserModel extends Model {
         authentication_backend: backend
       })
     }).then((response) => {
-      this.get()
-      return response.status === 202
+      if (response.status === 202) {
+        this.get()
+
+        this.is_authenticated = true
+        localStorage.setItem('authenticated', String(true))
+
+        return true
+      } else {
+        this.is_authenticated = false
+        localStorage.setItem('authenticated', '')
+
+        return false
+      }
     })
   }
 }

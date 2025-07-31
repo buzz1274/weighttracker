@@ -8,6 +8,7 @@ import router from '../router'
 
 const store = useStore()
 const { userModel } = storeToRefs(store)
+const user = userModel.value
 
 const error = ref('')
 
@@ -35,7 +36,7 @@ const initSignIn = () => {
 }
 
 const loginCallback = async (credentials) => {
-  if (await userModel.value.login(credentials.credential, 'GOOGLE')) {
+  if (await user.login(credentials.credential, 'GOOGLE')) {
     await router.push('/weights')
   } else {
     //display error message//
@@ -69,13 +70,15 @@ const loginCallback = async (credentials) => {
       <div class="d-flex justify-content-center text-danger">{{ error }}</div>
     </div>
     <div class="home_buttons">
-      <component
-        v-bind:is="script"
-        src="https://accounts.google.com/gsi/client"
-        @load="initSignIn"
-        async
-      />
-      <div id="gSignInButton" />
+      <div v-if="!user.is_authenticated">
+        <component
+          v-bind:is="script"
+          src="https://accounts.google.com/gsi/client"
+          @load="initSignIn"
+          async
+        />
+        <div id="gSignInButton" />
+      </div>
     </div>
   </main>
 </template>

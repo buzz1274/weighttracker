@@ -46,15 +46,7 @@ class Login(APIView):
                 },
             )
 
-            login(
-                request,
-                user[0],
-            )
-
-            print(request.user)
-            print(request.user.is_authenticated)
-            print(request.user.pk)
-            print(request.session)
+            login(request, user[0])
 
             return Response(
                 None,

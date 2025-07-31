@@ -27,17 +27,15 @@ const router = createRouter({
       name: 'weights',
       component: WeightsView,
       meta: {
-        requiresAuth: false
+        requiresAuth: true
       }
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  next()
-  /*
   if (to.meta.requiresAuth) {
-    if (localStorage.getItem('access_token')) {
+    if (localStorage.getItem('authenticated') === 'true') {
       next()
     } else {
       next('/')
@@ -45,7 +43,6 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
-   */
 })
 
 export default router

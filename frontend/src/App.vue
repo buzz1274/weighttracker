@@ -5,6 +5,7 @@ import { storeToRefs } from 'pinia'
 import NotificationModalComponent from '@/components/base/NotificationModalComponent.vue'
 import EditUserModal from '@/components/EditUserModal.vue'
 import { ref } from 'vue'
+import router from '@/router'
 
 const store = useStore()
 const { userModel } = storeToRefs(store)
@@ -12,6 +13,10 @@ const user = userModel.value
 const isEditUserModalOpen = ref(false)
 const openEditUserModal = () => {
   isEditUserModalOpen.value = true
+}
+const logout = () => {
+  user.logout()
+  router.push('/')
 }
 </script>
 
@@ -22,7 +27,7 @@ const openEditUserModal = () => {
     <RouterLink to="/">
       <h1>WeightTracker</h1>
     </RouterLink>
-    <nav v-if="user.name">
+    <nav v-if="user.is_authenticated">
       <div>
         <table style="float: right">
           <tbody>
@@ -45,6 +50,7 @@ const openEditUserModal = () => {
                   style="padding-top: 2px"
                   title="sign out"
                   icon="fa-solid fa-sign-out"
+                  @click="logout"
                 />
               </td>
             </tr>

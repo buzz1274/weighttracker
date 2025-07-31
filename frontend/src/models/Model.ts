@@ -14,8 +14,16 @@ export class Model {
 
   hydrate(data: object): void {
     for (const property in data) {
-      if (Object.prototype.hasOwnProperty.call(this, property)) {
+      if (Object.hasOwn(this, property)) {
         this[property] = data[property]
+      }
+    }
+  }
+
+  reset(): void {
+    for (const property in this) {
+      if (Object.hasOwn(this, property)) {
+        this[property as keyof this] = null
       }
     }
   }

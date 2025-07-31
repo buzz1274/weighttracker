@@ -27,6 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
             "last_name",
         ]
 
+    is_authenticated = True
     name = serializers.SerializerMethodField("name_field")
     bmi_boundaries = serializers.SerializerMethodField("bmi_boundaries_field")
     max_weight_kg = serializers.SerializerMethodField("max_weight_kg_field")
@@ -65,7 +66,7 @@ class UserSerializer(serializers.ModelSerializer):
     )
 
     def name_field(self, model):
-        return str(model)
+        return str(model.first_name)
 
     def bmi_boundaries_field(self, model):
         return model.bmi_boundaries()
@@ -170,4 +171,7 @@ class UserSerializer(serializers.ModelSerializer):
             return "-"
 
     def average_weight_kg_field(self, model):
-        return f"{model.average_weight():.2f}"
+        try:
+            return f"{model.average_weight():.2f}"
+        except TypeError:
+            return "-"

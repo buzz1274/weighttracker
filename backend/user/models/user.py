@@ -81,17 +81,20 @@ class User(AbstractUser):
 
     def bmi_boundaries(self) -> dict:
         """calculate bmi boundaries for current user"""
-        return {
-            "obese": round(
-                self._height_squared() * self.BMI_RANGES["OBESE"], 1
-            ),
-            "overweight": round(
-                self._height_squared() * self.BMI_RANGES["OVERWEIGHT"], 1
-            ),
-            "normal": round(
-                self._height_squared() * self.BMI_RANGES["NORMAL"], 1
-            ),
-        }
+        try:
+            return {
+                "obese": round(
+                    self._height_squared() * self.BMI_RANGES["OBESE"], 1
+                ),
+                "overweight": round(
+                    self._height_squared() * self.BMI_RANGES["OVERWEIGHT"], 1
+                ),
+                "normal": round(
+                    self._height_squared() * self.BMI_RANGES["NORMAL"], 1
+                ),
+            }
+        except TypeError:
+            return {}
 
     def _height_squared(self) -> decimal.Decimal:
         """square users height"""

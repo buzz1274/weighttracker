@@ -1,5 +1,6 @@
 from django.db.models import Avg, QuerySet
 from django.db.models.functions import TruncMonth, TruncWeek, TruncYear
+from rest_framework.permissions import IsAuthenticated
 
 from user.models.weight import Weight
 from user.serializers.weight_aggregate_serializer import (
@@ -11,6 +12,7 @@ from user.views.weight_viewset import WeightViewSet
 class WeightAggregateViewSet(WeightViewSet):
     serializer_class = WeightAggregateSerializer
     pagination_class = None
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self) -> QuerySet:
         context = self.get_serializer_context()

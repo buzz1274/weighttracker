@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import Tuple
 
+from django.contrib.auth import login
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -11,7 +12,6 @@ from user.authentication.authenticator_interface import AuthenticatorInterface
 from user.authentication.exceptions import AuthenticationException
 from user.models.user import User
 from user.serializers.serializers import LoginSerializer
-from user.serializers.user_serializer import UserSerializer
 
 
 class Login(APIView):
@@ -46,9 +46,19 @@ class Login(APIView):
                 },
             )
 
+            login(
+                request,
+                user[0],
+            )
+
+            print(request.user)
+            print(request.user.is_authenticated)
+            print(request.user.pk)
+            print(request.session)
+
             return Response(
-                UserSerializer(instance=user[0], partial=True).data,
-                status=status.HTTP_200_OK,
+                None,
+                status=status.HTTP_202_ACCEPTED,
             )
 
         except (IndexError, AuthenticationException) as e:

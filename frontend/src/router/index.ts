@@ -34,6 +34,8 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  next()
+  /*
   if (to.meta.requiresAuth) {
     if (localStorage.getItem('access_token')) {
       next()
@@ -43,6 +45,7 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
+   */
 })
 
 export default router

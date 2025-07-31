@@ -1,6 +1,7 @@
 from django.db.models import QuerySet
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from user.models.weight import Weight
@@ -10,15 +11,18 @@ from user.serializers.weight_serializer import WeightSerializer
 class WeightViewSet(viewsets.ModelViewSet):
     serializer_class = WeightSerializer
     pagination_class = None
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self) -> QuerySet:
         context = self.get_serializer_context()
 
-        return Weight.objects.filter(user_id=context["user_id"]).order_by("date")
+        return Weight.objects.filter(user_id=context["user_id"]).order_by(
+            "date"
+        )
 
     def get_serializer_context(self) -> dict:
         context = super().get_serializer_context()
-        context["user_id"] = 1
+        context["user_id"] = context.get("request").user.pk
 
         return context
 

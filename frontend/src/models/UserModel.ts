@@ -37,4 +37,21 @@ export class UserModel extends Model {
       .then((data) => this.hydrate(data))
       .catch((error) => this.errors(error))
   }
+
+  login(credentials: string, backend: string): Promise<boolean> {
+    return fetch('https://' + window.location.hostname + '/api/user/login/', {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': this.getCookie('csrftoken'),
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        credentials: credentials,
+        authentication_backend: backend
+      })
+    }).then((response) => {
+      this.get()
+      return response.status === 202
+    })
+  }
 }

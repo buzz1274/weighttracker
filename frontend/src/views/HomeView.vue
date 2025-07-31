@@ -2,6 +2,12 @@
 /*global google */
 
 import { ref, onMounted } from 'vue'
+import { useStore } from '@/stores/store'
+import { storeToRefs } from 'pinia'
+import router from '../router'
+
+const store = useStore()
+const { userModel } = storeToRefs(store)
 
 const error = ref('')
 
@@ -29,19 +35,11 @@ const initSignIn = () => {
 }
 
 const loginCallback = async (credentials) => {
-  fetch('https://' + window.location.hostname + '/api/user/login/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      credentials: credentials.credential,
-      authentication_backend: 'GOOGLE'
-    })
-  }).then(() => {
-    //console.log(response.body.);
-    //redirect to weights if authenticated
-  })
+  if (await userModel.value.login(credentials.credential, 'GOOGLE')) {
+    await router.push('/weights')
+  } else {
+    //display error message//
+  }
 }
 </script>
 

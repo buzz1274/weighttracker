@@ -194,7 +194,7 @@ const chartOptions = {
 <style scoped>
 .graph_container {
   width: 868px;
-  height: 800px;
+  height: 900px;
   order: 2;
 }
 #frequency_select {

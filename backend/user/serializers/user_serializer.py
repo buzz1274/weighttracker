@@ -60,6 +60,9 @@ class UserSerializer(serializers.ModelSerializer):
     percentage_weight_lost_of_target = serializers.SerializerMethodField(
         "percentage_weight_lost_of_target_field"
     )
+    percentage_weight_lost = serializers.SerializerMethodField(
+        "percentage_weight_lost_field"
+    )
     min_weight_kg = serializers.SerializerMethodField("min_weight_kg_field")
     estimated_weight_at_date = serializers.SerializerMethodField(
         "estimated_weight_at_date_field"
@@ -166,7 +169,29 @@ class UserSerializer(serializers.ModelSerializer):
 
     def percentage_weight_lost_of_target_field(self, model):
         try:
-            return f"{(((model.max_weight(True).weight_kg - model.weight_at_date().weight_kg) / (model.max_weight(True).weight_kg - model.target_weight_kg)) * 100):.2f}"
+            percentage_weight_lost_of_target = (
+                (
+                    model.max_weight(True).weight_kg
+                    - model.weight_at_date().weight_kg
+                )
+                / (model.max_weight(True).weight_kg - model.target_weight_kg)
+            ) * 100
+
+            return f"{percentage_weight_lost_of_target:.2f}"
+        except (AttributeError, TypeError):
+            return "-"
+
+    def percentage_weight_lost_field(self, model):
+        try:
+            percentage_weight_lost = 100 - (
+                (
+                    model.weight_at_date().weight_kg
+                    / model.max_weight(True).weight_kg
+                )
+                * 100
+            )
+
+            return f"{percentage_weight_lost:.2f}"
         except (AttributeError, TypeError):
             return "-"
 

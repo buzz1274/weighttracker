@@ -92,12 +92,6 @@ const changeClass = (change) => {
           </td>
         </tr>
         <tr>
-          <td>Weight (kg)</td>
-          <td :class="changeClass(totalWeightLost)" class="stats text-end">
-            {{ totalWeightLost }}({{ user.percentage_weight_lost_of_target }}%)
-          </td>
-        </tr>
-        <tr>
           <td>Total weight lost(kg)</td>
           <td :class="changeClass(totalWeightLost)" class="stats text-end">
             {{ totalWeightLost }}({{ user.percentage_weight_lost_of_target }}%)

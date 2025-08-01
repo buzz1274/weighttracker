@@ -5,10 +5,14 @@ import { ref, onMounted } from 'vue'
 import { useStore } from '@/stores/store'
 import { storeToRefs } from 'pinia'
 import router from '../router'
+import type { UserModel } from '@/models/UserModel'
+import type { WeightModel } from '@/models/WeightModel'
 
 const store = useStore()
-const { userModel } = storeToRefs(store)
-const user = userModel.value
+const { userModel, weightModel } = storeToRefs(store)
+
+const user: UserModel = userModel.value
+const weight: WeightModel = weightModel.value
 
 const error = ref('')
 
@@ -37,6 +41,8 @@ const initSignIn = () => {
 
 const loginCallback = async (credentials) => {
   if (await user.login(credentials.credential, 'GOOGLE')) {
+    await user.get()
+    await weight.get()
     await router.push('/weights')
   } else {
     //display error message//
@@ -70,7 +76,8 @@ const loginCallback = async (credentials) => {
       <div class="d-flex justify-content-center text-danger">{{ error }}</div>
     </div>
     <div class="home_buttons">
-      <div v-if="!user.is_authenticated">
+      {{ !user.isAuthenticated() }}
+      <div v-if="!user.isAuthenticated()">
         <component
           v-bind:is="script"
           src="https://accounts.google.com/gsi/client"

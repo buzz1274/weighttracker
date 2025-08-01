@@ -1,6 +1,7 @@
 import { Model } from '@/models/Model'
 
 export class UserModel extends Model {
+  protected _is_authenticated: boolean
   name: string
   min_weight_kg: number
   max_weight_kg: number
@@ -23,25 +24,27 @@ export class UserModel extends Model {
   percentage_weight_lost: number
   estimated_weight_at_date: number
   weight_loss_at_date: string
-  is_authenticated: boolean
 
   constructor() {
     super()
 
     if (localStorage.getItem('authenticated') === 'true') {
-      this.get()
-      this.is_authenticated = true
+      this._is_authenticated = true
     }
   }
 
-  get(): void {
+  public isAuthenticated(): boolean {
+    return this._is_authenticated
+  }
+
+  public get(): void {
     fetch(this.apiUrl('/api/user/'), { method: 'GET' })
       .then((response) => response.json())
       .then((data) => this.hydrate(data))
       .catch((error) => this.errors(error))
   }
 
-  logout(): Promise<boolean> {
+  public logout(): Promise<boolean> {
     return fetch(this.apiUrl('/api/user/logout/'), {
       method: 'POST',
       headers: {
@@ -55,7 +58,7 @@ export class UserModel extends Model {
     })
   }
 
-  login(credentials: string, backend: string): Promise<boolean> {
+  public login(credentials: string, backend: string): Promise<boolean> {
     return fetch(this.apiUrl('/api/user/login/'), {
       method: 'POST',
       headers: {
@@ -80,16 +83,14 @@ export class UserModel extends Model {
   }
 
   private handle_login(): void {
-    this.get()
-
-    this.is_authenticated = true
+    this._is_authenticated = true
     localStorage.setItem('authenticated', String(true))
   }
 
   private handle_logout(): void {
-    this.reset()
+    //this.reset()
 
-    this.is_authenticated = false
+    this._is_authenticated = false
     localStorage.setItem('authenticated', '')
   }
 }

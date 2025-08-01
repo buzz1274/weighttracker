@@ -27,7 +27,7 @@ const logout = () => {
     <RouterLink to="/">
       <h1>WeightTracker</h1>
     </RouterLink>
-    <nav v-if="user.is_authenticated">
+    <nav v-if="user.isAuthenticated()">
       <div>
         <table style="float: right">
           <tbody>

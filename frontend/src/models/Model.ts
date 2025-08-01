@@ -6,6 +6,7 @@ export class Model {
   _host: string = 'https://' + window.location.hostname + '/'
   _errors: ref<Array<Error> | null> = ref(null)
   _notification: ref<Notification | null> = ref(null)
+  protected _data_fetched: boolean = false
 
   constructor() {
     this.notification = this.notification.bind(this)
@@ -17,6 +18,10 @@ export class Model {
       this._notification.value = notification
     }
     return this._notification.value
+  }
+
+  public dataFetched(): boolean {
+    return this._data_fetched
   }
 
   public errors(errors?: Array<Error>): ref<Array<Error>> {
@@ -40,6 +45,7 @@ export class Model {
         this[property] = data[property]
       }
     }
+    this._data_fetched = true
   }
 
   protected reset(): void {
@@ -48,6 +54,7 @@ export class Model {
         this[property as keyof this] = null
       }
     }
+    this._data_fetched = false
   }
 
   protected isPropertyOf(property): boolean {

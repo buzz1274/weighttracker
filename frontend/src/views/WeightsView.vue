@@ -10,8 +10,14 @@ const store = useStore()
 const { userModel, weightModel } = storeToRefs(store)
 
 onBeforeMount(() => {
-  userModel.value.get()
-  weightModel.value.get()
+  if (userModel.value.isAuthenticated()) {
+    if (!userModel.value.dataFetched()) {
+      userModel.value.get()
+    }
+    if (!weightModel.value.dataFetched()) {
+      weightModel.value.get()
+    }
+  }
 })
 </script>
 

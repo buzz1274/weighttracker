@@ -34,7 +34,7 @@ export class WeightModel extends Model {
       })
   }
 
-  delete(weight: WeightType, isDeleteModalOpened: ref<boolean>): void {
+  public delete(weight: WeightType, isDeleteModalOpened: ref<boolean>): void {
     this.fetch('api/user/weights/' + weight.id, {
       method: 'DELETE',
       headers: {
@@ -65,7 +65,7 @@ export class WeightModel extends Model {
       })
   }
 
-  save(
+  public save(
     action: string,
     weight: WeightType | null,
     date: string,

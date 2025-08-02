@@ -18,13 +18,14 @@ const user: UserModel = userModel.value
 const weight: WeightModel = weightModel.value
 
 const error = ref('')
+const displayLogoutMessage = ref(false)
 
 onBeforeMount(() => {
   if (route.path.slice(1) === 'logout' && user.isAuthenticated()) {
     user.logout()
     user.reset()
     weight.reset()
-    //display logout message//
+    displayLogoutMessage.value = true
   }
 })
 
@@ -97,6 +98,9 @@ const loginCallback = async (credentials) => {
           defer
         />
         <div id="gSignInButton" />
+        <div v-if="displayLogoutMessage" class="d-flex justify-content-center mt-3 text-danger">
+          You have been logged out
+        </div>
       </div>
     </div>
   </main>

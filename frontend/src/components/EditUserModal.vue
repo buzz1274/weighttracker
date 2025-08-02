@@ -12,6 +12,10 @@ const user: UserModel = userModel.value
 const emit = defineEmits(['modalClose'])
 const target = ref(null)
 
+const saveUser = () => {
+  console.log('saveUser')
+}
+
 onClickOutside(target, () => emit('modalClose'))
 </script>
 
@@ -135,7 +139,10 @@ onClickOutside(target, () => emit('modalClose'))
           >
             Cancel
           </button>
-          <button type="button" class="btn btn-primary">Register</button>
+          <button type="button" class="btn btn-primary" @click="saveUser">
+            <span v-if="user.isRegistered()">Edit</span>
+            <span v-else>Register</span>
+          </button>
         </div>
       </form>
     </template>

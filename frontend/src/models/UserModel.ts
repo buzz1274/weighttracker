@@ -42,7 +42,7 @@ export class UserModel extends Model {
   }
 
   public isRegistered(): boolean {
-    return false
+    return !(!this.sex || !this.height_m || !this.starting_weight_kg)
   }
 
   public get(): void {

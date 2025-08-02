@@ -64,6 +64,14 @@ onClickOutside(target, () => emit('modalClose'))
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+.modal-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
 }
 .modal-header {
   font-weight: bold;
@@ -84,6 +92,8 @@ onClickOutside(target, () => emit('modalClose'))
 }
 .modal-container {
   width: 500px;
+  overflow-y: auto;
+  max-height: calc(100% - 60px);
   margin: 150px auto;
   padding: 20px 30px;
   border-radius: 2px;

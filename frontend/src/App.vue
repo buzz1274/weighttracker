@@ -19,7 +19,7 @@ const closeEditUserModal = () => {
   isEditUserModalOpen.value = false
 }
 
-if (!user.isRegistered()) {
+if (user.dataFetched() && !user.isRegistered()) {
   isEditUserModalOpen.value = true
 }
 </script>

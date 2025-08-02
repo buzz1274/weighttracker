@@ -87,6 +87,7 @@ onClickOutside(target, () => emit('modalClose'))
   display: inline;
   position: relative;
   float: right;
+  font-size: 0.6em;
   top: -15px;
   right: -25px;
 }

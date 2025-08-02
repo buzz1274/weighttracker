@@ -19,6 +19,7 @@ const weight: WeightModel = weightModel.value
 
 const error = ref('')
 const displayLogoutMessage = ref(false)
+const displayErrorMessage = ref(false)
 
 onBeforeMount(() => {
   if (route.path.slice(1) === 'logout' && user.isAuthenticated()) {
@@ -57,7 +58,7 @@ const loginCallback = async (credentials) => {
     await weight.get()
     await router.push('/weights')
   } else {
-    //display error message//
+    displayErrorMessage.value = true
   }
 }
 </script>
@@ -100,6 +101,9 @@ const loginCallback = async (credentials) => {
         <div id="gSignInButton" />
         <div v-if="displayLogoutMessage" class="d-flex justify-content-center mt-3 text-danger">
           You have been logged out
+        </div>
+        <div v-if="displayErrorMessage" class="d-flex justify-content-center mt-3 text-danger">
+          An error has occurred
         </div>
       </div>
     </div>

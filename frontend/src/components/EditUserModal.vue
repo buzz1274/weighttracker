@@ -1,21 +1,43 @@
 <script setup lang="ts">
 import ModalComponent from '@/components/base/ModalComponent.vue'
 import { UserModel } from '@/models/UserModel'
+import { WeightModel } from '@/models/WeightModel'
 import { ref } from 'vue'
 import { useStore } from '@/stores/store'
 import { storeToRefs } from 'pinia'
 import { onClickOutside } from '@vueuse/core'
 
 const store = useStore()
-const { userModel } = storeToRefs(store)
+const { userModel, weightModel } = storeToRefs(store)
 const user: UserModel = userModel.value
+const weight: WeightModel = weightModel.value
 const emit = defineEmits(['modalClose'])
 const target = ref(null)
 
-const saveUser = (e?: SubmitEvent) => {
-  user.save({
-    sex: 'F'
+const saveUser = async () => {
+  const getFormElement = (id: string): string | number => {
+    return (document.getElementById(id) as HTMLInputElement).value
+  }
+
+  const [success, closeEditUser]: boolean = await user.save({
+    sex: getFormElement('sex'),
+    height_m: getFormElement('height_m'),
+    starting_weight_kg: getFormElement('starting_weight_kg'),
+    weight_loss_start_date: getFormElement('weight_loss_start_date'),
+    target_weight_kg: getFormElement('target_weight_kg'),
+    intermediate_loss_target_kg: getFormElement('intermediate_loss_target_kg'),
+    weight_loss_at_date: getFormElement('weight_loss_at_date'),
+    target_weight_loss_percentage_per_week: getFormElement('target_weight_loss_percentage_per_week')
   })
+
+  if (closeEditUser) {
+    if (success) {
+      user.get()
+      weight.get()
+    }
+    //display notification to show user registered or edited//
+    emit('modalClose')
+  }
 }
 
 onClickOutside(target, () => emit('modalClose'))
@@ -28,11 +50,11 @@ onClickOutside(target, () => emit('modalClose'))
     @modalClose="emit('modalClose')"
   >
     <template #header>
-      <span v-if="user.isRegistered()">Edit</span>
+      <span v-if="user.isRegistered()">Edit User</span>
       <span v-else>Register</span>
     </template>
     <template #content>
-      <form class="w-100 p-3" @submit.prevent="'save', $event">
+      <form class="w-100 p-3" @submit.prevent="saveUser()">
         <div class="form-group-lg mb-3">
           <label for="email">Email address</label>
           <input
@@ -55,10 +77,10 @@ onClickOutside(target, () => emit('modalClose'))
         </div>
         <div class="form-group-lg mb-3">
           <label for="sex">Sex</label>
-          <select id="frequency" class="form-select">
+          <select id="sex" class="form-select">
             <option value="-">-</option>
-            <option value="Male" :selected="user.sex === 'M'">Male</option>
-            <option value="Female" :selected="user.sex == 'F'">Female</option>
+            <option value="M" :selected="user.sex === 'M'">Male</option>
+            <option value="F" :selected="user.sex == 'F'">Female</option>
           </select>
         </div>
         <div class="form-group-lg mb-3">
@@ -141,7 +163,7 @@ onClickOutside(target, () => emit('modalClose'))
           >
             Cancel
           </button>
-          <button type="button" class="btn btn-primary" @click="saveUser">
+          <button type="submit" class="btn btn-primary" value="save">
             <span v-if="user.isRegistered()">Edit</span>
             <span v-else>Register</span>
           </button>

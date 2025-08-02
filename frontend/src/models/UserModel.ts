@@ -38,14 +38,16 @@ export class UserModel extends Model {
   }
 
   public get(): void {
-    fetch(this.apiUrl('/api/user/'), { method: 'GET' })
-      .then((response) => response.json())
+    this.fetch('/api/user/', { method: 'GET' })
+      .then((response) => {
+        return response ? response.json() : null
+      })
       .then((data) => this.hydrate(data))
-      .catch((error) => this.errors(error))
+      .catch((error) => error.message && this.notification(error.message))
   }
 
   public logout(): Promise<boolean> {
-    return fetch(this.apiUrl('/api/user/logout/'), {
+    return this.fetch('/api/user/logout/', {
       method: 'POST',
       headers: {
         'X-CSRFToken': this.getCookie('csrftoken'),
@@ -59,7 +61,7 @@ export class UserModel extends Model {
   }
 
   public login(credentials: string, backend: string): Promise<boolean> {
-    return fetch(this.apiUrl('/api/user/login/'), {
+    return this.fetch('/api/user/login/', {
       method: 'POST',
       headers: {
         'X-CSRFToken': this.getCookie('csrftoken'),
@@ -70,14 +72,14 @@ export class UserModel extends Model {
         authentication_backend: backend
       })
     }).then((response) => {
-      if (response.status === 202) {
-        this.handle_login()
-
-        return true
-      } else {
+      if (!response || response.status !== 202) {
         this.handle_logout()
 
         return false
+      } else {
+        this.handle_login()
+
+        return true
       }
     })
   }

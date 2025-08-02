@@ -14,8 +14,10 @@ const isEditUserModalOpen = ref(false)
 const openEditUserModal = () => {
   isEditUserModalOpen.value = true
 }
+
 const logout = () => {
   user.logout()
+  user.reset()
   router.push('/')
 }
 </script>
@@ -96,7 +98,7 @@ a {
   padding-top: 1em;
 }
 .main {
-  min-height: 950px;
+  min-height: 1050px;
 }
 footer {
   width: 100%;

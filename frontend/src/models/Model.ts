@@ -1,11 +1,12 @@
 import { ref } from 'vue'
 import Cookies from 'js-cookie'
+import router from '@/router'
 import type { Error, Notification } from '@/types/types.d.ts'
 
 export class Model {
-  _host: string = 'https://' + window.location.hostname + '/'
-  _errors: ref<Array<Error> | null> = ref(null)
-  _notification: ref<Notification | null> = ref(null)
+  protected _host: string = 'https://' + window.location.hostname + '/'
+  protected _errors: ref<Array<Error> | null> = ref(null)
+  protected _notification: ref<Notification | null> = ref(null)
   protected _data_fetched: boolean = false
 
   constructor() {
@@ -31,12 +32,27 @@ export class Model {
     return this._errors.value
   }
 
-  protected getCookie(name: string): string {
-    return Cookies.get(name)
+  protected fetch(url: string, request: RequestInit): Promise<Response | void> {
+    const HTTP_FORBIDDEN = 403
+
+    return fetch(this.apiUrl(url), request)
+      .then((response) => {
+        if (response.status === HTTP_FORBIDDEN) {
+          throw new Error(String(HTTP_FORBIDDEN))
+        } else {
+          return response
+        }
+      })
+      .catch((error) => {
+        if (error.message === String(HTTP_FORBIDDEN)) {
+          router.push('/logout').then(() => {})
+        }
+        throw new Error()
+      })
   }
 
-  protected apiUrl(endpoint: string): string {
-    return this._host + endpoint
+  protected getCookie(name: string): string {
+    return Cookies.get(name)
   }
 
   protected hydrate(data: object): void {
@@ -61,5 +77,9 @@ export class Model {
     return (
       Object.hasOwn(this, property) && typeof this[property] !== 'function' && property[0] !== '_'
     )
+  }
+
+  private apiUrl(endpoint: string): string {
+    return this._host + endpoint
   }
 }

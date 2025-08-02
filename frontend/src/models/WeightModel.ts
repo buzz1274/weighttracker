@@ -14,30 +14,36 @@ export class WeightModel extends Model {
     this.user_model = user_model
   }
 
-  get(): void {
+  public get(): void {
     let url: string = 'api/user/weights/'
 
     if (this.frequency !== 'Daily') {
       url += 'aggregate/?frequency=' + this.frequency.toLowerCase()
     }
 
-    fetch(this.apiUrl(url), { method: 'GET' })
-      .then((response) => response.json())
+    this.fetch(url, { method: 'GET' })
+      .then((response) => {
+        return response ? response.json() : null
+      })
       .then((data) => {
         this.hydrate({ weights: data })
         this.weights = this.weights.reverse()
       })
-      .catch((error) => this.notification(error))
+      .catch((error) => {
+        error.message && this.notification(error.message)
+      })
   }
 
   delete(weight: WeightType, isDeleteModalOpened: ref<boolean>): void {
-    fetch(this.apiUrl('api/user/weights/' + weight.id), {
+    this.fetch('api/user/weights/' + weight.id, {
       method: 'DELETE',
       headers: {
         'X-CSRFToken': this.getCookie('csrftoken')
       }
     })
       .then((response) => {
+        if (!response) throw new Error()
+
         if (response.status == 204) {
           this.get()
           this.user_model.get()
@@ -54,7 +60,9 @@ export class WeightModel extends Model {
           isDeleteModalOpened.value = true
         }
       })
-      .catch((error) => this.notification(error))
+      .catch((error) => {
+        error.message && this.notification(error.message)
+      })
   }
 
   save(
@@ -66,7 +74,7 @@ export class WeightModel extends Model {
   ): void {
     let response_status: number
 
-    fetch(this.apiUrl('api/user/weights/' + (action == 'add' ? '' : weight?.id)), {
+    this.fetch('api/user/weights/' + (action == 'add' ? '' : weight?.id), {
       method: action == 'add' ? 'POST' : 'PUT',
       headers: {
         'X-CSRFToken': this.getCookie('csrftoken'),
@@ -80,6 +88,8 @@ export class WeightModel extends Model {
       })
     })
       .then((response) => {
+        if (!response) throw new Error()
+
         response_status = response.status
 
         return response.json()
@@ -103,11 +113,13 @@ export class WeightModel extends Model {
         }
       })
       .catch((error) => {
-        this.notification({
-          message: error,
-          type: 'error'
-        })
-        isAddEditModalOpened.value = false
+        if (error.message) {
+          this.notification({
+            message: error,
+            type: 'error'
+          })
+          isAddEditModalOpened.value = false
+        }
       })
   }
 }

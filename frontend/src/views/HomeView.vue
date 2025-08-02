@@ -4,7 +4,7 @@
 import { ref, onMounted } from 'vue'
 import { useStore } from '@/stores/store'
 import { storeToRefs } from 'pinia'
-import router from '../router'
+import router from '@/router'
 import type { UserModel } from '@/models/UserModel'
 import type { WeightModel } from '@/models/WeightModel'
 
@@ -76,7 +76,6 @@ const loginCallback = async (credentials) => {
       <div class="d-flex justify-content-center text-danger">{{ error }}</div>
     </div>
     <div class="home_buttons">
-      {{ !user.isAuthenticated() }}
       <div v-if="!user.isAuthenticated()">
         <component
           v-bind:is="script"

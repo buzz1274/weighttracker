@@ -7,6 +7,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      alias: '/logout',
       name: 'home',
       component: HomeView,
       meta: {

@@ -24,6 +24,10 @@ export class UserModel extends Model {
   percentage_weight_lost: number
   estimated_weight_at_date: number
   weight_loss_at_date: string
+  height_m: number
+  intermediate_loss_target_kg: number
+  email: string
+  sex: string
 
   constructor() {
     super()
@@ -35,6 +39,10 @@ export class UserModel extends Model {
 
   public isAuthenticated(): boolean {
     return this._is_authenticated
+  }
+
+  public isRegistered(): boolean {
+    return false
   }
 
   public get(): void {

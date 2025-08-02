@@ -5,11 +5,13 @@ import { onClickOutside } from '@vueuse/core'
 interface Props {
   isOpen: boolean
   backgroundColour?: string
+  showCloseIcon?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   isOpen: false,
-  backgroundColour: '#fff'
+  backgroundColour: '#fff',
+  showCloseIcon: true
 })
 
 const emit = defineEmits(['modalClose'])
@@ -30,6 +32,7 @@ onClickOutside(target, () => emit('modalClose'))
           <div class="header">
             <strong><slot name="header"></slot></strong>
             <button
+              v-if="props.showCloseIcon"
               type="button"
               class="btn-close close-button"
               aria-label="Close"

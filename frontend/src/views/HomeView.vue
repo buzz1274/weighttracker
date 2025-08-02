@@ -1,14 +1,17 @@
 <script setup lang="ts">
 /*global google */
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeMount } from 'vue'
 import { useStore } from '@/stores/store'
 import { storeToRefs } from 'pinia'
+import { useRoute } from 'vue-router'
 import router from '@/router'
 import type { UserModel } from '@/models/UserModel'
 import type { WeightModel } from '@/models/WeightModel'
 
 const store = useStore()
+const route = useRoute()
+
 const { userModel, weightModel } = storeToRefs(store)
 
 const user: UserModel = userModel.value
@@ -16,8 +19,17 @@ const weight: WeightModel = weightModel.value
 
 const error = ref('')
 
+onBeforeMount(() => {
+  if (route.path.slice(1) === 'logout' && user.isAuthenticated()) {
+    user.logout()
+    user.reset()
+    weight.reset()
+    //display logout message//
+  }
+})
+
 onMounted(() => {
-  if (typeof google !== 'undefined') {
+  if (typeof google !== 'undefined' && typeof google.accounts !== 'undefined') {
     initSignIn()
   }
 })
@@ -36,7 +48,6 @@ const initSignIn = () => {
     size: 'large',
     width: '80'
   })
-  google.accounts.id.prompt()
 }
 
 const loginCallback = async (credentials) => {
@@ -76,12 +87,14 @@ const loginCallback = async (credentials) => {
       <div class="d-flex justify-content-center text-danger">{{ error }}</div>
     </div>
     <div class="home_buttons">
-      <div v-if="!user.isAuthenticated()">
+      <div>
         <component
           v-bind:is="script"
           src="https://accounts.google.com/gsi/client"
           @load="initSignIn"
+          hidden="{{ user.isAuthenticated() ? 'hidden' : '' }}"
           async
+          defer
         />
         <div id="gSignInButton" />
       </div>

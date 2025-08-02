@@ -90,8 +90,6 @@ export class UserModel extends Model {
   }
 
   private handle_logout(): void {
-    //this.reset()
-
     this._is_authenticated = false
     localStorage.setItem('authenticated', '')
   }

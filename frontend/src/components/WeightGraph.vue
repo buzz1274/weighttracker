@@ -26,7 +26,7 @@ const user = computed<UserModel>(() => {
 })
 
 const frequencyChange = (e?: SubmitEvent) => {
-  wm.frequency = e.target.value
+  wm.setFrequency(e.target.value)
   wm.get()
 }
 
@@ -34,7 +34,7 @@ const labels = computed(() => {
   if (wm.weights) {
     return wm.weights
       .reduce((weights, weight) => {
-        weights.push(formatDate(weight['date'], wm.frequency))
+        weights.push(formatDate(weight['date'], wm.frequency()))
         return weights
       }, [])
       .reverse()
@@ -74,7 +74,9 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(220, 53, 69, 0.1)',
         fill: '-1',
         order: 1,
-        data: new Array(data.value.length).fill(user.value.bmi_boundaries.obese)
+        data: new Array(data.value.length).fill(
+          user.value.bmi_boundaries ? user.value.bmi_boundaries.obese : 0
+        )
       },
       {
         label: 'remove',
@@ -83,7 +85,9 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(243, 171, 133, 0.3)',
         fill: '-1',
         order: 1,
-        data: new Array(data.value.length).fill(user.value.bmi_boundaries.obese)
+        data: new Array(data.value.length).fill(
+          user.value.bmi_boundaries ? user.value.bmi_boundaries.obese : 0
+        )
       },
       {
         label: 'Overweight',
@@ -92,7 +96,9 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(243, 171, 133, 0.3)',
         fill: '-2',
         order: 1,
-        data: new Array(data.value.length).fill(user.value.bmi_boundaries.overweight)
+        data: new Array(data.value.length).fill(
+          user.value.bmi_boundaries ? user.value.bmi_boundaries.overweight : 0
+        )
       },
       {
         label: 'Normal',
@@ -101,7 +107,9 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(155, 238, 105, 0.3)',
         fill: false,
         order: 1,
-        data: new Array(data.value.length).fill(user.value.bmi_boundaries.normal)
+        data: new Array(data.value.length).fill(
+          user.value.bmi_boundaries ? user.value.bmi_boundaries.normal : 0
+        )
       },
       {
         label: 'remove',
@@ -110,7 +118,9 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(155, 238, 105, 0.3)',
         fill: '-1',
         order: 1,
-        data: new Array(data.value.length).fill(user.value.bmi_boundaries.overweight)
+        data: new Array(data.value.length).fill(
+          user.value.bmi_boundaries ? user.value.bmi_boundaries.overweight : 0
+        )
       },
       {
         label: 'Current Weight',
@@ -177,10 +187,10 @@ const chartOptions = {
       Graph
       <div id="frequency_select">
         <select id="frequency" @change="frequencyChange($event)">
-          <option value="Daily" :selected="wm.frequency == 'Daily'">Daily</option>
-          <option value="Weekly" :selected="wm.frequency == 'Weekly'">Weekly</option>
-          <option value="Monthly" :selected="wm.frequency == 'Monthly'">Monthly</option>
-          <option value="Yearly" :selected="wm.frequency == 'Yearly'">Yearly</option>
+          <option value="Daily" :selected="wm.frequency() == 'Daily'">Daily</option>
+          <option value="Weekly" :selected="wm.frequency() == 'Weekly'">Weekly</option>
+          <option value="Monthly" :selected="wm.frequency() == 'Monthly'">Monthly</option>
+          <option value="Yearly" :selected="wm.frequency() == 'Yearly'">Yearly</option>
         </select>
       </div>
     </header>

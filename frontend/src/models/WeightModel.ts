@@ -6,7 +6,7 @@ import type { WeightType } from '@/types/types.d.ts'
 export class WeightModel extends Model {
   user_model: ref<UserModel>
   weights: Array<WeightType>
-  frequency: string = 'Daily'
+  protected _frequency: string = 'Daily'
 
   constructor(user_model: ref<UserModel>) {
     super()
@@ -14,11 +14,19 @@ export class WeightModel extends Model {
     this.user_model = user_model
   }
 
+  public setFrequency(frequency: string): void {
+    this._frequency = frequency
+  }
+
+  public frequency(): string {
+    return this._frequency
+  }
+
   public get(): void {
     let url: string = 'api/user/weights/'
 
-    if (this.frequency !== 'Daily') {
-      url += 'aggregate/?frequency=' + this.frequency.toLowerCase()
+    if (this._frequency !== 'Daily') {
+      url += 'aggregate/?frequency=' + this.frequency().toLowerCase()
     }
 
     this.fetch(url, { method: 'GET' })

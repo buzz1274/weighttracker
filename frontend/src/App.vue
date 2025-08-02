@@ -16,9 +16,7 @@ const openEditUserModal = () => {
 }
 
 const logout = () => {
-  user.logout()
-  user.reset()
-  router.push('/')
+  router.push('/logout')
 }
 </script>
 

@@ -32,6 +32,15 @@ export class Model {
     return this._errors.value
   }
 
+  public reset(): void {
+    for (const property in this) {
+      if (this.isPropertyOf(property)) {
+        this[property as keyof this] = null
+      }
+    }
+    this._data_fetched = false
+  }
+
   protected fetch(url: string, request: RequestInit): Promise<Response | void> {
     const HTTP_FORBIDDEN = 403
 
@@ -62,15 +71,6 @@ export class Model {
       }
     }
     this._data_fetched = true
-  }
-
-  protected reset(): void {
-    for (const property in this) {
-      if (this.isPropertyOf(property)) {
-        this[property as keyof this] = null
-      }
-    }
-    this._data_fetched = false
   }
 
   protected isPropertyOf(property): boolean {

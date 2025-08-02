@@ -80,12 +80,12 @@ const changeClass = (change): string => {
 
   let permittedChange = user.target_weight_loss_percentage_per_week * -1
 
-  if (wm.frequency == 'Daily') {
+  if (wm.frequency() == 'Daily') {
     permittedChange = permittedChange / 7
-  } else if (wm.frequency == 'Monthly') {
+  } else if (wm.frequency() == 'Monthly') {
     permittedChange = (permittedChange * 52) / 12
   }
-  if (wm.frequency == 'Yearly') {
+  if (wm.frequency() == 'Yearly') {
     permittedChange = permittedChange * 52
   }
 
@@ -113,7 +113,7 @@ const changeClass = (change): string => {
   />
   <div class="weight_history_container">
     <header>
-      {{ wm.frequency }} History
+      {{ wm.frequency() }} History
       <span class="float-end add_weight">
         <font-awesome-icon
           icon="fa-solid fa-plus"
@@ -125,7 +125,7 @@ const changeClass = (change): string => {
     <table class="table table-sm table-hover">
       <thead>
         <tr>
-          <th>Date{{ wm.frequency.toLowerCase() === 'weekly' ? '(w/c)' : '' }}</th>
+          <th>Date{{ wm.frequency().toLowerCase() === 'weekly' ? '(w/c)' : '' }}</th>
           <th>Weight(kg)</th>
           <th>Change(%)</th>
           <th>Change(kg)</th>
@@ -135,7 +135,7 @@ const changeClass = (change): string => {
       <tbody v-if="weights_history">
         <tr v-for="weight in weights_history" :key="weight.id">
           <td style="width: 42%; font-size: 0.99em">
-            {{ formatDate(weight.date, wm.frequency) }}
+            {{ formatDate(weight.date, wm.frequency()) }}
           </td>
           <td class="text-end" style="width: 8%">
             {{ weight.weight_kg }}

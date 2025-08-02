@@ -16,15 +16,9 @@ class WeightViewSet(viewsets.ModelViewSet):
     def get_queryset(self) -> QuerySet:
         context = self.get_serializer_context()
 
-        return Weight.objects.filter(user_id=context["user_id"]).order_by(
-            "date"
-        )
-
-    def get_serializer_context(self) -> dict:
-        context = super().get_serializer_context()
-        context["user_id"] = context.get("request").user.pk
-
-        return context
+        return Weight.objects.filter(
+            user_id=context.get("request").user.pk
+        ).order_by("date")
 
     def list(self, request, *args, **kwargs) -> Response:
         serializer = self.get_serializer(self.get_queryset(), many=True)
@@ -54,12 +48,16 @@ class WeightViewSet(viewsets.ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         context = self.get_serializer_context()
-        get_object_or_404(Weight, pk=kwargs["pk"], user_id=context["user_id"])
+        get_object_or_404(
+            Weight, pk=kwargs["pk"], user_id=context.get("request").user.pk
+        )
 
         return super().destroy(request, args, kwargs)
 
     def partial_update(self, request, *args, **kwargs):
         context = self.get_serializer_context()
-        get_object_or_404(Weight, pk=kwargs["pk"], user_id=context["user_id"])
+        get_object_or_404(
+            Weight, pk=kwargs["pk"], user_id=context.get("request").user.pk
+        )
 
         return super().partial_update(request, *args, **kwargs)

@@ -1,7 +1,10 @@
 import { Model } from '@/models/Model'
+import type { WeightType } from '@/types/types'
+import { ref } from 'vue'
 
 export class UserModel extends Model {
   protected _is_authenticated: boolean
+  id: number
   name: string
   min_weight_kg: number
   max_weight_kg: number
@@ -52,6 +55,55 @@ export class UserModel extends Model {
       })
       .then((data) => this.hydrate(data))
       .catch((error) => error.message && this.notification(error.message))
+  }
+
+  public save(user: Object | null): void {
+    let response_status: number
+
+    this.fetch('api/user/' + this.id, {
+      method: 'PUT',
+      headers: {
+        'X-CSRFToken': this.getCookie('csrftoken'),
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+      .then((response) => {
+        if (!response) throw new Error()
+
+        response_status = response.status
+
+        return response.json()
+      })
+      .then((data) => {
+        if (response_status == 200 || response_status == 201) {
+          this.get()
+
+          /*
+            this.notification({
+              message: action == 'add' ? 'User Edited',
+              type: 'success'
+            })
+             */
+
+          //isAddEditModalOpened.value = false
+        } else if (response_status == 400) {
+          this.errors(data)
+          //isAddEditModalOpened.value = true
+        } else {
+          throw new Error(data['detail'])
+        }
+      })
+      .catch((error) => {
+        if (error.message) {
+          this.notification({
+            message: error,
+            type: 'error'
+          })
+          //isAddEditModalOpened.value = false
+        }
+      })
   }
 
   public logout(): Promise<boolean> {

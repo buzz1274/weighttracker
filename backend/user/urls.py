@@ -20,11 +20,19 @@ weight_aggregate_set_view = WeightAggregateViewSet.as_view(
     }
 )
 
+user_set_view = UserViewSet.as_view(
+    {
+        "get": "retrieve",
+        "put": "partial_update",
+    }
+)
+
 urlpatterns = [
     path("login/", Login.as_view(), name="login"),
     path("logout/", Logout.as_view(), name="logout"),
     path("weights/aggregate/", weight_aggregate_set_view, name="weights"),
     path("weights/", weight_set_view, name="weights"),
     path("weights/<int:pk>", weight_set_view, name="weights"),
-    path("", UserViewSet.as_view({"get": "retrieve"}), name="user"),
+    path("", user_set_view, name="user"),
+    path("<int:pk>", user_set_view, name="user"),
 ]

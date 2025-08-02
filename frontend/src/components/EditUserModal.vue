@@ -12,8 +12,10 @@ const user: UserModel = userModel.value
 const emit = defineEmits(['modalClose'])
 const target = ref(null)
 
-const saveUser = () => {
-  console.log('saveUser')
+const saveUser = (e?: SubmitEvent) => {
+  user.save({
+    sex: 'F'
+  })
 }
 
 onClickOutside(target, () => emit('modalClose'))
@@ -30,7 +32,7 @@ onClickOutside(target, () => emit('modalClose'))
       <span v-else>Register</span>
     </template>
     <template #content>
-      <form class="w-100 p-3">
+      <form class="w-100 p-3" @submit.prevent="'save', $event">
         <div class="form-group-lg mb-3">
           <label for="email">Email address</label>
           <input

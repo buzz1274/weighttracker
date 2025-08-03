@@ -15,8 +15,8 @@ const emit = defineEmits(['modalClose'])
 const target = ref(null)
 
 const saveUser = async () => {
-  const getFormElement = (id: string): string | number => {
-    return (document.getElementById(id) as HTMLInputElement).value
+  const getFormElement = (id: string): string => {
+    return String((document.getElementById(id) as HTMLInputElement).value)
   }
 
   const [success, closeEditUser]: boolean = await user.save({

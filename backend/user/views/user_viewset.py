@@ -6,12 +6,19 @@ from rest_framework.response import Response
 
 from user.models.user import User
 from user.serializers.user_serializer import UserSerializer
+from user.serializers.user_update_serializer import UserUpdateSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
     pagination_class = None
+
+    def get_serializer_class(self):
+        if self.action == "partial_update" or self.action == "update":
+            return UserUpdateSerializer
+
+        return super().get_serializer_class()
 
     def get_queryset(self) -> QuerySet:
         context = self.get_serializer_context()

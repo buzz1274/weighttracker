@@ -25,7 +25,7 @@ class WeightAggregateViewSet(WeightViewSet):
             ag_date = TruncYear("date")
 
         return (
-            Weight.objects.filter(user_id=context["user_id"])
+            Weight.objects.filter(user_id=context.get("request").user.pk)
             .annotate(ag_date=ag_date)
             .values("ag_date")
             .annotate(ag_weight=Avg("weight_kg"))

@@ -1,4 +1,5 @@
 import { Model } from '@/models/Model'
+import type { UserSave } from '@/types/types.d.ts'
 
 export class UserModel extends Model {
   protected _is_authenticated: boolean
@@ -55,7 +56,7 @@ export class UserModel extends Model {
       .catch((error) => error.message && this.notification(error.message))
   }
 
-  public save(user: this): Promise<[boolean, boolean]> {
+  public save(user: UserSave): Promise<[boolean, boolean]> {
     let response_status: number
 
     return this.fetch('api/user/' + this.id, {
@@ -91,7 +92,7 @@ export class UserModel extends Model {
             type: 'error'
           })
         }
-        return [true, false]
+        return [false, true]
       })
   }
 

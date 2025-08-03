@@ -15,3 +15,14 @@ export type WeightType = {
   previous_weight_change_kg: number
   previous_weight_change_percentage: number
 }
+
+export type UserSave = {
+  sex?: string
+  height_m?: string
+  starting_weight_kg?: string
+  weight_loss_start_date?: string
+  target_weight_kg?: string
+  intermediate_loss_target_kg?: string
+  weight_loss_at_date?: string
+  target_weight_loss_percentage_per_week?: string
+}

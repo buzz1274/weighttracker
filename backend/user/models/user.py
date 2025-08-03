@@ -26,16 +26,32 @@ class User(AbstractUser):
     ]
 
     height_m = DecimalField(
-        max_digits=3, decimal_places=2, blank=True, null=True
+        max_digits=3,
+        decimal_places=2,
+        blank=True,
+        null=True,
+        validators=[MinValueValidator(1.00), MaxValueValidator(3.00)],
     )
     starting_weight_kg = DecimalField(
-        max_digits=5, decimal_places=2, blank=True, null=True
+        max_digits=5,
+        decimal_places=2,
+        blank=True,
+        null=True,
+        validators=[MinValueValidator(40.00), MaxValueValidator(250.00)],
     )
     target_weight_kg = DecimalField(
-        max_digits=5, decimal_places=2, blank=True, null=True
+        max_digits=5,
+        decimal_places=2,
+        blank=True,
+        null=True,
+        validators=[MinValueValidator(40.00), MaxValueValidator(100.00)],
     )
     intermediate_loss_target_kg = DecimalField(
-        max_digits=3, decimal_places=2, blank=True, null=True
+        max_digits=3,
+        decimal_places=2,
+        blank=True,
+        null=True,
+        validators=[MinValueValidator(0.50), MaxValueValidator(10.00)],
     )
     sex = models.CharField(
         max_length=2,

@@ -1,5 +1,4 @@
 from django.db.models import QuerySet
-from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -30,8 +29,3 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer = UserSerializer(queryset)
 
         return Response(serializer.data)
-
-    def partial_update(self, request, *args, **kwargs):
-        get_object_or_404(User, pk=request.user.pk)
-
-        return super().partial_update(request, *args, **kwargs)

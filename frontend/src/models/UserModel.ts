@@ -71,6 +71,8 @@ export class UserModel extends Model {
       .then((response) => {
         if (!response) throw new Error()
 
+        //
+
         response_status = response.status
 
         return response.json()

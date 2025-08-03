@@ -40,10 +40,13 @@ const saveUser = async () => {
 
   if (closeEditUser) {
     if (success) {
+      user.notification({
+        message: user.isRegistered() ? 'User updated' : 'Registration complete',
+        type: 'success'
+      })
       user.get()
       weight.get()
     }
-    //display notification to show user registered or edited//
     close()
   }
 }

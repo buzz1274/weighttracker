@@ -22,7 +22,7 @@ class WeightSerializer(serializers.ModelSerializer):
                 and str(data["date"]) != str(self.instance.date)
             )
         ) and Weight.objects.filter(
-            user_id=self.context["user_id"], date=data["date"]
+            user_id=self.context.get("request").user.pk, date=data["date"]
         ):
             raise ValidationError(
                 {
@@ -35,5 +35,5 @@ class WeightSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data) -> Response:
         return Weight.objects.create(
-            user_id=self.context["user_id"], **validated_data
+            user_id=self.context.get("request").user.pk, **validated_data
         )

@@ -55,7 +55,6 @@ const data = computed(() => {
 })
 
 const chartData = computed(() => {
-  console.log(user.value.bmi_boundaries)
   return {
     labels: labels.value,
     datasets: [

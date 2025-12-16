@@ -16,6 +16,7 @@ class User(AbstractUser):
         "OBESE": decimal.Decimal(30),
         "OVERWEIGHT": decimal.Decimal(25),
         "NORMAL": decimal.Decimal(18.5),
+        "UNDERWEIGHT": decimal.Decimal(18.49),
     }
     SEX_CHOICES = [
         ("M", "Male"),
@@ -107,6 +108,9 @@ class User(AbstractUser):
                 ),
                 "normal": round(
                     self._height_squared() * self.BMI_RANGES["NORMAL"], 1
+                ),
+                "underweight": round(
+                    self._height_squared() * self.BMI_RANGES["UNDERWEIGHT"], 1
                 ),
             }
         except TypeError:

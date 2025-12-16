@@ -55,6 +55,7 @@ const data = computed(() => {
 })
 
 const chartData = computed(() => {
+  console.log(user.value.bmi_boundaries)
   return {
     labels: labels.value,
     datasets: [
@@ -110,9 +111,31 @@ const chartData = computed(() => {
         fill: false,
         order: 1,
         data: new Array(data.value.length).fill(
+          user.value.bmi_boundaries ? user.value.bmi_boundaries.normal : 0
+        )
+      },
+      {
+        label: 'Underweight',
+        pointStyle: 'line',
+        borderColor: 'rgba(0, 0, 0, 0.0)',
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+        fill: false,
+        order: 1,
+        data: new Array(data.value.length).fill(
           user.value.bmi_boundaries
-            ? Math.floor(parseFloat(user.value.bmi_boundaries.normal) / 10) * 10
+            ? Math.floor(parseFloat(user.value.bmi_boundaries.underweight) / 10) * 10
             : 0
+        )
+      },
+      {
+        label: 'remove',
+        pointStyle: 'line',
+        borderColor: 'rgba(0, 0, 0, 0.3)',
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+        fill: '-1',
+        order: 1,
+        data: new Array(data.value.length).fill(
+          user.value.bmi_boundaries ? user.value.bmi_boundaries.underweight : 0
         )
       },
       {

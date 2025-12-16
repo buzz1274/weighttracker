@@ -27,6 +27,9 @@ class UserSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField("name_field")
     bmi_boundaries = serializers.SerializerMethodField("bmi_boundaries_field")
     max_weight_kg = serializers.SerializerMethodField("max_weight_kg_field")
+    max_weight_kg_all_time = serializers.SerializerMethodField(
+        "max_weight_kg_all_time_field"
+    )
     current_weight_kg = serializers.SerializerMethodField(
         "current_weight_kg_field"
     )
@@ -79,6 +82,12 @@ class UserSerializer(serializers.ModelSerializer):
     def min_weight_kg_field(self, model):
         try:
             return f"{model.min_weight(True).weight_kg:.2f}"
+        except AttributeError:
+            return "-"
+
+    def max_weight_kg_all_time_field(self, model):
+        try:
+            return f"{model.max_weight(False).weight_kg:.2f}"
         except AttributeError:
             return "-"
 

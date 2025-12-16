@@ -65,7 +65,9 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(220, 53, 69, 0.1)',
         fill: '1',
         order: 1,
-        data: new Array(data.value.length).fill(user.value.max_weight_kg)
+        data: new Array(data.value.length).fill(
+          Math.ceil(parseFloat(user.value.max_weight_kg_all_time) / 10) * 10
+        )
       },
       {
         label: 'Obese',
@@ -108,7 +110,9 @@ const chartData = computed(() => {
         fill: false,
         order: 1,
         data: new Array(data.value.length).fill(
-          user.value.bmi_boundaries ? user.value.bmi_boundaries.normal : 0
+          user.value.bmi_boundaries
+            ? Math.floor(parseFloat(user.value.bmi_boundaries.normal) / 10) * 10
+            : 0
         )
       },
       {

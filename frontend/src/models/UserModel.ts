@@ -7,6 +7,7 @@ export class UserModel extends Model {
   name: string
   min_weight_kg: number
   max_weight_kg: number
+  max_weight_kg_all_time: number
   date_joined: string
   weight_loss_start_date: string
   bmi_boundaries: object = []

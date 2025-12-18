@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import ModalComponent from '@/components/base/ModalComponent.vue'
+import moment from 'moment/moment'
+import { computed } from 'vue'
 
 const emit = defineEmits(['addEditDeleteWeight', 'modalClose'])
 const props = defineProps({
@@ -7,6 +9,18 @@ const props = defineProps({
   title: String,
   weight: Object,
   modalAction: String
+})
+
+const date = computed((): string => {
+  if (props.errors?.date) {
+    return ''
+  }
+
+  if (props.weight?.date) {
+    return props.weight.date
+  }
+
+  return moment().format('YYYY-MM-DD')
 })
 </script>
 
@@ -20,12 +34,7 @@ const props = defineProps({
       >
         <div class="mb-3">
           <label for="date" class="form-label">Date</label>
-          <input
-            type="date"
-            class="form-control"
-            id="date"
-            :value="!props.errors?.date ? props.weight?.date : ''"
-          />
+          <input type="date" class="form-control" id="date" :value="date" />
           <div v-if="props.errors?.date">
             <p
               class="alert alert-danger"
